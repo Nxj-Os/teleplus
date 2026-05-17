@@ -1,6 +1,7 @@
 import banner from "../../assets/img/banner-evento3.jpg";
 import eventoSinFondo from "../../assets/img/evento3-sin fondo.jpg";
 import "../../css/evento3.css";
+import { useComprarEntrada } from "../../hooks/useComprarEntrada";
 import LayoutPrincipal from "../../layouts/LayoutPrincipal";
 
 function TablaPrecios() {
@@ -290,6 +291,8 @@ function TablaPrecios() {
 }
 
 export default function Evento3() {
+  const { comprarEntrada } = useComprarEntrada();
+
   return (
     <LayoutPrincipal>
       <img
@@ -319,22 +322,70 @@ export default function Evento3() {
           <div className="mx-auto mb-5 container">
             <div className="row row-cols-1 row-cols-md-2 g-3">
               <div className="col">
-                <button className="btn btn-outline-dark border-3 w-100 py-4">
+                <button
+                  className="btn btn-outline-dark border-3 w-100 py-4"
+                  onClick={() =>
+                    comprarEntrada({
+                      evento: "MAROON 5 en el Estadio Nacional",
+                      fecha: "25 Mayo 2026",
+                      lugar: "Estadio Nacional",
+                      zona: "Tribuna Oriente 1",
+                      tipo: "Preventa fans",
+                      precio: 342,
+                    })
+                  }
+                >
                   Preventa fans
                 </button>
               </div>
               <div className="col">
-                <button className="btn btn-outline-dark border-3 w-100 py-4">
+                <button
+                  className="btn btn-outline-dark border-3 w-100 py-4"
+                  onClick={() =>
+                    comprarEntrada({
+                      evento: "MAROON 5 en el Estadio Nacional",
+                      fecha: "25 Mayo 2026",
+                      lugar: "Estadio Nacional",
+                      zona: "Tribuna Oriente 2",
+                      tipo: "Preventa Interbank",
+                      precio: 290,
+                    })
+                  }
+                >
                   Preventa Interbank
                 </button>
               </div>
               <div className="col">
-                <button className="btn btn-outline-dark border-3 w-100 py-4">
+                <button
+                  className="btn btn-outline-dark border-3 w-100 py-4"
+                  onClick={() =>
+                    comprarEntrada({
+                      evento: "MAROON 5 en el Estadio Nacional",
+                      fecha: "25 Mayo 2026",
+                      lugar: "Estadio Nacional",
+                      zona: "Tribuna Oriente 3",
+                      tipo: "Precio full",
+                      precio: 342,
+                    })
+                  }
+                >
                   Precio full
                 </button>
               </div>
               <div className="col">
-                <button className="btn btn-outline-dark border-3 w-100 py-4">
+                <button
+                  className="btn btn-outline-dark border-3 w-100 py-4"
+                  onClick={() =>
+                    comprarEntrada({
+                      evento: "MAROON 5 en el Estadio Nacional",
+                      fecha: "25 Mayo 2026",
+                      lugar: "Estadio Nacional",
+                      zona: "Tribuna Oriente 4",
+                      tipo: "Conadis",
+                      precio: 120,
+                    })
+                  }
+                >
                   Conadis
                 </button>
               </div>
