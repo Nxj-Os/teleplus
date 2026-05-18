@@ -42,3 +42,25 @@ export const registrarUsuario = async (nuevoUsuario) => {
     throw error;
   }
 };
+
+export const actualizarUsuario = async (id, datosUsuario) => {
+  try {
+    const respuesta = await fetch(`${API_URL}/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(datosUsuario),
+    });
+
+    if (!respuesta.ok) {
+      const errorData = await respuesta.text();
+      throw new Error(errorData || "Error al actualizar el usuario");
+    }
+
+    return await respuesta.json();
+  } catch (error) {
+    console.error("Error en actualizarUsuario:", error);
+    throw error;
+  }
+};

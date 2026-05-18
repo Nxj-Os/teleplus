@@ -1,12 +1,13 @@
 package pe.edu.utp.backend.service.impl;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
+
 import pe.edu.utp.backend.entity.Usuario;
 import pe.edu.utp.backend.repository.UsuarioRepository;
 import pe.edu.utp.backend.service.UsuarioService;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
@@ -39,10 +40,11 @@ public class UsuarioServiceImpl implements UsuarioService {
     public Usuario actualizar(Long id, Usuario datosNuevos) {
         return usuarioRepository.findById(id).map(usuario -> {
             usuario.setNombre(datosNuevos.getNombre());
-            usuario.setApellido(datosNuevos.getApellido()); 
+            usuario.setApellido(datosNuevos.getApellido());
             usuario.setTelefono(datosNuevos.getTelefono());
             usuario.setCorreo(datosNuevos.getCorreo());
-           
+            usuario.setEstado(datosNuevos.getEstado());
+
             if (datosNuevos.getContrasena() != null && !datosNuevos.getContrasena().isEmpty()) {
                 usuario.setContrasena(datosNuevos.getContrasena());
             }
