@@ -1,12 +1,15 @@
 import Eventos from "../../assets/img/evento4.png";
 import EventosF from "../../assets/img/map4.png";
-import "../../css/evento4.css";
+import styles from "../../css/evento4.module.css";
 import LayoutPrincipal from "../../layouts/LayoutPrincipal";
 function Evento4() {
   return (
     <LayoutPrincipal>
       {/* Sección Hero */}
-      <section className="seccion-principal" style={{ height: "100%" }}>
+      <section
+        className={styles["seccion-principal"]}
+        style={{ height: "100%" }}
+      >
         <img
           src={Eventos}
           alt="Banner Evento"
@@ -15,71 +18,85 @@ function Evento4() {
       </section>
 
       {/* Mapa y Tabla de Precios */}
-      <div className="campo-escenario ">
-        <div className="contenedor-escenario d-flex flex-wrap justify-content-center">
+      <div className={styles["campo-escenario"]}>
+        <div
+          className={`${styles["contenedor-escenario"]} ${styles["contenedor-vertical"]}`}
+        >
           <div className="escenario mb-4">
             <div className="mapa">
               <img
-                className="imagen-mapa img-fluid"
+                className={`${styles["imagen-mapa"]} img-fluid`}
                 src={EventosF}
                 alt="Mapa del escenario"
               />
             </div>
           </div>
 
-          <div className="caja-boletos pb-4">
-            <div className="tabla-precios">
+          <div className={`${styles["caja-boletos"]} pb-4`}>
+            <div className={styles["tabla-precios"]}>
               {/* PLATINUM */}
-              <div className="fila-precios d-flex align-items-center border-bottom py-2">
+              <div
+                className={`${styles["fila-precios"]} d-flex align-items-center border-bottom py-2`}
+              >
                 <div
-                  className="bg-success text-white p-2 etiqueta-fila"
+                  className={`bg-success text-white p-2 ${styles["etiqueta-fila"]}`}
                   style={{ minWidth: "100px" }}
                 >
                   PLATINUM
                 </div>
-                <div className="celda-precio px-3 text-center">
+                <div className={`${styles["celda-precio"]} px-3 text-center`}>
                   <div className="small fw-bold">PREVENTA FANS</div>
-                  <div className="precio">S/ 230.00</div>
+                  <div className={styles["precio"]}>S/ 230.00</div>
                 </div>
-                <div className="celda-precio destacado px-3 text-center bg-light">
+                <div
+                  className={`${styles["celda-precio"]} ${styles["destacado"]} px-3 text-center bg-light`}
+                >
                   <div className="small fw-bold">PREVENTA INTERBANK</div>
-                  <div className="precio">S/ 210.00</div>
+                  <div className={styles["precio"]}>S/ 210.00</div>
                 </div>
               </div>
 
               {/* VIP */}
-              <div className="fila-precios d-flex align-items-center border-bottom py-2">
+              <div
+                className={`${styles["fila-precios"]} d-flex align-items-center border-bottom py-2`}
+              >
                 <div
-                  className="bg-secondary text-white p-2 etiqueta-fila"
+                  className={`bg-secondary text-white p-2 ${styles["etiqueta-fila"]}`}
                   style={{ minWidth: "100px" }}
                 >
                   VIP
                 </div>
-                <div className="celda-precio px-3 text-center">
+                <div className={`${styles["celda-precio"]} px-3 text-center`}>
                   <div className="small fw-bold">PREVENTA FANS</div>
-                  <div className="precio">S/ 200.00</div>
+                  <div className={styles["precio"]}>S/ 200.00</div>
                 </div>
-                <div className="celda-precio destacado px-3 text-center bg-light">
+                <div
+                  className={`${styles["celda-precio"]} ${styles["destacado"]} px-3 text-center bg-light`}
+                >
                   <div className="small fw-bold">PREVENTA INTERBANK</div>
-                  <div className="precio">S/ 180.00</div>
+                  <div className={styles["precio"]}>S/ 180.00</div>
                 </div>
               </div>
 
               {/* GENERAL */}
-              <div className="fila-precios d-flex align-items-center py-2">
+              <div
+                className={`${styles["fila-precios"]} d-flex align-items-center py-2`}
+              >
                 <div
-                  className="bg-primary text-white p-2 etiqueta-fila"
+                  className={`bg-primary text-white p-2 ${styles["etiqueta-fila"]}`}
                   style={{ minWidth: "100px" }}
                 >
                   GENERAL
                 </div>
-                <div className="celda-precio px-3 text-center">
+                <div className={`${styles["celda-precio"]} px-3 text-center`}>
                   <div className="small fw-bold">PREVENTA FANS</div>
-                  <div className="precio">S/ 150.00</div>
+                  <div className={styles["precio"]}>S/ 150.00</div>
                 </div>
-                <div className="celda-precio destacado px-3 text-center bg-light">
+                <div
+                  className={`${styles["celda-precio"]} ${styles["destacado"]} px-3 text-center bg-light`}
+                >
                   <div className="small fw-bold">PREVENTA INTERBANK</div>
-                  <div className="precio">S/ 130.00</div>
+                  <div className={styles["precio"]}>S/ 130.00</div>
                 </div>
               </div>
             </div>
@@ -88,7 +105,7 @@ function Evento4() {
       </div>
 
       {/* Botones de Acción */}
-      <section className="text-center  py-4">
+      <section className={`${styles["botones-seccion"]} text-center py-4`}>
         <h3 className="mb-4">
           Obtén tus tickets para ver VOCES DEL ROCK LATINO MOYOBAMBA
         </h3>

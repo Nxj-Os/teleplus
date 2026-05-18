@@ -1,0 +1,38 @@
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+  background-color: white;
+}
+
+/* Ensure images can reach the viewport edges when used in full-bleed sections */
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/* Hero / carousel: force full-bleed and proper cover behavior */
+.hero {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  overflow: hidden;
+}
+
+.hero .carousel-item img {
+  display: block;
+  width: 100%;
+  height: clamp(420px, 70vh, 760px) !important;
+  object-fit: cover;
+  object-position: center;
+}
+
+.hero .carousel-caption .bg-dark.bg-opacity-50 {
+  backdrop-filter: blur(4px);
+}

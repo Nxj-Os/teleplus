@@ -1,4 +1,4 @@
-import "../../css/dashboard.css";
+import styles from "../../css/dashboard.module.css";
 
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -58,45 +58,44 @@ function IndexDashboard() {
       title="Dashboard Administrador"
       subtitle="Resumen general de la plataforma"
     >
-      <section className="cards" style={{ background: "none" }}>
-        <article className="card">
+      <section className={styles.cards} style={{ background: "none" }}>
+        <article className={styles.card}>
           <h3>Eventos</h3>
           <p>{totalEventos}</p>
-          <Link className="card-link" to="/dashboard/eventos">
+          <Link className={styles["card-link"]} to="/dashboard/eventos">
             Ver eventos
           </Link>
         </article>
 
-        <article className="card">
+        <article className={styles.card}>
           <h3>Tickets vendidos</h3>
           <p>{totalEntradas}</p>
-          <span className="card-caption">Entradas registradas</span>
+          <span className={styles["card-caption"]}>Entradas registradas</span>
         </article>
 
-        <article className="card">
+        <article className={styles.card}>
           <h3>Usuarios</h3>
           <p>{totalUsuarios}</p>
-          <Link className="card-link" to="/dashboard/usuarios">
+          <Link className={styles["card-link"]} to="/dashboard/usuarios">
             Ver usuarios
           </Link>
         </article>
 
-        <article className="card">
+        <article className={styles.card}>
           <h3>Ganancias</h3>
           <p>S/ 15,000</p>
-          <span className="card-caption">Estimado del periodo</span>
+          <span className={styles["card-caption"]}>Estimado del periodo</span>
         </article>
       </section>
 
-      <section className="table-section">
-        <div className="section-header">
+      <section className={styles["table-section"]}>
+        <div className={styles["section-header"]}>
           <div>
             <h2>Eventos recientes</h2>
             <p>Últimos registros disponibles en el sistema</p>
           </div>
         </div>
-
-        <table>
+        <table className={styles.table}>
           <thead>
             <tr>
               <th>Evento</th>
@@ -114,7 +113,11 @@ function IndexDashboard() {
 
                 <td>
                   <span
-                    className={`status-badge status-${(evento.estado || "sin-estado").toLowerCase()}`}
+                    className={`${styles["status-badge"]} ${
+                      styles[
+                        `status-${(evento.estado || "sin-estado").toLowerCase()}`
+                      ] || ""
+                    }`}
                   >
                     {evento.estado || "Sin estado"}
                   </span>

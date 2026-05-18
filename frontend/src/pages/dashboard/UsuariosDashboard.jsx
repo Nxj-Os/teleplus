@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useMemo, useState } from "react";
-import "../../css/dashboard.css";
+import styles from "../../css/dashboard.module.css";
 import DashboardShell from "./DashboardShell";
 
 function UsuariosDashboard() {
@@ -65,37 +65,37 @@ function UsuariosDashboard() {
       title="Gestión de Usuarios"
       subtitle="Revisa los usuarios registrados y su estado dentro de la plataforma"
     >
-      <section className="cards" style={{ background: "none" }}>
-        <article className="card">
+      <section className={styles.cards} style={{ background: "none" }}>
+        <article className={styles.card}>
           <h3>Total usuarios</h3>
           <p>{totalUsuarios}</p>
         </article>
 
-        <article className="card">
+        <article className={styles.card}>
           <h3>Activos</h3>
           <p>{usuariosActivos}</p>
         </article>
 
-        <article className="card">
+        <article className={styles.card}>
           <h3>Administradores</h3>
           <p>{administradores}</p>
         </article>
 
-        <article className="card">
+        <article className={styles.card}>
           <h3>Bloqueados</h3>
           <p>{usuariosBloqueados}</p>
         </article>
       </section>
 
-      <section className="table-section">
-        <div className="section-header section-header-row">
+      <section className={styles["table-section"]}>
+        <div className={`${styles["section-header"]} section-header-row`}>
           <div>
             <h2>Listado de usuarios</h2>
             <p>Administra la información básica de las cuentas registradas</p>
           </div>
 
           <input
-            className="dashboard-search"
+            className={styles["dashboard-search"]}
             type="search"
             placeholder="Buscar por nombre, correo, rol o estado"
             value={busqueda}
@@ -103,55 +103,65 @@ function UsuariosDashboard() {
           />
         </div>
 
-        {error ? <div className="empty-state error-state">{error}</div> : null}
+        {error ? (
+          <div className={`${styles["empty-state"]} ${styles["error-state"]}`}>
+            {error}
+          </div>
+        ) : null}
 
         {!error && cargando ? (
-          <div className="empty-state">Cargando usuarios...</div>
+          <div className={styles["empty-state"]}>Cargando usuarios...</div>
         ) : null}
 
         {!error && !cargando && usuariosFiltrados.length === 0 ? (
-          <div className="empty-state">
+          <div className={styles["empty-state"]}>
             No hay usuarios que coincidan con la búsqueda.
           </div>
         ) : null}
 
         {!error && !cargando && usuariosFiltrados.length > 0 ? (
-          <table>
-            <thead>
-              <tr>
-                <th>Usuario</th>
-                <th>Correo</th>
-                <th>Teléfono</th>
-                <th>Rol</th>
-                <th>Estado</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {usuariosFiltrados.map((usuario) => (
-                <tr key={usuario.id_usuario}>
-                  <td>
-                    <div className="table-primary-text">
-                      {usuario.nombre} {usuario.apellido}
-                    </div>
-                    <div className="table-secondary-text">
-                      ID {usuario.id_usuario}
-                    </div>
-                  </td>
-                  <td>{usuario.correo || "--"}</td>
-                  <td>{usuario.telefono || "--"}</td>
-                  <td>{usuario.rol?.nombre || "Sin rol"}</td>
-                  <td>
-                    <span
-                      className={`status-badge status-${(usuario.estado || "sin-estado").toLowerCase()}`}
-                    >
-                      {usuario.estado || "Sin estado"}
-                    </span>
-                  </td>
+          <div className={styles["table-responsive"]}>
+            <table className={styles.table}>
+              <thead>
+                <tr>
+                  <th>Usuario</th>
+                  <th>Correo</th>
+                  <th>Teléfono</th>
+                  <th>Rol</th>
+                  <th>Estado</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+
+              <tbody>
+                {usuariosFiltrados.map((usuario) => (
+                  <tr key={usuario.id_usuario}>
+                    <td>
+                      <div className={styles["table-primary-text"]}>
+                        {usuario.nombre} {usuario.apellido}
+                      </div>
+                      <div className={styles["table-secondary-text"]}>
+                        ID {usuario.id_usuario}
+                      </div>
+                    </td>
+                    <td>{usuario.correo || "--"}</td>
+                    <td>{usuario.telefono || "--"}</td>
+                    <td>{usuario.rol?.nombre || "Sin rol"}</td>
+                    <td>
+                      <span
+                        className={`${styles["status-badge"]} ${
+                          styles[
+                            `status-${(usuario.estado || "sin-estado").toLowerCase()}`
+                          ] || ""
+                        }`}
+                      >
+                        {usuario.estado || "Sin estado"}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         ) : null}
       </section>
     </DashboardShell>

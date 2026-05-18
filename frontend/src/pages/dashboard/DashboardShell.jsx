@@ -1,4 +1,5 @@
 import { NavLink, useNavigate } from "react-router-dom";
+import styles from "../../css/dashboard.module.css";
 import { cerrarSesionDashboard } from "../../utils/dashboardAuth";
 
 function DashboardShell({ activeSection, title, subtitle, children }) {
@@ -10,20 +11,103 @@ function DashboardShell({ activeSection, title, subtitle, children }) {
   ];
 
   return (
-    <div className="dashboard-container">
-      <aside className="sidebar">
-        <div className="sidebar-brand">
-          <span className="sidebar-kicker">TelePlus</span>
+    <div className={styles["dashboard-container"]}>
+      {/* Offcanvas sidebar for small screens */}
+      <div
+        className="offcanvas offcanvas-start d-md-none"
+        tabIndex={-1}
+        id="dashboardSidebar"
+        aria-labelledby="dashboardSidebarLabel"
+      >
+        <div className="offcanvas-header">
+          <h5 className="offcanvas-title" id="dashboardSidebarLabel">
+            TelePlus
+          </h5>
+          <button
+            type="button"
+            className="btn-close text-reset"
+            data-bs-dismiss="offcanvas"
+            aria-label="Close"
+          />
+        </div>
+        <div className="offcanvas-body p-0">
+          <aside className={styles.sidebar + " p-3"}>
+            <div className={styles["sidebar-brand"]}>
+              <span className={styles["sidebar-kicker"]}>TelePlus</span>
+              <h2>Admin Panel</h2>
+            </div>
+
+            <nav
+              className={styles["sidebar-nav"]}
+              aria-label="Navegación del dashboard"
+            >
+              {navItems.map((item) => (
+                <a
+                  key={item.to}
+                  href={item.to}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigate(item.to);
+                    const el = document.getElementById("dashboardSidebar");
+                    if (el && window.bootstrap && window.bootstrap.Offcanvas) {
+                      const instance =
+                        window.bootstrap.Offcanvas.getInstance(el) ||
+                        new window.bootstrap.Offcanvas(el);
+                      try {
+                        instance.hide();
+                      } catch {
+                        // ignore
+                      }
+                    }
+                  }}
+                  className={styles["sidebar-link"]}
+                >
+                  {item.label}
+                </a>
+              ))}
+            </nav>
+
+            <div className={styles["sidebar-footer"]}>
+              <p className={styles["sidebar-footer-text"] || ""}>
+                Gestión interna de eventos y usuarios
+              </p>
+
+              <button
+                type="button"
+                className={styles["sidebar-logout"]}
+                onClick={() => {
+                  cerrarSesionDashboard();
+                  navigate("/dashboard/login", { replace: true });
+                }}
+              >
+                Cerrar sesión
+              </button>
+            </div>
+          </aside>
+        </div>
+      </div>
+
+      {/* Desktop sidebar */}
+      <aside className={styles.sidebar + " d-none d-md-flex"}>
+        <div className={styles["sidebar-brand"]}>
+          <span className={styles["sidebar-kicker"]}>TelePlus</span>
           <h2>Admin Panel</h2>
         </div>
 
-        <nav className="sidebar-nav" aria-label="Navegación del dashboard">
+        <nav
+          className={styles["sidebar-nav"]}
+          aria-label="Navegación del dashboard"
+        >
           {navItems.map((item) => (
             <NavLink
               key={item.to}
               to={item.to}
               className={({ isActive }) =>
-                `sidebar-link ${isActive || activeSection === item.section ? "active" : ""}`
+                `${styles["sidebar-link"]} ${
+                  isActive || activeSection === item.section
+                    ? styles.active
+                    : ""
+                }`
               }
             >
               {item.label}
@@ -31,12 +115,14 @@ function DashboardShell({ activeSection, title, subtitle, children }) {
           ))}
         </nav>
 
-        <div className="sidebar-footer">
-          <p>Gestión interna de eventos y usuarios</p>
+        <div className={styles["sidebar-footer"]}>
+          <p className={styles["sidebar-footer-text"] || ""}>
+            Gestión interna de eventos y usuarios
+          </p>
 
           <button
             type="button"
-            className="sidebar-logout"
+            className={styles["sidebar-logout"]}
             onClick={() => {
               cerrarSesionDashboard();
               navigate("/dashboard/login", { replace: true });
@@ -47,12 +133,26 @@ function DashboardShell({ activeSection, title, subtitle, children }) {
         </div>
       </aside>
 
-      <main className="dashboard-content">
-        <header className="dashboard-header">
-          <div>
-            <p className="page-kicker">Panel administrativo</p>
-            <h1>{title}</h1>
-            <p className="page-subtitle">{subtitle}</p>
+      <main className={styles["dashboard-content"]}>
+        <header className={styles["dashboard-header"]}>
+          <div className="d-flex align-items-center justify-content-between">
+            <div className="d-flex align-items-center">
+              <button
+                className="btn btn-outline-light d-md-none me-3"
+                type="button"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#dashboardSidebar"
+                aria-controls="dashboardSidebar"
+              >
+                ☰
+              </button>
+
+              <div>
+                <p className={styles["page-kicker"]}>Panel administrativo</p>
+                <h1>{title}</h1>
+                <p className={styles["page-subtitle"]}>{subtitle}</p>
+              </div>
+            </div>
           </div>
         </header>
 

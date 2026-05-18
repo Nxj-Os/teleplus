@@ -1,0 +1,14 @@
+.page {
+  background-color: #ffffff;
+}
+
+.seccion-principal {
+  height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #6c757d; /* restored gray hero background */
+}
+
+/* end of module */
+/* placeholder for any future custom styles */

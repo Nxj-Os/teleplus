@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FaCheckCircle, FaEye, FaEyeSlash, FaSignInAlt } from "react-icons/fa";
-import logoLogin from "../assets/img/logo-login.jpeg";
+import styles from "../css/login.module.css";
 import LayoutPrincipal from "../layouts/LayoutPrincipal";
 import { loginUsuario } from "../services/UsuarioService";
 
@@ -96,23 +96,11 @@ function Login() {
 
   return (
     <LayoutPrincipal>
-      <div
-        className="container-fluid p-0"
-        style={{ backgroundColor: "#f8f9fa", position: "relative" }}
-      >
+      <div className={`container-fluid p-0 ${styles.page}`}>
         {/* MODAL ÉXITO */}
         {isLoggedIn && (
-          <div
-            className="position-fixed top-0 start-0 w-100 vh-100 d-flex justify-content-center align-items-center"
-            style={{
-              zIndex: 1050,
-              backgroundColor: "rgba(0,0,0,0.6)",
-            }}
-          >
-            <div
-              className="bg-white p-5 rounded-4 shadow-lg text-center"
-              style={{ maxWidth: "400px", width: "90%" }}
-            >
+          <div className={styles.modalOverlay}>
+            <div className={`${styles.modalBox}`}>
               <FaCheckCircle
                 className="text-success mb-3"
                 style={{ fontSize: "3rem" }}
@@ -171,11 +159,7 @@ function Login() {
               </span>
             </div>
 
-            <form
-              className="w-75"
-              style={{ maxWidth: "450px" }}
-              onSubmit={handleSubmit}
-            >
+            <form className={styles.formWrapper} onSubmit={handleSubmit}>
               {/* TITULOS */}
               <div className="text-center mb-4">
                 <div className="badge bg-danger mb-2 px-3 py-2 text-uppercase">
@@ -266,12 +250,9 @@ function Login() {
 
           {/* IMAGEN */}
           <div
-            className="col-md-6 d-none d-md-block position-relative"
-            style={{
-              background: `linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.6)), url(${logoLogin}) center/cover no-repeat`,
-            }}
+            className={`col-md-6 d-none d-md-block position-relative ${styles.rightColumn}`}
           >
-            <div className="position-absolute bottom-0 start-0 p-5 text-white">
+            <div className={styles.heroTextWrapper}>
               <h1 className="display-4 fw-bold m-0">Ticket Plus+</h1>
 
               <p className="lead opacity-75">

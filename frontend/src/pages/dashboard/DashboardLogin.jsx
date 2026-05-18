@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaEye, FaEyeSlash, FaSignInAlt } from "react-icons/fa";
 import { Navigate, useNavigate } from "react-router-dom";
 import logoLogin from "../../assets/img/logo-login.jpeg";
-import "../../css/dashboardLogin.css";
+import styles from "../../css/dashboardLogin.module.css";
 import { loginUsuario } from "../../services/UsuarioService";
 import {
   guardarSesionDashboard,
@@ -19,9 +19,7 @@ function DashboardLogin() {
 
   const sesion = recuperarSesionDashboard();
 
-  useEffect(() => {
-    setError("");
-  }, [correo, contrasena]);
+  // Clear error when user types — handled in onChange handlers below
 
   if (sesion) {
     return <Navigate to="/dashboard" replace />;
@@ -57,10 +55,10 @@ function DashboardLogin() {
   };
 
   return (
-    <div className="dashboard-login-page">
-      <div className="dashboard-login-card">
-        <div className="dashboard-login-copy">
-          <span className="dashboard-login-badge">Acceso admin</span>
+    <div className={styles["dashboard-login-page"]}>
+      <div className={styles["dashboard-login-card"]}>
+        <div className={styles["dashboard-login-copy"]}>
+          <span className={styles["dashboard-login-badge"]}>Acceso admin</span>
           <h1>Panel de control</h1>
           <p>
             Ingresa con tu correo y contraseña para administrar eventos y
@@ -68,34 +66,43 @@ function DashboardLogin() {
           </p>
         </div>
 
-        <form className="dashboard-login-form" onSubmit={handleSubmit}>
-          <div className="dashboard-login-visual">
+        <form
+          className={styles["dashboard-login-form"]}
+          onSubmit={handleSubmit}
+        >
+          <div className={styles["dashboard-login-visual"]}>
             <img src={logoLogin} alt="Ticket Plus" />
           </div>
 
-          <label className="dashboard-login-label">
+          <label className={styles["dashboard-login-label"]}>
             Correo electrónico
             <input
               type="email"
               value={correo}
-              onChange={(event) => setCorreo(event.target.value)}
+              onChange={(event) => {
+                setCorreo(event.target.value);
+                setError("");
+              }}
               placeholder="admin@correo.com"
             />
           </label>
 
-          <label className="dashboard-login-label">
+          <label className={styles["dashboard-login-label"]}>
             Contraseña
-            <div className="dashboard-login-password">
+            <div className={styles["dashboard-login-password"]}>
               <input
                 type={mostrarContrasena ? "text" : "password"}
                 value={contrasena}
-                onChange={(event) => setContrasena(event.target.value)}
+                onChange={(event) => {
+                  setContrasena(event.target.value);
+                  setError("");
+                }}
                 placeholder="Ingresa tu contraseña"
               />
 
               <button
                 type="button"
-                className="dashboard-login-toggle"
+                className={styles["dashboard-login-toggle"]}
                 onClick={() => setMostrarContrasena((actual) => !actual)}
               >
                 {mostrarContrasena ? <FaEyeSlash /> : <FaEye />}
@@ -103,11 +110,13 @@ function DashboardLogin() {
             </div>
           </label>
 
-          {error ? <div className="dashboard-login-error">{error}</div> : null}
+          {error ? (
+            <div className={styles["dashboard-login-error"]}>{error}</div>
+          ) : null}
 
           <button
             type="submit"
-            className="dashboard-login-button"
+            className={styles["dashboard-login-button"]}
             disabled={cargando}
           >
             <FaSignInAlt />

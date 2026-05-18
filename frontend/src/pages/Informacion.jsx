@@ -1,34 +1,33 @@
 import { useEffect, useState } from "react";
 import imagenNosotros from "../assets/img/informacion-fundadores.jpg";
-import "../css/informacion.css";
+import styles from "../css/informacion.module.css";
 import LayoutPrincipal from "../layouts/LayoutPrincipal";
 
+const tabs = [
+  {
+    titulo: "Somos Ticket +",
+    contenido:
+      " Una empresa apasionada por conectar personas con eventos, artistas y experiencias memorables. Cada día trabajamos paraque disfrutes tus momentos de forma fácil y segura.",
+  },
+
+  {
+    titulo: "Valores",
+    contenido:
+      "La confianza, innovación y cercanía son la base de todo lo que hacemos.",
+  },
+
+  {
+    titulo: "Plataformas",
+    contenido: "Ofrecemos ticketing, streaming y marketplace para eventos.",
+  },
+
+  {
+    titulo: "Impacto",
+    contenido: "Ayudamos a artistas y organizadores a crecer junto a sus fans.",
+  },
+];
+
 function Informacion() {
-  const tabs = [
-    {
-      titulo: "Somos Ticket +",
-      contenido:
-        " Una empresa apasionada por conectar personas con eventos, artistas y experiencias memorables. Cada día trabajamos paraque disfrutes tus momentos de forma fácil y segura.",
-    },
-
-    {
-      titulo: "Valores",
-      contenido:
-        "La confianza, innovación y cercanía son la base de todo lo que hacemos.",
-    },
-
-    {
-      titulo: "Plataformas",
-      contenido: "Ofrecemos ticketing, streaming y marketplace para eventos.",
-    },
-
-    {
-      titulo: "Impacto",
-      contenido:
-        "Ayudamos a artistas y organizadores a crecer junto a sus fans.",
-    },
-  ];
-
   const [tabActiva, setTabActiva] = useState(0);
 
   useEffect(() => {
@@ -41,8 +40,8 @@ function Informacion() {
 
   return (
     <LayoutPrincipal>
-      <div className="d-flex flex-column min-vh-100 bg-light">
-        <section className="hero-nosotros text-center">
+      <div className={`${styles.page} d-flex flex-column min-vh-100`}>
+        <section className={`${styles.heroNosotros} text-center`}>
           <div className="container">
             <h1>Nosotros</h1>
 
@@ -54,43 +53,44 @@ function Informacion() {
         </section>
 
         <section
-          className="container my-5"
+          className={`container my-5 ${styles.contentSection}`}
           id="nosotros"
-          style={{ backgroundColor: "#f8f9fa" }}
         >
-          <div className="row g-4 align-items-center" bg-primary>
+          <div className="row g-4 align-items-center">
             <div className="col-lg-6">
-              <div className="card card-nosotros p-4 h-100">
+              <div className={`card ${styles.cardNosotros} p-4 h-100`}>
                 <h2 className="h4 mb-3">Nuestra historia</h2>
 
-                <div className="d-flex gap-3 mb-4 flex-wrap">
+                <div className={styles.tabsRow}>
                   {tabs.map((tab, index) => (
                     <button
                       key={index}
-                      className={`btn ${
-                        tabActiva === index ? "btn-primary" : "btn-dark"
+                      className={`${styles.tabButton} ${
+                        tabActiva === index ? styles.tabButtonActive : ""
                       }`}
                       onClick={() => setTabActiva(index)}
                     >
                       {tab.titulo}
                     </button>
                   ))}
+                </div>
 
-                  <div className="card p-4 shadow">
-                    <h3>{tabs[tabActiva].titulo}</h3>
+                <div className={`card p-4 shadow ${styles.contentCard}`}>
+                  <h3>{tabs[tabActiva].titulo}</h3>
 
-                    <p>{tabs[tabActiva].contenido}</p>
-                  </div>
+                  <p>{tabs[tabActiva].contenido}</p>
                 </div>
               </div>
             </div>
 
             <div className="col-lg-6">
-              <div className="card card-nosotros overflow-hidden h-100">
+              <div
+                className={`card ${styles.cardNosotros} overflow-hidden h-100`}
+              >
                 <img
                   src={imagenNosotros}
                   alt="Fundadores"
-                  className="img-fluid imagen-nosotros"
+                  className={`img-fluid ${styles.imagenNosotros}`}
                 />
 
                 <div className="card-body">

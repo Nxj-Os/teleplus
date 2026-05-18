@@ -1,7 +1,7 @@
 import banner from "../../assets/img/banner1-evento5.jpg";
 import logoEvento from "../../assets/img/logo-evento5.png";
 import mapa from "../../assets/img/mapa-evento5.png";
-import "../../css/evento5.css";
+import styles from "../../css/evento5.module.css";
 import LayoutPrincipal from "../../layouts/LayoutPrincipal";
 
 export default function Evento5() {
@@ -9,35 +9,30 @@ export default function Evento5() {
     <LayoutPrincipal>
       <div className="bg-black text-white min-vh-100">
         {/* SECCIÓN PRINCIPAL (HERO) */}
-        <section className="seccion-principal" style={{ height: "100%" }}>
+        <section
+          className={styles["seccion-principal"]}
+          style={{ height: "100%" }}
+        >
           <img
             src={banner}
-            className="hero-image img-fluid w-100"
+            className={`${styles["hero-image"]} img-fluid w-100`}
             alt="Cenicienta El Musical Banner"
           />
         </section>
 
         <div className="container text-center py-5">
           {/* MAPA DEL ESCENARIO */}
-          <div className="mapa mb-5">
+          <div className={`${styles["mapa"]} mb-5`}>
             <img
               src={mapa}
-              className="imagen-mapa img-fluid"
+              className={`${styles["imagen-mapa"]} img-fluid`}
               alt="Mapa del escenario Teatro Manuel Segura"
               style={{ maxWidth: "800px" }}
             />
           </div>
 
           {/* TABLA DE PRECIOS */}
-          <div
-            className="tabla-zona p-3 rounded shadow"
-            style={{
-              maxWidth: "850px",
-              margin: "0 auto",
-              backgroundColor: "#0d0628",
-              fontSize: "0.85rem",
-            }}
-          >
+          <div className={`${styles["tabla-zona"]} p-3 rounded shadow`}>
             <div className="row align-items-end text-center small fw-bold mb-2">
               <div className="col-3 text-start ps-4">SECTORES</div>
               <div className="col-3 py-2 bg-celeste rounded-top text-dark">
@@ -100,12 +95,15 @@ export default function Evento5() {
             ].map((item, index) => (
               <div
                 key={index}
-                className="row align-items-center text-center border-custom py-2"
+                className={`row align-items-center text-center ${styles["border-custom"]} py-2`}
               >
                 <div className="col-3 text-start fw-bold">
-                  <span className={`dot ${item.dot}`}></span> {item.zona}
+                  <span className={`${styles["dot"]} ${item.dot}`}></span>{" "}
+                  {item.zona}
                 </div>
-                <div className="col-3 bg-celeste py-2 h6 m-0 fw-bold text-dark">
+                <div
+                  className={`col-3 ${styles["bg-celeste"]} py-2 h6 m-0 fw-bold text-dark`}
+                >
                   {item.preventa}
                 </div>
                 <div className="col-3 h6 m-0 fw-bold">{item.regular}</div>
@@ -133,7 +131,7 @@ export default function Evento5() {
 
           <a
             href="/compra?evento=Cenicienta&precio=119"
-            className="btn btn-info w-100 mb-3 fw-bold bg-celeste border-0 py-2"
+            className={`btn btn-info w-100 mb-3 fw-bold ${styles["bg-celeste"]} border-0 py-2`}
           >
             COMPRAR PREVENTA (S/ 119)
           </a>
@@ -190,7 +188,7 @@ export default function Evento5() {
           <img
             src={logoEvento}
             alt="Cenicienta Logo"
-            className="img-fluid"
+            className="img-fluid mx-auto d-block"
             style={{ maxHeight: "100px" }}
           />
         </footer>

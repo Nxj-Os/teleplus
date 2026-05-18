@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useMemo, useState } from "react";
-import "../../css/dashboard.css";
+import styles from "../../css/dashboard.module.css";
 import DashboardShell from "./DashboardShell";
 
 function EventosDashboard() {
@@ -59,37 +59,37 @@ function EventosDashboard() {
       title="Gestión de Eventos"
       subtitle="Consulta, filtra y revisa los eventos registrados en la plataforma"
     >
-      <section className="cards" style={{ background: "none" }}>
-        <article className="card">
+      <section className={styles.cards} style={{ background: "none" }}>
+        <article className={styles.card}>
           <h3>Total eventos</h3>
           <p>{totalEventos}</p>
         </article>
 
-        <article className="card">
+        <article className={styles.card}>
           <h3>Activos</h3>
           <p>{eventosActivos}</p>
         </article>
 
-        <article className="card">
+        <article className={styles.card}>
           <h3>Programados</h3>
           <p>{eventosProgramados}</p>
         </article>
 
-        <article className="card">
+        <article className={styles.card}>
           <h3>Estado</h3>
           <p>{cargando ? "Cargando" : "Listo"}</p>
         </article>
       </section>
 
-      <section className="table-section">
-        <div className="section-header section-header-row">
+      <section className={styles["table-section"]}>
+        <div className={`${styles["section-header"]} section-header-row`}>
           <div>
             <h2>Listado de eventos</h2>
             <p>Visualiza la información principal de cada evento</p>
           </div>
 
           <input
-            className="dashboard-search"
+            className={styles["dashboard-search"]}
             type="search"
             placeholder="Buscar por título, fecha o estado"
             value={busqueda}
@@ -97,20 +97,24 @@ function EventosDashboard() {
           />
         </div>
 
-        {error ? <div className="empty-state error-state">{error}</div> : null}
+        {error ? (
+          <div className={`${styles["empty-state"]} ${styles["error-state"]}`}>
+            {error}
+          </div>
+        ) : null}
 
         {!error && cargando ? (
-          <div className="empty-state">Cargando eventos...</div>
+          <div className={styles["empty-state"]}>Cargando eventos...</div>
         ) : null}
 
         {!error && !cargando && eventosFiltrados.length === 0 ? (
-          <div className="empty-state">
+          <div className={styles["empty-state"]}>
             No hay eventos que coincidan con la búsqueda.
           </div>
         ) : null}
 
         {!error && !cargando && eventosFiltrados.length > 0 ? (
-          <table>
+          <table className={styles.table}>
             <thead>
               <tr>
                 <th>Evento</th>
@@ -124,8 +128,10 @@ function EventosDashboard() {
               {eventosFiltrados.map((evento) => (
                 <tr key={evento.id_evento}>
                   <td>
-                    <div className="table-primary-text">{evento.titulo}</div>
-                    <div className="table-secondary-text">
+                    <div className={styles["table-primary-text"]}>
+                      {evento.titulo}
+                    </div>
+                    <div className={styles["table-secondary-text"]}>
                       ID {evento.id_evento}
                     </div>
                   </td>
@@ -133,7 +139,11 @@ function EventosDashboard() {
                   <td>{evento.hora_evento || "--"}</td>
                   <td>
                     <span
-                      className={`status-badge status-${(evento.estado || "sin-estado").toLowerCase()}`}
+                      className={`${styles["status-badge"]} ${
+                        styles[
+                          `status-${(evento.estado || "sin-estado").toLowerCase()}`
+                        ] || ""
+                      }`}
                     >
                       {evento.estado || "Sin estado"}
                     </span>

@@ -1,0 +1,80 @@
+.page {
+  min-height: 100vh;
+  background: #f8f9fa;
+  color: #222;
+}
+
+.heroNosotros {
+  background: linear-gradient(135deg, #3f2b83 0%, #b30b2f 100%);
+  color: #fff;
+  padding: 4rem 0;
+}
+
+.heroNosotros h1 {
+  font-weight: 800;
+}
+
+.contentSection {
+  background-color: #f8f9fa;
+}
+
+.cardNosotros {
+  border: none;
+  border-radius: 1rem;
+  box-shadow: 0 18px 45px rgba(47, 47, 79, 0.12);
+}
+
+.tabsRow {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.tabButton {
+  border: none;
+  border-radius: 999px;
+  padding: 0.7rem 1rem;
+  font-weight: 700;
+  color: #fff;
+  background: #212529;
+  transition:
+    background-color 160ms ease,
+    transform 160ms ease;
+}
+
+.tabButton:hover {
+  transform: translateY(-1px);
+}
+
+.tabButtonActive {
+  background: #007bff;
+}
+
+.contentCard {
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #e9ecef;
+}
+
+.contentCard h3 {
+  color: #333;
+  font-weight: 600;
+}
+
+.contentCard p {
+  color: #666;
+  line-height: 1.6;
+}
+
+.imagenNosotros {
+  min-height: 320px;
+  object-fit: cover;
+  border-radius: 1rem;
+}
+
+@media (max-width: 767px) {
+  .heroNosotros {
+    padding: 3rem 0;
+  }
+}

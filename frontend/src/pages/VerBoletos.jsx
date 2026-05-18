@@ -4,9 +4,9 @@ export default function VerBoletos() {
   return (
     <LayoutPrincipal>
       <div className="container py-5">
-        <main classNameName="container py-2 mb-5">
-          <div classNameName="d-flex justify-content-between align-items-center my-4">
-            <h1 className="h3">Mis Boletos</h1>
+        <main className="container py-2 mb-5">
+          <div className="d-flex justify-content-between align-items-center my-4">
+            <h1 className="h3 text-dark">Mis Boletos</h1>
 
             <div className="dropdown">
               <button
@@ -63,7 +63,7 @@ export default function VerBoletos() {
           </ul>
 
           <div className="container text-center my-5 py-5">
-            <h3>No tiene boletos disponibles</h3>
+            <h3 className="text-dark">No tiene boletos disponibles</h3>
             <a href="#" className="btn btn-primary">
               Comprar Boletos
             </a>

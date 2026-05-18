@@ -1,0 +1,184 @@
+body {
+  background-color: #000;
+  color: #fff;
+}
+
+/* NAV */
+.navbar {
+  background: #000;
+}
+
+/* HERO */
+.seccion-principal {
+  min-height: 0vh;
+  margin: 0;
+  padding: 0;
+}
+
+.campo-escenario {
+  background-color: #081020;
+  padding-top: 0;
+}
+
+/* ESCENARIO*/
+.contenedor-escenario {
+  background: #07101a;
+  padding-bottom: 0;
+}
+
+.escenario {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 10px;
+  background: linear-gradient(
+    to top,
+    rgba(7, 16, 26, 1) 0%,
+    rgba(7, 16, 26, 0.6) 40%,
+    rgba(7, 16, 26, 0) 100%
+  );
+}
+
+.mapa {
+  width: 360px;
+  max-width: 90%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.imagen-mapa {
+  display: block;
+  width: 320px;
+  max-width: 100%;
+  margin: 0 auto 8px auto;
+}
+
+/* TARJETA/Precios */
+.caja-boletos {
+  position: relative;
+  margin: 20px auto 0 auto;
+  /* espacio adecuado entre escenario y tabla */
+  width: calc(100% - 40px);
+  max-width: 960px;
+  background: transparent;
+  border-radius: 6px;
+  padding: 0 10px;
+}
+
+.tabla-precios {
+  gap: 12px;
+}
+
+.fila-precios {
+  margin-bottom: 1rem;
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.fila-precios::-webkit-scrollbar {
+  height: 8px;
+}
+
+.fila-precios::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 999px;
+}
+
+.fila-precios:hover {
+  box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.25);
+  transform: translateY(-2px);
+}
+
+.etiqueta-fila {
+  min-height: 80px;
+  min-width: 180px;
+  padding: 0 1rem;
+  background: transparent;
+  color: #092950;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.celda-precio {
+  background: #071021;
+  color: #fff;
+  padding: 12px 14px;
+  text-align: center;
+  border: 2px solid #1b263b;
+  min-width: 160px;
+  min-height: 80px;
+  box-sizing: border-box;
+}
+
+.celda-precio .etiqueta {
+  font-size: 12px;
+  color: #cbd5e1;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.celda-precio .precio {
+  font-weight: 800;
+  font-size: 18px;
+}
+
+.destacado {
+  background: #074b01;
+  color: #ffffff;
+  border-color: #44ff00;
+}
+
+.descripcion {
+  background: #111;
+  padding: 50px 20px;
+  text-align: center;
+}
+
+.botones-seccion {
+  background-color: #fde000;
+  color: #000;
+}
+
+.img-centrada {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* FOOTER */
+.pie {
+  background: #000;
+  text-align: center;
+  padding: 20px;
+}
+.img-footer {
+  max-width: 250px;
+  height: auto;
+}
+/* Hero full-bleed */
+.seccion-principal {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.hero-image {
+  display: block;
+  width: 100%;
+  height: clamp(420px, 70vh, 760px);
+  object-fit: cover;
+  object-position: center;
+}

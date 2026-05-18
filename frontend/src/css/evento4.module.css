@@ -22,6 +22,14 @@ body {
   padding-bottom: 0;
 }
 
+.contenedor-vertical {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
 /* ESCENARIO */
 .escenario {
   width: 100%;
@@ -126,6 +134,11 @@ body {
   background: #111;
   padding: 50px 20px;
   text-align: center;
+}
+
+.botones-seccion {
+  background-color: #fde000;
+  color: #000;
 }
 
 /* FOOTER */
