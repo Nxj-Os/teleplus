@@ -16,6 +16,7 @@ import Evento6 from "./pages/eventos/Evento6";
 import Informacion from "./pages/Informacion";
 import Inicio from "./pages/Inicio";
 import Login from "./pages/Login";
+import PaginaNoEncontrada from "./pages/PaginaNoEncontrada";
 import Perfil from "./pages/Perfil";
 import Registro from "./pages/Registro";
 import VerBoletos from "./pages/VerBoletos";
@@ -59,6 +60,8 @@ function RouteTransition() {
           <Route path="/dashboard/eventos" element={<EventosDashboard />} />
           <Route path="/dashboard/usuarios" element={<UsuariosDashboard />} />
         </Route>
+
+        <Route path="*" element={<PaginaNoEncontrada />} />
       </Routes>
 
       {loading && (
