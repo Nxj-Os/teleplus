@@ -1,5 +1,7 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
+import Cargando from "./pages/Cargando";
 import Compras from "./pages/compras";
 import DashboardGuard from "./pages/dashboard/DashboardGuard";
 import DashboardLogin from "./pages/dashboard/DashboardLogin";
@@ -17,10 +19,27 @@ import Login from "./pages/Login";
 import Perfil from "./pages/Perfil";
 import Registro from "./pages/Registro";
 import VerBoletos from "./pages/VerBoletos";
-function App() {
+
+function RouteTransition() {
+  const location = useLocation();
+  const [displayLocation, setDisplayLocation] = useState(location);
+  const loading = location.pathname !== displayLocation.pathname;
+
+  useEffect(() => {
+    if (location.pathname === displayLocation.pathname) {
+      return;
+    }
+
+    const timer = window.setTimeout(() => {
+      setDisplayLocation(location);
+    }, 50);
+
+    return () => window.clearTimeout(timer);
+  }, [location, displayLocation.pathname]);
+
   return (
-    <BrowserRouter>
-      <Routes>
+    <>
+      <Routes location={displayLocation}>
         <Route path="/" element={<Inicio />} />
         <Route path="/nosotros" element={<Informacion />} />
         <Route path="/compras" element={<Compras />} />
@@ -41,6 +60,23 @@ function App() {
           <Route path="/dashboard/usuarios" element={<UsuariosDashboard />} />
         </Route>
       </Routes>
+
+      {loading && (
+        <div
+          className="position-fixed top-0 start-0 w-100 h-100"
+          style={{ zIndex: 2000 }}
+        >
+          <Cargando />
+        </div>
+      )}
+    </>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <RouteTransition />
     </BrowserRouter>
   );
 }
