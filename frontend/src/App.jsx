@@ -22,6 +22,7 @@ import Registro from "./pages/Registro";
 import VerBoletos from "./pages/VerBoletos";
 import PoliticaCompra from "./pages/PoliticaCompra";
 import PoliticaPrivacidad from "./pages/PoliticaPrivacidad";
+import PoliticaCookies from "./pages/PoliticaCookies";
 
 function RouteTransition() {
   const location = useLocation();
@@ -58,6 +59,8 @@ function RouteTransition() {
         <Route path="/dashboard/login" element={<DashboardLogin />} />
         <Route path="/politica-compra" element={<PoliticaCompra />} />
         <Route path="/politica-privacidad" element={<PoliticaPrivacidad />} />
+        <Route path="/politica-cookies" element={<PoliticaCookies />} />
+        
 
         <Route element={<DashboardGuard />}>
           <Route path="/dashboard" element={<IndexDashboard />} />

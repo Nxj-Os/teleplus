@@ -34,12 +34,12 @@ export default function Footer() {
             >
             Política de privacidad
             </Link>
-            <a
-              href="#"
-              className="text-white text-decoration-none border-end pe-2 me-1"
+            <Link
+            to="/politica-cookies"
+            className="text-white text-decoration-none border-end pe-2 me-1"
             >
-              Política de cookies
-            </a>
+            Política de Cookies
+            </Link>
             <a href="#" className="text-white text-decoration-none">
               Término de Uso
             </a>
