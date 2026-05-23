@@ -10,9 +10,12 @@ export default function Footer() {
             <p className="small text-secondary">
               Al continuar en esta página, usted acuerda registrarse por
               nuestros{" "}
-              <a href="#" className="text-white text-decoration-underline">
-                términos de uso
-              </a>
+            <Link
+            to="/terminos-uso"
+            className="text-white text-decoration-none"
+            >
+            Términos de Uso
+            </Link>
               .
             </p>
           </div>
@@ -40,9 +43,12 @@ export default function Footer() {
             >
             Política de Cookies
             </Link>
-            <a href="#" className="text-white text-decoration-none">
-              Término de Uso
-            </a>
+            <Link
+            to="/terminos-uso"
+            className="text-white text-decoration-none"
+            >
+            Términos de Uso
+            </Link>
 
             <span
               className="rounded-3 bg-success p-2 ms-md-3"

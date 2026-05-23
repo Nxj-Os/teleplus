@@ -23,6 +23,7 @@ import VerBoletos from "./pages/VerBoletos";
 import PoliticaCompra from "./pages/PoliticaCompra";
 import PoliticaPrivacidad from "./pages/PoliticaPrivacidad";
 import PoliticaCookies from "./pages/PoliticaCookies";
+import TerminosUso from "./pages/TerminosUso";
 
 function RouteTransition() {
   const location = useLocation();
@@ -60,6 +61,7 @@ function RouteTransition() {
         <Route path="/politica-compra" element={<PoliticaCompra />} />
         <Route path="/politica-privacidad" element={<PoliticaPrivacidad />} />
         <Route path="/politica-cookies" element={<PoliticaCookies />} />
+        <Route path="/terminos-uso" element={<TerminosUso />} />
         
 
         <Route element={<DashboardGuard />}>
