@@ -38,10 +38,10 @@ export default function Footer() {
             Política de privacidad
             </Link>
             <Link
-            to="/politica-cookies"
+            to="/aviso-legal"
             className="text-white text-decoration-none border-end pe-2 me-1"
             >
-            Política de Cookies
+            Aviso Legal
             </Link>
             <Link
             to="/terminos-uso"

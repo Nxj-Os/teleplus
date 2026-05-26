@@ -1,6 +1,6 @@
 import LayoutPrincipal from "../layouts/LayoutPrincipal";
 
-function PoliticaCookies() {
+function AvisoLegal() {
 
   return (
 
@@ -13,7 +13,7 @@ function PoliticaCookies() {
 
           <h1 className="display-4 fw-bold">
 
-            Política de Cookies
+            Aviso Legal
 
           </h1>
 
@@ -229,4 +229,4 @@ function PoliticaCookies() {
 
 }
 
-export default PoliticaCookies;
+export default AvisoLegal;

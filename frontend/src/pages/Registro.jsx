@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "../css/registro.module.css";
 import LayoutPrincipal from "../layouts/LayoutPrincipal";
 import { registrarUsuario } from "../services/UsuarioService";
+import { Link } from "react-router-dom";
 
 function Registro() {
   const navigate = useNavigate();
@@ -11,6 +12,7 @@ function Registro() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [aceptaPoliticas, setAceptaPoliticas] = useState(false);
 
   const [formData, setFormData] = useState({
     nombre: "",
@@ -263,9 +265,64 @@ function Registro() {
                 </div>
               )}
 
+              <div className="form-check mb-4 mt-2">
+
+  <input
+    className="form-check-input"
+
+    type="checkbox"
+
+    id="aceptaPoliticas"
+
+    checked={aceptaPoliticas}
+
+    onChange={(e) =>
+      setAceptaPoliticas(e.target.checked)
+    }
+  />
+
+  <label
+    className="form-check-label text-dark"
+    htmlFor="aceptaPoliticas"
+   text-black>
+
+    Acepto los{" "}
+
+    <Link
+      to="/terminos-uso"
+      target="_blank"
+      className="text-danger fw-bold text-decoration-none">
+      Términos de Uso
+    </Link>
+
+    {" "}y la{" "}
+
+    <Link
+      to="/politica-compra"
+      target="_blank"
+      className="text-danger fw-bold text-decoration-none"
+    >
+      Política de Compra
+    </Link>
+
+  </label>
+
+</div>
+
               <button
                 type="submit"
                 className="btn btn-danger btn-lg w-100 mb-3 fw-bold shadow-sm d-flex align-items-center justify-content-center gap-2"
+              disabled={!aceptaPoliticas}
+              onClick={() => {
+                if (!aceptaPoliticas) {
+
+             alert(
+              "Debes aceptar los términos"
+               );
+
+               return;
+
+              }}}
               >
                 <FaUserPlus /> {t.btn}
               </button>

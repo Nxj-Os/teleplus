@@ -3,6 +3,8 @@ import LayoutPrincipal from "../layouts/LayoutPrincipal";
 
 import { useState } from "react";
 
+import { Link } from "react-router-dom";
+
 import { validarPromocion } from "../services/promocionService";
 
 import { useLocation } from "react-router-dom";
@@ -24,6 +26,8 @@ function Compras() {
   const [promoValida, setPromoValida] = useState(null);
 
   const [descuento, setDescuento] = useState(0);
+
+  const [aceptaPoliticas, setAceptaPoliticas] = useState(false);
 
   // TOTAL
   const subtotal = precioUnitario * cantidad;
@@ -149,6 +153,52 @@ function Compras() {
                   </div>
                 )}
 
+                {/* POLÍTICAS */}
+               <div className="form-check mt-4 mb-3">
+
+              <input
+              className="form-check-input"
+
+              type="checkbox"
+
+              checked={aceptaPoliticas}
+
+               onChange={(e) =>
+                setAceptaPoliticas(e.target.checked)
+               }
+
+                id="aceptaPoliticas"
+               />
+
+              <label
+              className="form-check-label"
+              htmlFor="aceptaPoliticas"
+              >
+
+              He leído y acepto los{" "}
+
+             <Link
+             to="/politica-compra"
+             target="_blank"
+              className="text-danger fw-bold"
+            >
+            Términos de Compra
+            </Link>
+
+            {" "}y{" "}
+
+            <Link
+            to="/terminos-uso"
+            target="_blank"
+           className="text-danger fw-bold"
+          > 
+          Términos de Uso
+          </Link>
+
+        </label>
+
+      </div>
+
                 <hr />
 
                 {/* TOTAL */}
@@ -164,10 +214,27 @@ function Compras() {
                 <h3 className="text-danger">S/ {totalFinal.toFixed(2)}</h3>
 
                 {/* BOTÓN */}
-                <button className="btn btn-danger w-100 mt-3 fw-bold">
+                <button className="btn btn-danger w-100 mt-3 fw-bold"
+                
+                disabled={!aceptaPoliticas}
+                onClick={() => {
+
+                if (!aceptaPoliticas) {
+
+                 alert(
+                "Debes aceptar las políticas"
+                 );
+
+                 return;
+                 }
+
+                 alert("Compra realizada");
+ 
+                 }}
+                >
                   Confirmar compra
                 </button>
-              </div>
+              </div>  
             </div>
           </div>
         </section>
