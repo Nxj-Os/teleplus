@@ -1,9 +1,11 @@
 import styles from "../css/compras.module.css";
 import LayoutPrincipal from "../layouts/LayoutPrincipal";
 
+import { guardarEntrada } from "../services/entradaService";
+
 import { useState } from "react";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { validarPromocion } from "../services/promocionService";
 
@@ -11,6 +13,8 @@ import { useLocation } from "react-router-dom";
 
 function Compras() {
   const location = useLocation();
+
+  const navigate = useNavigate();
 
   const datosCompra = location.state;
 
@@ -28,6 +32,8 @@ function Compras() {
   const [descuento, setDescuento] = useState(0);
 
   const [aceptaPoliticas, setAceptaPoliticas] = useState(false);
+
+  const [mostrarExito, setMostrarExito] = useState(false);
 
   // TOTAL
   const subtotal = precioUnitario * cantidad;
@@ -52,6 +58,41 @@ function Compras() {
       setMensajePromo("Error del servidor");
 
       setPromoValida(false);
+    }
+  };
+  const generarBoleto = () => {
+    const nuevoBoleto = {
+      nombre_evento: datosCompra?.evento,
+      codigo_qr: `QR_${Math.random().toString(36).substring(2, 14).toUpperCase()}`,
+      estado: "Activo",
+      fecha_generacion: new Date().toISOString().split("T")[0],
+      precio_final: totalFinal,
+      reservado_hasta: null,
+    };
+
+    return nuevoBoleto;
+  };
+  const handleCompra = async () => {
+    if (!aceptaPoliticas) {
+      alert("Debes aceptar las políticas");
+      return;
+    }
+
+    try {
+      const boleto = generarBoleto();
+
+      await guardarEntrada({
+        codigo_qr: boleto.codigo_qr,
+        estado: boleto.estado,
+        precio_final: boleto.precio_final,
+        reservado_hasta: null,
+      });
+
+      setMostrarExito(true);
+    } catch (error) {
+      console.error(error);
+
+      alert("Error al registrar la compra");
     }
   };
 
@@ -154,50 +195,34 @@ function Compras() {
                 )}
 
                 {/* POLÍTICAS */}
-               <div className="form-check mt-4 mb-3">
+                <div className="form-check mt-4 mb-3">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    checked={aceptaPoliticas}
+                    onChange={(e) => setAceptaPoliticas(e.target.checked)}
+                    id="aceptaPoliticas"
+                  />
 
-              <input
-              className="form-check-input"
-
-              type="checkbox"
-
-              checked={aceptaPoliticas}
-
-               onChange={(e) =>
-                setAceptaPoliticas(e.target.checked)
-               }
-
-                id="aceptaPoliticas"
-               />
-
-              <label
-              className="form-check-label"
-              htmlFor="aceptaPoliticas"
-              >
-
-              He leído y acepto los{" "}
-
-             <Link
-             to="/politica-compra"
-             target="_blank"
-              className="text-danger fw-bold"
-            >
-            Términos de Compra
-            </Link>
-
-            {" "}y{" "}
-
-            <Link
-            to="/terminos-uso"
-            target="_blank"
-           className="text-danger fw-bold"
-          > 
-          Términos de Uso
-          </Link>
-
-        </label>
-
-      </div>
+                  <label className="form-check-label" htmlFor="aceptaPoliticas">
+                    He leído y acepto los{" "}
+                    <Link
+                      to="/politica-compra"
+                      target="_blank"
+                      className="text-danger fw-bold"
+                    >
+                      Términos de Compra
+                    </Link>{" "}
+                    y{" "}
+                    <Link
+                      to="/terminos-uso"
+                      target="_blank"
+                      className="text-danger fw-bold"
+                    >
+                      Términos de Uso
+                    </Link>
+                  </label>
+                </div>
 
                 <hr />
 
@@ -214,27 +239,14 @@ function Compras() {
                 <h3 className="text-danger">S/ {totalFinal.toFixed(2)}</h3>
 
                 {/* BOTÓN */}
-                <button className="btn btn-danger w-100 mt-3 fw-bold"
-                
-                disabled={!aceptaPoliticas}
-                onClick={() => {
-
-                if (!aceptaPoliticas) {
-
-                 alert(
-                "Debes aceptar las políticas"
-                 );
-
-                 return;
-                 }
-
-                 alert("Compra realizada");
- 
-                 }}
+                <button
+                  className="btn btn-danger w-100 mt-3 fw-bold"
+                  disabled={!aceptaPoliticas}
+                  onClick={handleCompra}
                 >
-                  Confirmar compra
+                  Confirmar compra{" "}
                 </button>
-              </div>  
+              </div>
             </div>
           </div>
         </section>
@@ -247,6 +259,49 @@ function Compras() {
           <small>Los boletos serán enviados a tu correo electrónico.</small>
         </section>
       </div>
+      {mostrarExito && (
+        <>
+          <div
+            className="modal fade show"
+            style={{
+              display: "block",
+              backgroundColor: "rgba(0,0,0,0.5)",
+            }}
+          >
+            <div className="modal-dialog modal-dialog-centered">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title">Compra realizada</h5>
+                </div>
+
+                <div className="modal-body text-center">
+                  <h4 className="text-success mb-3">
+                    Compra realizada correctamente
+                  </h4>
+
+                  <p>Tu boleto ha sido registrado exitosamente.</p>
+                </div>
+
+                <div className="modal-footer justify-content-center">
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => navigate("/ver-boletos")}
+                  >
+                    Ver mis boletos
+                  </button>
+
+                  <button
+                    className="btn btn-secondary"
+                    onClick={() => navigate("/")}
+                  >
+                    Volver al inicio
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </LayoutPrincipal>
   );
 }
