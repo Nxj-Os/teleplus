@@ -10,6 +10,7 @@ function DashboardShell({ activeSection, title, subtitle, children }) {
     { to: "/dashboard", label: "Dashboard", section: "dashboard" },
     { to: "/dashboard/eventos", label: "Eventos", section: "eventos" },
     { to: "/dashboard/usuarios", label: "Usuarios", section: "usuarios" },
+    { to: "/dashboard/promociones", label: "Promociones", section: "promociones" },
   ];
 
   const filteredNavItems = navItems.filter(item => {

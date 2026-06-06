@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 import pe.edu.utp.backend.entity.Promocion;
 
 @Repository
-public interface PromocionRepository extends JpaRepository<Promocion, Long> {
+public interface PromocionRepository extends JpaRepository<Promocion, Integer> {
     Optional<Promocion> findByCodigo(String codigo);
+
+    boolean existsByCodigo(String codigo);
 }

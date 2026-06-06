@@ -24,6 +24,7 @@ import PoliticaCompra from "./pages/PoliticaCompra";
 import PoliticaPrivacidad from "./pages/PoliticaPrivacidad";
 import TerminosUso from "./pages/TerminosUso";
 import AvisoLegal from "./pages/AvisoLegal";
+import PromocionesDashboard from "./pages/dashboard/PromocionesDashboard";
 
 function RouteTransition() {
   const location = useLocation();
@@ -68,6 +69,7 @@ function RouteTransition() {
           <Route path="/dashboard" element={<IndexDashboard />} />
           <Route path="/dashboard/eventos" element={<EventosDashboard />} />
           <Route path="/dashboard/usuarios" element={<UsuariosDashboard />} />
+          <Route path="/dashboard/promociones" element={<PromocionesDashboard />} />
         </Route>
 
         <Route path="*" element={<PaginaNoEncontrada />} />

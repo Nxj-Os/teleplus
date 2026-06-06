@@ -56,4 +56,15 @@ public class Promocion {
     @NotNull
     @Min(0)
     private Integer maximoUsos;
+
+    @Column(length = 200)
+    private String descripcion;
+
+    @Column(nullable = false)
+    @NotNull
+    @Min(0)
+    private Integer stockDisponible;
+
+    @Column(nullable = false)
+    private LocalDate fechaCreacion;
 }
