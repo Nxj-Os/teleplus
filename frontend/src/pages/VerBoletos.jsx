@@ -2,6 +2,7 @@ import LayoutPrincipal from "../layouts/LayoutPrincipal";
 import { Link } from "react-router-dom";
 import { useEffect, useState} from "react";
 import { obtenerEntradas } from "../services/entradaService";
+import { QRCodeSVG } from "qrcode.react";
 const boletosDummy = [
   {
     nombre_evento: 1024589,
@@ -167,9 +168,13 @@ export default function VerBoletos() {
               <div className="row g-2 align-items-center bg-light p-3 rounded border mb-3">
                 <div className="col-5 text-center">
                   <div className="bg-white border p-2 rounded d-flex align-items-center justify-content-center mx-auto" style={{ width: "110px", height: "110px" }}>
-                    <div className="text-center text-muted fw-bold">
-                      [ CÓDIGO QR ]
-                    </div>
+                    <QRCodeSVG 
+                      value={boletoSeleccionado.codigo_qr} 
+                      size={110}
+                      bgColor={"#ffffff"}
+                      fgColor={"#000000"}
+                      includeMargin={true}
+                    />
                   </div>
                 </div>
 
