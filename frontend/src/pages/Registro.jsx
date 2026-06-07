@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FaCheckCircle, FaEye, FaEyeSlash, FaUserPlus } from "react-icons/fa"; // Importación correcta
+import { FaCheckCircle, FaEye, FaEyeSlash, FaUserPlus } from "react-icons/fa"; 
 import { useNavigate } from "react-router-dom";
 import styles from "../css/registro.module.css";
 import LayoutPrincipal from "../layouts/LayoutPrincipal";
@@ -27,8 +27,8 @@ function Registro() {
   const texts = {
     es: {
       welcome: "¡Bienvenido a TicketPlus+!",
-      modalTitle: "Bienvenido a TicketPlus+",
-      modalBody: "Registro exitoso",
+      modalTitle: "¡Registro Exitoso!",
+      modalBody: "Felicitaciones, su cuenta ha sido creada con éxito. Gracias por registrarse en TicketPlus+",
       modalBtn: "Continuar",
       subtitle: "Crea tu cuenta para vivir la mejor experiencia en eventos.",
       badge: "Registro de Usuario",
@@ -46,8 +46,8 @@ function Registro() {
     },
     en: {
       welcome: "Welcome to TicketPlus+!",
-      modalTitle: "Welcome to TicketPlus+",
-      modalBody: "Successful registration",
+      modalTitle: "Successful Registration!",
+      modalBody: "Congratulations, your account has been successfully created. Thank you for registering with TicketPlus+",
       modalBtn: "Continue",
       subtitle: "Create your account for the best event experience.",
       badge: "User Registration",
@@ -97,24 +97,33 @@ function Registro() {
   return (
     <LayoutPrincipal>
       <div className={`container-fluid p-0 ${styles.page}`}>
-        {/* MODAL DE ÉXITO CORREGIDO CON ICONO */}
+        {/* MODAL DE ÉXITO ESTILIZADO AL DETALLE */}
         {showSuccessModal && (
-          <div className={styles.modalOverlay}>
-            <div className={styles.modalBox}>
+          <div className={styles.modalOverlay} style={{ backdropFilter: "blur(5px)", backgroundColor: "rgba(0,0,0,0.5)" }}>
+            <div className={`${styles.modalBox} text-center p-4 shadow`} style={{ borderRadius: "12px", maxWidth: "440px" }}>
               <FaCheckCircle
-                className="text-success mb-3"
-                style={{ fontSize: "3rem" }}
+                className="text-success mb-3 animate__animated animate__zoomIn"
+                style={{ fontSize: "3.2rem", filter: "drop-shadow(0px 4px 8px rgba(25, 135, 84, 0.25))" }}
               />
-              <h2 className="fw-bold mb-1" style={{ color: "#333" }}>
-                {t.modalTitle} 🥳
+              
+              <h2 className="fw-bold mb-2" style={{ color: "#222", fontSize: "1.5rem" }}>
+                {t.modalTitle}
               </h2>
-              <p className="text-muted mb-4">{t.modalBody}</p>
+
+              <div className="mx-auto my-2" style={{ width: "35px", height: "3px", backgroundColor: "#198754", borderRadius: "2px" }}></div>
+
+              <p className="text-muted mb-4 small px-3" style={{ lineHeight: "1.5" }}>
+                {t.modalBody}
+              </p>
+
               <button
-                className="btn btn-success w-100 py-2 fw-bold"
+                className="btn btn-success w-100 py-2 fw-bold text-uppercase"
                 style={{
                   backgroundColor: "#198754",
                   border: "none",
-                  borderRadius: "10px",
+                  borderRadius: "8px",
+                  fontSize: "0.85rem",
+                  letterSpacing: "0.5px"
                 }}
                 onClick={() => navigate("/login")}
               >
@@ -266,63 +275,43 @@ function Registro() {
               )}
 
               <div className="form-check mb-4 mt-2">
-
-  <input
-    className="form-check-input"
-
-    type="checkbox"
-
-    id="aceptaPoliticas"
-
-    checked={aceptaPoliticas}
-
-    onChange={(e) =>
-      setAceptaPoliticas(e.target.checked)
-    }
-  />
-
-  <label
-    className="form-check-label text-dark"
-    htmlFor="aceptaPoliticas"
-   text-black>
-
-    Acepto los{" "}
-
-    <Link
-      to="/terminos-uso"
-      target="_blank"
-      className="text-danger fw-bold text-decoration-none">
-      Términos de Uso
-    </Link>
-
-    {" "}y la{" "}
-
-    <Link
-      to="/politica-compra"
-      target="_blank"
-      className="text-danger fw-bold text-decoration-none"
-    >
-      Política de Compra
-    </Link>
-
-  </label>
-
-</div>
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  id="aceptaPoliticas"
+                  checked={aceptaPoliticas}
+                  onChange={(e) => setAceptaPoliticas(e.target.checked)}
+                />
+                <label className="form-check-label text-dark" htmlFor="aceptaPoliticas">
+                  Acepto los{" "}
+                  <Link
+                    to="/terminos-uso"
+                    target="_blank"
+                    className="text-danger fw-bold text-decoration-none"
+                  >
+                    Términos de Uso
+                  </Link>{" "}
+                  y la{" "}
+                  <Link
+                    to="/politica-compra"
+                    target="_blank"
+                    className="text-danger fw-bold text-decoration-none"
+                  >
+                    Política de Compra
+                  </Link>
+                </label>
+              </div>
 
               <button
                 type="submit"
                 className="btn btn-danger btn-lg w-100 mb-3 fw-bold shadow-sm d-flex align-items-center justify-content-center gap-2"
-              disabled={!aceptaPoliticas}
-              onClick={() => {
-                if (!aceptaPoliticas) {
-
-             alert(
-              "Debes aceptar los términos"
-               );
-
-               return;
-
-              }}}
+                disabled={!aceptaPoliticas}
+                onClick={() => {
+                  if (!aceptaPoliticas) {
+                    alert("Debes aceptar los términos");
+                    return;
+                  }
+                }}
               >
                 <FaUserPlus /> {t.btn}
               </button>
@@ -338,9 +327,7 @@ function Registro() {
             </form>
           </div>
 
-          <div
-            className={`col-md-6 d-none d-md-block position-relative ${styles.rightColumn}`}
-          >
+          <div className={`col-md-6 d-none d-md-block position-relative ${styles.rightColumn}`}>
             <div className={styles.heroTextWrapper}>
               <h1 className="display-4 fw-bold m-0">TicketPlus+</h1>
               <p className="lead opacity-75">
