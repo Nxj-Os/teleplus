@@ -1,8 +1,7 @@
 import LayoutPrincipal from "../layouts/LayoutPrincipal";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState} from "react";
 import { obtenerEntradas } from "../services/entradaService";
-
 const boletosDummy = [
   {
     nombre_evento: 1024589,
@@ -23,21 +22,8 @@ const boletosDummy = [
 
 export default function VerBoletos() {
   const [entradas, setEntradas] = useState([]);
-  const allBoletos = [...boletosDummy, ...entradas];
-
-  const getBadgeClass = (estado) => {
-    switch (estado?.toLowerCase()) {
-      case "activo":
-        return "bg-success";
-      case "reservado":
-        return "bg-warning text-dark";
-      case "cancelado":
-        return "bg-danger";
-      default:
-        return "bg-secondary";
-    }
-  };
-
+  const [boletoSeleccionado, setBoletoSeleccionado] = useState(null); 
+  const allBoletos = [...entradas, ...boletosDummy];
   useEffect(() => {
     const cargarEntradas = async () => {
       try {
@@ -72,11 +58,6 @@ export default function VerBoletos() {
               <ul className="dropdown-menu">
                 <li>
                   <a className="dropdown-item" href="#">
-                    MIS COMPRAS
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
                     E-TICKETS
                   </a>
                 </li>
@@ -100,11 +81,8 @@ export default function VerBoletos() {
           </div>
 
           <ul className="row list-unstyled text-center bg-light mb-4">
-            <li className="col-4 btn py-3 btn-outline-secondary rounded-0">
-              MIS COMPRAS
-            </li>
             <li className="col-4 btn py-3 btn-outline-secondary rounded-0 active">
-              ETICKETS
+              TICKETS
             </li>
             <li className="col-4 btn py-3 btn-outline-secondary rounded-0">
               MIS DEVOLUCIONES
@@ -127,31 +105,15 @@ export default function VerBoletos() {
                       <span className="small fw-bold">
                         Evento: {boleto.nombre_evento || "Evento registrado"}
                       </span>
-                      <span className={`badge ${getBadgeClass(boleto.estado)}`}>
-                        {boleto.estado.toUpperCase()}
-                      </span>
                     </div>
                     {/* Cuerpo del Boleto */}
                     <div className="card-body">
                       <div className="row align-items-center">
                         <div className="col-4 text-center">
-                          <div
-                            className="bg-light border d-flex flex-column align-items-center justify-content-center p-2 rounded"
-                            style={{
-                              height: "80px",
-                              width: "80px",
-                              fontSize: "10px",
-                            }}
-                          >
-                            <span className="fw-bold text-muted">
-                              [QR CODE]
-                            </span>
-                          </div>
                           <small
                             className="text-muted d-block text-truncate mt-1"
                             style={{ fontSize: "11px" }}
                           >
-                            {boleto.codigo_qr}
                           </small>
                         </div>
                         <div className="col-8">
@@ -172,6 +134,12 @@ export default function VerBoletos() {
                       <button className="btn btn-sm btn-outline-danger">
                         Cancelar
                       </button>
+                      <button className="btn max-w:30px btn-sm btn-outline-primary" 
+                        data-bs-toggle="modal"
+                        data-bs-target="#ticketModal"
+                        onClick={() => setBoletoSeleccionado(boleto)}>
+                        Ver Boleto
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -179,6 +147,72 @@ export default function VerBoletos() {
             </div>
           )}
         </main>
+      </div>
+     {/* Ventana Flotante*/}
+      <div className="modal fade" id="ticketModal" tabIndex="-1" aria-labelledby="ticketModalLabel" aria-hidden="true">
+        <div className="modal-content modal-dialog modal-dialog-centered" style={{ maxWidth: "450px", border: "none", borderRadius: "15px" }}>
+          {boletoSeleccionado && (
+            <div className="modal-body p-4 bg-white rounded shadow-lg">
+              <div className="d-flex justify-content-between align-items-center mb-3">
+                <span className="text-danger fw-bold">Ticket +</span>
+                <span className="badge bg-dark p-2" style={{ fontSize: "11px" }}>
+                  Nro. de Compra: {boletoSeleccionado.codigo_qr}
+                </span> 
+              </div>
+
+              <h2 className="text-center my-3 fw-bold text-navy">
+                {boletoSeleccionado.nombre_evento}
+              </h2>
+
+              <div className="row g-2 align-items-center bg-light p-3 rounded border mb-3">
+                <div className="col-5 text-center">
+                  <div className="bg-white border p-2 rounded d-flex align-items-center justify-content-center mx-auto" style={{ width: "110px", height: "110px" }}>
+                    <div className="text-center text-muted fw-bold">
+                      [ CÓDIGO QR ]
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col-7" style={{ fontSize: "12px" }}>
+                  <div className="mb-2 text-truncate">
+                    <strong>{ "Cliente"}</strong>
+                  </div>
+                  <div className="mb-2">
+                  <span className=" text-truncate"><strong>Fecha de compra: </strong></span>{new Date(boletoSeleccionado.fecha_generacion).toLocaleDateString()}
+                  </div>
+                  <div className="mb-2 text-truncate">
+                    <strong>{boletoSeleccionado.lugar || "Lugar"}</strong>
+                  </div>
+                  <div className="mb-2 text-truncate">
+                    <strong>{boletoSeleccionado.zona || "Zona"}</strong>
+                  </div>
+                </div>
+              </div>
+              <p className="text-danger small text-center mb-3">
+                Muestra el código QR desde tu celular para ingresar.  
+              </p>
+              <div className="border rounded p-3 mb-4">
+                <div class="d-flex align-items-center border-bottom pb-2 mb-2 text-danger fw-bold">
+                   <span class="ms-2">Boleto</span>
+                </div>
+                <div className="d-flex justify-content-between small text-muted mb-2">
+                  <span>Cant: {boletoSeleccionado.cantidad || 1}</span>
+                  <span>S/ {(boletoSeleccionado.precio_final).toFixed(2)}</span>
+                </div>
+                <hr className="my-2 border-dashed" />
+                <div className="d-flex justify-content-between fw-bold fs-5 text-dark mt-2">
+                  <span>Costo Total</span>
+                  <span>S/ {(boletoSeleccionado.precio_final).toFixed(2)}</span>
+                </div>
+              </div>
+              <div>
+                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
+                  Cerrar Ventana  
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </LayoutPrincipal>
   );

@@ -65,6 +65,8 @@ function Compras() {
       nombre_evento: datosCompra?.evento,
       codigo_qr: `QR_${Math.random().toString(36).substring(2, 14).toUpperCase()}`,
       estado: "Activo",
+      lugar:datosCompra?.evento,
+      zona:datosCompra?.zona,
       fecha_generacion: new Date().toISOString().split("T")[0],
       precio_final: totalFinal,
       reservado_hasta: null,
@@ -94,6 +96,8 @@ function Compras() {
         estado: boleto.estado,
         precio_final: boleto.precio_final,
         reservado_hasta: null,
+        lugar:boleto.lugar,
+        zona:boleto.zona,
       });
 
       setMostrarExito(true);
