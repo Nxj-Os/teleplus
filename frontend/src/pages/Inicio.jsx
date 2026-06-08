@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-
+import { useEffect, useState } from "react";
+import axios from "axios";
 // Importación de Banners y Eventos
 import imgEvento4 from "../assets/img/evento4.png";
 import imgEvento1 from "../assets/img/index-evento1.jpg";
@@ -10,19 +11,30 @@ import imgEvento6 from "../assets/img/index-evento6.jpg";
 import LayoutPrincipal from "../layouts/LayoutPrincipal";
 
 export default function Inicio() {
-  const eventos = [
-    { id: 1, img: imgEvento1, ruta: "/evento-1" },
-    { id: 2, img: imgEvento2, ruta: "/evento-2" },
-    { id: 3, img: imgEvento3, ruta: "/evento-3" },
-    { id: 4, img: imgEvento4, ruta: "/evento-4" },
-    { id: 5, img: imgEvento5, ruta: "/evento-5" },
-    { id: 6, img: imgEvento6, ruta: "/evento-6" },
-  ];
+  const [eventos, setEventos] = useState([]);
+  useEffect(() => {
+
+  axios
+    .get("http://localhost:8080/api/eventos")
+    .then((response) => {
+
+      console.log(response.data);
+
+      setEventos(response.data);
+
+    })
+    .catch((error) => {
+
+      console.error(error);
+
+    });
+
+}, []); 
 
   const heroSlides = eventos.map((evento, index) => ({
     ...evento,
-    title: `Evento ${evento.id}`,
-    subtitle: "No te pierdas este evento destacado en nuestra plataforma",
+    title: evento.titulo,
+    subtitle: evento.descripcion,
     active: index === 0,
   }));
 
@@ -41,7 +53,7 @@ export default function Inicio() {
               <div className="carousel-indicators">
                 {heroSlides.map((slide, index) => (
                   <button
-                    key={slide.id}
+                    key={slide.id_evento}
                     type="button"
                     data-bs-target="#heroCarousel"
                     data-bs-slide-to={index}
@@ -55,7 +67,7 @@ export default function Inicio() {
               <div className="carousel-inner">
                 {heroSlides.map((slide) => (
                   <div
-                    key={slide.id}
+                    key={slide.id_evento}
                     className={`carousel-item ${slide.active ? "active" : ""}`}
                   >
                     <Link
@@ -126,12 +138,12 @@ export default function Inicio() {
           <h3 className="pb-4">Eventos destacados</h3>
           <div className="row row-cols-1 row-cols-md-3 g-4">
             {eventos.map((evento) => (
-              <div className="col" key={evento.id}>
+              <div className="col" key={evento.id_evento}>
                 <div className="card h-100 border-0 shadow-sm overflow-hidden">
-                  <Link to={evento.ruta}>
+                  <Link to={`/evento/${evento.id_evento}`}>
                     <img
                       src={evento.img}
-                      alt={`Evento ${evento.id}`}
+                      alt={`Evento ${evento.id_evento}`}
                       className="card-img-top"
                       style={{ transition: "transform 0.3s" }}
                       onMouseOver={(e) =>
@@ -147,13 +159,13 @@ export default function Inicio() {
                       className="card-text mb-0 fw-bold"
                       style={{ color: "black", fontSize: "1.5rem" }}
                     >
-                      EVENTO {evento.id}
+                      {evento.titulo}
                     </p>
                     <p
                       className="card-text text-secondary small"
                       style={{ fontSize: "0.9rem" }}
                     >
-                      17 Mayo - 6:00 PM
+                      {evento.fecha_evento}
                     </p>
                   </div>
                 </div>
