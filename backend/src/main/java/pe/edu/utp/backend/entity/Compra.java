@@ -1,6 +1,7 @@
 package pe.edu.utp.backend.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,11 +18,15 @@ public class Compra {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_compra;
 
+    @NotNull
     private LocalDate fecha_compra;
 
+    @NotNull
+    @DecimalMin(value = "0.0", inclusive = true)
     private Double total;
 
     @Column(length = 20)
+    @Size(max = 20)
     private String estado;
 
     @ManyToMany

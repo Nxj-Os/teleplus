@@ -1,56 +1,65 @@
 package pe.edu.utp.backend.controller;
 
-import pe.edu.utp.backend.dto.PromocionRequest;
-import pe.edu.utp.backend.dto.PromocionResponse;
-import pe.edu.utp.backend.entity.Promocion;
-import pe.edu.utp.backend.service.PromocionService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import pe.edu.utp.backend.dto.PromocionDTO;
+import pe.edu.utp.backend.dto.PromocionRequest;
+import pe.edu.utp.backend.dto.PromocionResponse;
+import pe.edu.utp.backend.service.PromocionService;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/promociones")
 @CrossOrigin(origins = "http://localhost:5173")
+@RequiredArgsConstructor
 public class PromocionController {
 
-    @Autowired
-    private PromocionService service;
+    private final PromocionService service;
 
     @GetMapping
-    public ResponseEntity<List<Promocion>> listarPromociones() {
-        return ResponseEntity.ok(service.listarPromociones());
+    public ResponseEntity<List<PromocionDTO>> listarPromociones() {
+
+        return ResponseEntity.ok(
+                service.listarPromociones());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Promocion> obtenerPromocion(@PathVariable Integer id) {
+    public ResponseEntity<PromocionDTO> obtenerPromocion(
+            @PathVariable Integer id) {
 
-        Promocion promocion = service.buscarPorId(id)
-                .orElseThrow(() -> new RuntimeException("Promoción no encontrada"));
-
-        return ResponseEntity.ok(promocion);
+        return ResponseEntity.ok(
+                service.obtenerPromocion(id));
     }
 
     @PostMapping
-    public ResponseEntity<Promocion> guardarPromocion(@RequestBody Promocion promocion) {
-        return ResponseEntity.ok(service.guardarPromocion(promocion));
+    public ResponseEntity<PromocionDTO> crearPromocion(
+            @Valid @RequestBody PromocionRequest request) {
+
+        return ResponseEntity.ok(
+                service.crearPromocion(request));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Promocion> actualizarPromocion(
+    public ResponseEntity<PromocionDTO> actualizarPromocion(
             @PathVariable Integer id,
-            @RequestBody Promocion promocion) {
+            @Valid @RequestBody PromocionRequest request) {
 
-        return ResponseEntity.ok(service.actualizarPromocion(id, promocion));
+        return ResponseEntity.ok(
+                service.actualizarPromocion(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> eliminarPromocion(@PathVariable Integer id) {
+    public ResponseEntity<String> eliminarPromocion(
+            @PathVariable Integer id) {
 
         service.eliminarPromocion(id);
 
-        return ResponseEntity.ok("Promoción eliminada correctamente");
+        return ResponseEntity.ok(
+                "Promoción eliminada correctamente");
     }
 
     @PostMapping("/validar")
@@ -59,6 +68,15 @@ public class PromocionController {
 
         return ResponseEntity.ok(
                 service.validarPromocion(
+                        request.getCodigo()));
+    }
+
+    @PostMapping("/aplicar")
+    public ResponseEntity<PromocionResponse> aplicarPromocion(
+            @RequestBody PromocionRequest request) {
+
+        return ResponseEntity.ok(
+                service.aplicarPromocion(
                         request.getCodigo()));
     }
 }

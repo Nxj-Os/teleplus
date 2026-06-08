@@ -1,6 +1,7 @@
 package pe.edu.utp.backend.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,21 +18,39 @@ public class Usuario {
     private Long id_usuario;
 
     @Column(length = 100, nullable = false)
+    @NotBlank
+    @Size(max = 100)
     private String nombre;
+
     @Column(length = 100, nullable = false)
+    @NotBlank
+    @Size(max = 100)
     private String apellido;
+
     @Column(length = 150, unique = true)
+    @NotBlank
+    @Email
+    @Size(max = 150)
     private String correo;
+
     @Column(length = 100, nullable = false)
+    @NotBlank
+    @Size(min = 6, max = 100)
     private String contrasena;
+
     @Column(length = 10 )
+    @Size(max = 10)
     private String telefono;
+
     @Column(length = 20 )
+    @Size(max = 20)
     private String estado;
 
+    @PastOrPresent
     private LocalDate fecha_registro;
 
     @ManyToOne
     @JoinColumn(name = "id_rol")
+    @NotNull
     private Rol rol;
 }

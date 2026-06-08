@@ -1,6 +1,7 @@
 package pe.edu.utp.backend.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,8 @@ public class Rol {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id;
 
-   @Column(length = 50, nullable = false)
-   private String nombreRol;
+    @Column(length = 50, nullable = false)
+    @NotBlank
+    @Size(max = 50)
+    private String nombreRol;
 }

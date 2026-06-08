@@ -15,7 +15,7 @@ function Login() {
   const texts = {
     es: {
       welcome: "¡Bienvenido a Ticket Plus+!",
-      successTitle: "Bienvenido a Ticket Plus+ 🥳",
+      successTitle: "Bienvenido a Ticket Plus+", 
       success: "Login exitoso",
       continue: "Continuar",
       subtitle: "Ingresa para vivir la mejor experiencia en eventos.",
@@ -36,7 +36,7 @@ function Login() {
 
     en: {
       welcome: "Welcome to Ticket Plus+!",
-      successTitle: "Welcome to Ticket Plus+ 🥳",
+      successTitle: "Welcome to Ticket Plus+", 
       success: "Login successful",
       continue: "Continue",
       subtitle: "Sign in for the best event experience.",
@@ -97,27 +97,31 @@ function Login() {
   return (
     <LayoutPrincipal>
       <div className={`container-fluid p-0 ${styles.page}`}>
-        {/* MODAL ÉXITO */}
+        {/* MODAL ÉXITO: Única sección mejorada estéticamente */}
         {isLoggedIn && (
-          <div className={styles.modalOverlay}>
-            <div className={`${styles.modalBox}`}>
+          <div className={styles.modalOverlay} style={{ backdropFilter: "blur(5px)", backgroundColor: "rgba(0,0,0,0.5)" }}>
+            <div className={`${styles.modalBox} text-center p-4 shadow`} style={{ borderRadius: "12px", maxWidth: "420px" }}>
               <FaCheckCircle
-                className="text-success mb-3"
-                style={{ fontSize: "3rem" }}
+                className="text-success mb-3 animate__animated animate__zoomIn"
+                style={{ fontSize: "3.2rem", filter: "drop-shadow(0px 4px 8px rgba(25, 135, 84, 0.25))" }}
               />
 
-              <h2 className="fw-bold mb-1" style={{ color: "#333" }}>
+              <h2 className="fw-bold mb-2" style={{ color: "#222", fontSize: "1.5rem" }}>
                 {t.successTitle}
               </h2>
 
-              <p className="text-muted mb-4">{t.success}</p>
+              <div className="mx-auto my-2" style={{ width: "35px", height: "3px", backgroundColor: "#198754", borderRadius: "2px" }}></div>
+
+              <p className="text-muted mb-4 small px-2">{t.success}</p>
 
               <button
-                className="btn btn-success w-100 py-2 fw-bold"
+                className="btn btn-success w-100 py-2 fw-bold text-uppercase"
                 style={{
                   backgroundColor: "#198754",
                   border: "none",
-                  borderRadius: "10px",
+                  borderRadius: "8px",
+                  fontSize: "0.85rem",
+                  letterSpacing: "0.5px"
                 }}
                 onClick={() => (window.location.href = "/")}
               >

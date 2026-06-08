@@ -1,5 +1,7 @@
 package pe.edu.utp.backend.service;
 
+import pe.edu.utp.backend.dto.PromocionDTO;
+import pe.edu.utp.backend.dto.PromocionRequest;
 import pe.edu.utp.backend.dto.PromocionResponse;
 import pe.edu.utp.backend.entity.Promocion;
 
@@ -8,15 +10,20 @@ import java.util.Optional;
 
 public interface PromocionService {
 
-    List<Promocion> listarPromociones();
+    PromocionDTO crearPromocion(PromocionRequest request);
 
-    Optional<Promocion> buscarPorId(Integer id);
+    List<PromocionDTO> listarPromociones();
 
-    Promocion guardarPromocion(Promocion promocion);
+    PromocionDTO obtenerPromocion(Integer id);
 
-    Promocion actualizarPromocion(Integer id, Promocion promocion);
+    PromocionDTO actualizarPromocion(
+            Integer id,
+            PromocionRequest request);
 
     void eliminarPromocion(Integer id);
 
     PromocionResponse validarPromocion(String codigo);
+
+    PromocionResponse aplicarPromocion(String codigo);
+
 }

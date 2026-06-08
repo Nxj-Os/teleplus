@@ -1,6 +1,7 @@
 package pe.edu.utp.backend.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,24 +27,35 @@ public class EventoZonaPrecio {
     private Long id;
 
     // PREVENTA - FULL - INTERBANK
+    @NotBlank
+    @Size(max = 50)
     private String tipoPrecio;
 
     // PRECIO DE LA ENTRADA
+    @NotNull
+    @DecimalMin(value = "0.0", inclusive = true)
     private BigDecimal precio;
 
     // STOCK TOTAL
+    @NotNull
+    @Min(0)
     private Integer stock;
 
     // STOCK DISPONIBLE
+    @NotNull
+    @Min(0)
     private Integer stockDisponible;
 
     // SI ESTÁ ACTIVO
+    @NotNull
     private Boolean activo;
 
     // FECHA INICIO VENTA
+    @NotNull
     private LocalDateTime fechaInicio;
 
     // FECHA FIN VENTA
+    @NotNull
     private LocalDateTime fechaFin;
 
     // EVENTO
@@ -51,6 +63,7 @@ public class EventoZonaPrecio {
 
     @JoinColumn(name = "id_evento")
 
+    @NotNull
     private Evento evento;
 
     // ZONA
@@ -58,5 +71,6 @@ public class EventoZonaPrecio {
 
     @JoinColumn(name = "id_zona")
 
+    @NotNull
     private Zona zona;
 }

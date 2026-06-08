@@ -7,7 +7,7 @@ import { useState } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 
-import { validarPromocion } from "../services/promocionService";
+import { validarPromocion, aplicarPromocion as aplicarPromocionAPI } from "../services/promocionService";
 
 import { useLocation } from "react-router-dom";
 
@@ -41,7 +41,7 @@ function Compras() {
   const totalFinal = subtotal - (subtotal * descuento) / 100;
 
   // VALIDAR PROMO
-  const aplicarPromocion = async () => {
+  const validarCodigoPromocion = async () => {
     try {
       const data = await validarPromocion(codigoPromo);
 
@@ -65,6 +65,8 @@ function Compras() {
       nombre_evento: datosCompra?.evento,
       codigo_qr: `QR_${Math.random().toString(36).substring(2, 14).toUpperCase()}`,
       estado: "Activo",
+      lugar:datosCompra?.evento,
+      zona:datosCompra?.zona,
       fecha_generacion: new Date().toISOString().split("T")[0],
       precio_final: totalFinal,
       reservado_hasta: null,
@@ -79,6 +81,14 @@ function Compras() {
     }
 
     try {
+      if (promoValida && codigoPromo.trim()) {
+        const aplicacion = await aplicarPromocionAPI(codigoPromo.trim());
+        if (!aplicacion.valido) {
+          alert(aplicacion.mensaje || "No se pudo aplicar la promoción.");
+          return;
+        }
+      }
+
       const boleto = generarBoleto();
 
       await guardarEntrada({
@@ -86,6 +96,8 @@ function Compras() {
         estado: boleto.estado,
         precio_final: boleto.precio_final,
         reservado_hasta: null,
+        lugar:boleto.lugar,
+        zona:boleto.zona,
       });
 
       setMostrarExito(true);
@@ -178,7 +190,7 @@ function Compras() {
                     onChange={(e) => setCodigoPromo(e.target.value)}
                   />
 
-                  <button className="btn btn-danger" onClick={aplicarPromocion}>
+                  <button className="btn btn-danger" onClick={validarCodigoPromocion}>
                     Aplicar
                   </button>
                 </div>
