@@ -24,6 +24,7 @@ import PoliticaCompra from "./pages/PoliticaCompra";
 import PoliticaPrivacidad from "./pages/PoliticaPrivacidad";
 import TerminosUso from "./pages/TerminosUso";
 import AvisoLegal from "./pages/AvisoLegal";
+import EventoDetalle from "./pages/eventos/EventoDetalle";
 import PromocionesDashboard from "./pages/dashboard/PromocionesDashboard";
 
 function RouteTransition() {
@@ -63,6 +64,7 @@ function RouteTransition() {
         <Route path="/politica-privacidad" element={<PoliticaPrivacidad />} />
         <Route path="/aviso-legal" element={<AvisoLegal />} />
         <Route path="/terminos-uso" element={<TerminosUso />} />
+        <Route path="/evento/:id" element={<EventoDetalle />} />
         
 
         <Route element={<DashboardGuard />}>
