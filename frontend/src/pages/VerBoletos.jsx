@@ -120,9 +120,7 @@ export default function VerBoletos() {
                         <div className="col-8">
                           <p className="mb-1 text-muted small">
                             <strong>Emisión:</strong>{" "}
-                            {new Date(
-                              boleto.fecha_generacion,
-                            ).toLocaleDateString()}
+                            {boleto.fecha_generacion.split("-").reverse().join("/")}
                           </p>
 
                           <h4 className="text-primary m-0 mt-2">
@@ -183,7 +181,7 @@ export default function VerBoletos() {
                     <strong>{ "Cliente"}</strong>
                   </div>
                   <div className="mb-2">
-                  <span className=" text-truncate"><strong>Fecha de compra: </strong></span>{new Date(boletoSeleccionado.fecha_generacion).toLocaleDateString()}
+                  <span className=" text-truncate"><strong>Fecha de compra: </strong></span>{boletoSeleccionado.fecha_generacion.split("-").reverse().join("/")}
                   </div>
                   <div className="mb-2 text-truncate">
                     <strong>{boletoSeleccionado.lugar || "Lugar"}</strong>
@@ -197,8 +195,8 @@ export default function VerBoletos() {
                 Muestra el código QR desde tu celular para ingresar.  
               </p>
               <div className="border rounded p-3 mb-4">
-                <div class="d-flex align-items-center border-bottom pb-2 mb-2 text-danger fw-bold">
-                   <span class="ms-2">Boleto</span>
+                <div className="d-flex align-items-center border-bottom pb-2 mb-2 text-danger fw-bold">
+                   <span className="ms-2">Boleto</span>
                 </div>
                 <div className="d-flex justify-content-between small text-muted mb-2">
                   <span>Cant: {boletoSeleccionado.cantidad || 1}</span>
