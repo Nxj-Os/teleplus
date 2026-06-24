@@ -1,13 +1,6 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-// Importación de Banners y Eventos
-import imgEvento4 from "../assets/img/evento4.png";
-import imgEvento1 from "../assets/img/index-evento1.jpg";
-import imgEvento2 from "../assets/img/index-evento2.jpg";
-import imgEvento3 from "../assets/img/index-evento3.jpg";
-import imgEvento5 from "../assets/img/index-evento5.jpg";
-import imgEvento6 from "../assets/img/index-evento6.jpg";
 import LayoutPrincipal from "../layouts/LayoutPrincipal";
 
 export default function Inicio() {
@@ -35,6 +28,8 @@ export default function Inicio() {
     ...evento,
     title: evento.titulo,
     subtitle: evento.descripcion,
+    img: evento.imagen || "https://placehold.co/1200x600?text=Evento",
+    ruta: `/evento/${evento.id_evento}`,
     active: index === 0,
   }));
 
@@ -142,7 +137,7 @@ export default function Inicio() {
                 <div className="card h-100 border-0 shadow-sm overflow-hidden">
                   <Link to={`/evento/${evento.id_evento}`}>
                     <img
-                      src={evento.img}
+                      src={evento.imagen || "https://placehold.co/400x300?text=Evento"}
                       alt={`Evento ${evento.id_evento}`}
                       className="card-img-top"
                       style={{ transition: "transform 0.3s" }}

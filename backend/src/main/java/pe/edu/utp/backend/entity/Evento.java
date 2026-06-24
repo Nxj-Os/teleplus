@@ -37,7 +37,7 @@ public class Evento {
     @NotNull
     private LocalTime hora_evento;
 
-    @Size(max = 255)
+    @Size(max = 500)
     private String imagen;
 
     @Column(length = 30)

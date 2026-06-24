@@ -8,6 +8,8 @@ public interface EventoZonaPrecioService {
 
     List<EventoZonaPrecio> listar();
 
+    List<EventoZonaPrecio> listarPorEvento(Long eventoId);
+
     EventoZonaPrecio buscarPorId(Long id);
 
     EventoZonaPrecio guardar(EventoZonaPrecio eventoZonaPrecio);
