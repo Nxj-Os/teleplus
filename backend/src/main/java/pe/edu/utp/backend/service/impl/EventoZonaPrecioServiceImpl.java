@@ -35,6 +35,12 @@ public class EventoZonaPrecioServiceImpl
     }
 
     @Override
+    public List<EventoZonaPrecio> listarPorEvento(Long eventoId) {
+
+        return repository.findByEventoId(eventoId);
+    }
+
+    @Override
     public EventoZonaPrecio buscarPorId(Long id) {
 
         return repository.findById(id).orElse(null);
