@@ -2,9 +2,14 @@ package pe.edu.utp.backend.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pe.edu.utp.backend.entity.Evento;
+import pe.edu.utp.backend.entity.EventoZonaPrecio;
+import pe.edu.utp.backend.entity.DetalleCompra;
 import pe.edu.utp.backend.entity.Lugar;
 import pe.edu.utp.backend.repository.EventoRepository;
+import pe.edu.utp.backend.repository.EventoZonaPrecioRepository;
+import pe.edu.utp.backend.repository.DetalleCompraRepository;
 import pe.edu.utp.backend.repository.LugarRepository;
 import pe.edu.utp.backend.service.EventoService;
 
@@ -15,7 +20,8 @@ import java.util.List;
 public class EventoServiceImpl implements EventoService {
 
     private final EventoRepository eventoRepository;
-
+    private final EventoZonaPrecioRepository eventoZonaPrecioRepository;
+    private final DetalleCompraRepository detalleCompraRepository;
     private final LugarRepository lugarRepository;
 
     @Override
@@ -55,7 +61,23 @@ public class EventoServiceImpl implements EventoService {
     }
 
     @Override
-    public void eliminar(Long id) {
+    @Transactional
+    public boolean eliminar(Long id) {
+        Evento evento = eventoRepository.findById(id).orElse(null);
+        if (evento == null) {
+            return false;
+        }
+
+        List<EventoZonaPrecio> ezpList = eventoZonaPrecioRepository.findByEventoId(id);
+
+        for (EventoZonaPrecio ezp : ezpList) {
+            List<DetalleCompra> detalles = detalleCompraRepository.findByEventoZonaPrecioId(ezp.getId());
+            detalleCompraRepository.deleteAll(detalles);
+        }
+
+        eventoZonaPrecioRepository.deleteAll(ezpList);
+
         eventoRepository.deleteById(id);
+        return true;
     }
 }

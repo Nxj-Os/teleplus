@@ -28,6 +28,13 @@ public class EventoZonaPrecioController {
         return service.listar();
     }
 
+    @GetMapping("/evento/{eventoId}")
+    public List<EventoZonaPrecio> listarPorEvento(
+            @PathVariable Long eventoId) {
+
+        return service.listarPorEvento(eventoId);
+    }
+
     @GetMapping("/{id}")
     public EventoZonaPrecio buscarPorId(
             @PathVariable Long id) {

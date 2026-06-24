@@ -1,6 +1,7 @@
 package pe.edu.utp.backend.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.utp.backend.entity.Evento;
 import pe.edu.utp.backend.service.EventoService;
@@ -38,7 +39,11 @@ public class EventoController {
 	}
 
 	@DeleteMapping("/{id}")
-	public void eliminar(@PathVariable Long id) {
-		eventoService.eliminar(id);
+	public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+		boolean eliminado = eventoService.eliminar(id);
+		if (!eliminado) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.noContent().build();
 	}
 }

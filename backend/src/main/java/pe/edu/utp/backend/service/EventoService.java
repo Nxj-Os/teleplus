@@ -14,5 +14,5 @@ public interface EventoService {
 
     Evento actualizar(Long id, Evento evento);
 
-    void eliminar(Long id);
+    boolean eliminar(Long id);
 }
