@@ -73,29 +73,29 @@ export default function Evento5() {
               {
                 zona: "ZONA DIAMANTE",
                 dot: "bg-danger",
-                preventa: "S/ 119.00",
-                regular: "S/ 150.00",
-                conadis: "S/ 120.00",
+                preventa: "S/. 119.00",
+                regular: "S/. 150.00",
+                conadis: "S/. 120.00",
               },
               {
                 zona: "PALCOS REALES",
                 dot: "bg-success",
-                preventa: "S/ 99.00",
-                regular: "S/ 125.00",
+                preventa: "S/. 99.00",
+                regular: "S/. 125.00",
                 conadis: "----",
               },
               {
                 zona: "GALERÍA ENCANTADA",
                 dot: "bg-info",
-                preventa: "S/ 75.00",
-                regular: "S/ 90.00",
+                preventa: "S/. 75.00",
+                regular: "S/. 90.00",
                 conadis: "----",
               },
               {
                 zona: "VISTA DEL REINO",
                 dot: "bg-primary",
-                preventa: "S/ 45.00",
-                regular: "S/ 60.00",
+                preventa: "S/. 45.00",
+                regular: "S/. 60.00",
                 conadis: "----",
               },
             ].map((item, index) => (
@@ -148,7 +148,7 @@ export default function Evento5() {
               })
             }
           >
-            COMPRAR PREVENTA (S/ 119)
+            COMPRAR PREVENTA (S/. 119)
           </button>
 
           <button
@@ -164,7 +164,7 @@ export default function Evento5() {
               })
             }
           >
-            PRECIO REGULAR (S/ 150)
+            PRECIO REGULAR (S/. 150)
           </button>
 
           <small className="text-secondary d-block">

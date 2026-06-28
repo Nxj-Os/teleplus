@@ -248,7 +248,7 @@ function EventoDetalle() {
                                 {tipoNombre}
                               </div>
                               <div className={styles["precio"]}>
-                                S/ {Number(tipoData.precio).toFixed(2)}
+                                S/. {Number(tipoData.precio).toFixed(2)}
                               </div>
                               {tipoData.stockDisponible <= 5 &&
                                 tipoData.stockDisponible > 0 && (

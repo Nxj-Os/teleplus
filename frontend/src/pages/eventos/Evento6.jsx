@@ -41,8 +41,8 @@ export default function Evento6() {
               <div className="col-lg-6">
                 <div className={`${styles["zona"]} ${styles["vip"]}`}>
                   <h5>PRIMERAS FILAS</h5>
-                  <p>Preventa: S/ 617.50</p>
-                  <p>Regular: S/ 747.50</p>
+                  <p>Preventa: S/. 617.50</p>
+                  <p>Regular: S/. 747.50</p>
                   <button
                     className="btn btn-danger w-100"
                     onClick={() =>
@@ -62,8 +62,8 @@ export default function Evento6() {
 
                 <div className={styles["zona"]}>
                   <h5>DIAMANTE</h5>
-                  <p>Preventa: S/ 522.50</p>
-                  <p>Regular: S/ 632.50</p>
+                  <p>Preventa: S/. 522.50</p>
+                  <p>Regular: S/. 632.50</p>
                   <button
                     className="btn btn-primary w-100"
                     onClick={() =>
@@ -83,8 +83,8 @@ export default function Evento6() {
 
                 <div className={styles["zona"]}>
                   <h5>PLATINUM</h5>
-                  <p>Preventa: S/ 380.00</p>
-                  <p>Regular: S/ 460.00</p>
+                  <p>Preventa: S/. 380.00</p>
+                  <p>Regular: S/. 460.00</p>
                   <button
                     className="btn btn-primary w-100"
                     onClick={() =>
@@ -104,8 +104,8 @@ export default function Evento6() {
 
                 <div className={styles["zona"]}>
                   <h5>GOLDEN</h5>
-                  <p>Preventa: S/ 285.00</p>
-                  <p>Regular: S/ 345.00</p>
+                  <p>Preventa: S/. 285.00</p>
+                  <p>Regular: S/. 345.00</p>
                   <button
                     className="btn btn-primary w-100"
                     onClick={() =>
@@ -125,8 +125,8 @@ export default function Evento6() {
 
                 <div className={styles["zona"]}>
                   <h5>SILVER</h5>
-                  <p>Preventa: S/ 237.50</p>
-                  <p>Regular: S/ 287.50</p>
+                  <p>Preventa: S/. 237.50</p>
+                  <p>Regular: S/. 287.50</p>
                   <button
                     className="btn btn-secondary w-100"
                     onClick={() =>

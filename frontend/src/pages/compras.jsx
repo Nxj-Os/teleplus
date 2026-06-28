@@ -141,7 +141,7 @@ function Compras() {
 
                 <h4 className="mt-3">Precio unitario</h4>
 
-                <h2 className="text-danger">S/ {precioUnitario.toFixed(2)}</h2>
+                <h2 className="text-danger">S/. {precioUnitario.toFixed(2)}</h2>
               </div>
             </div>
 
@@ -248,7 +248,7 @@ function Compras() {
                   </p>
                 )}
 
-                <h3 className="text-danger">S/ {totalFinal.toFixed(2)}</h3>
+                <h3 className="text-danger">S/. {totalFinal.toFixed(2)}</h3>
 
                 {/* BOTÓN */}
                 <button

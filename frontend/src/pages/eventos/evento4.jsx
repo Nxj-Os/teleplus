@@ -53,13 +53,13 @@ function Evento4() {
                 </div>
                 <div className={`${styles["celda-precio"]} px-3 text-center`}>
                   <div className="small fw-bold">PREVENTA FANS</div>
-                  <div className={styles["precio"]}>S/ 230.00</div>
+                  <div className={styles["precio"]}>S/. 230.00</div>
                 </div>
                 <div
                   className={`${styles["celda-precio"]} ${styles["destacado"]} px-3 text-center bg-light`}
                 >
                   <div className="small fw-bold">PREVENTA INTERBANK</div>
-                  <div className={styles["precio"]}>S/ 210.00</div>
+                  <div className={styles["precio"]}>S/. 210.00</div>
                 </div>
               </div>
 
@@ -75,13 +75,13 @@ function Evento4() {
                 </div>
                 <div className={`${styles["celda-precio"]} px-3 text-center`}>
                   <div className="small fw-bold">PREVENTA FANS</div>
-                  <div className={styles["precio"]}>S/ 200.00</div>
+                  <div className={styles["precio"]}>S/. 200.00</div>
                 </div>
                 <div
                   className={`${styles["celda-precio"]} ${styles["destacado"]} px-3 text-center bg-light`}
                 >
                   <div className="small fw-bold">PREVENTA INTERBANK</div>
-                  <div className={styles["precio"]}>S/ 180.00</div>
+                  <div className={styles["precio"]}>S/. 180.00</div>
                 </div>
               </div>
 
@@ -97,13 +97,13 @@ function Evento4() {
                 </div>
                 <div className={`${styles["celda-precio"]} px-3 text-center`}>
                   <div className="small fw-bold">PREVENTA FANS</div>
-                  <div className={styles["precio"]}>S/ 150.00</div>
+                  <div className={styles["precio"]}>S/. 150.00</div>
                 </div>
                 <div
                   className={`${styles["celda-precio"]} ${styles["destacado"]} px-3 text-center bg-light`}
                 >
                   <div className="small fw-bold">PREVENTA INTERBANK</div>
-                  <div className={styles["precio"]}>S/ 130.00</div>
+                  <div className={styles["precio"]}>S/. 130.00</div>
                 </div>
               </div>
             </div>

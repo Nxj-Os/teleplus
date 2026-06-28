@@ -124,7 +124,7 @@ export default function VerBoletos() {
                           </p>
 
                           <h4 className="text-primary m-0 mt-2">
-                            ${boleto.precio_final?.toFixed(2)}
+                            S/. {boleto.precio_final?.toFixed(2)}
                           </h4>
                         </div>
                       </div>
@@ -200,12 +200,12 @@ export default function VerBoletos() {
                 </div>
                 <div className="d-flex justify-content-between small text-muted mb-2">
                   <span>Cant: {boletoSeleccionado.cantidad || 1}</span>
-                  <span>S/ {(boletoSeleccionado.precio_final).toFixed(2)}</span>
+                  <span>S/. {(boletoSeleccionado.precio_final).toFixed(2)}</span>
                 </div>
                 <hr className="my-2 border-dashed" />
                 <div className="d-flex justify-content-between fw-bold fs-5 text-dark mt-2">
                   <span>Costo Total</span>
-                  <span>S/ {(boletoSeleccionado.precio_final).toFixed(2)}</span>
+                  <span>S/. {(boletoSeleccionado.precio_final).toFixed(2)}</span>
                 </div>
               </div>
               <div>

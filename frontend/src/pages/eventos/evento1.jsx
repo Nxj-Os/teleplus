@@ -63,7 +63,7 @@ function Evento1() {
                     <div className={`${styles["celda-precio"]} flex-shrink-0`}>
                       <div className={styles["etiqueta"]}>PREVENTA FANS</div>
 
-                      <div className={styles["precio"]}>S/ 330.00</div>
+                      <div className={styles["precio"]}>S/. 330.00</div>
                     </div>
 
                     {/* INTERBANK */}
@@ -74,21 +74,21 @@ function Evento1() {
                         PREVENTA INTERBANK
                       </div>
 
-                      <div className={styles["precio"]}>S/ 280.00</div>
+                      <div className={styles["precio"]}>S/. 280.00</div>
                     </div>
 
                     {/* FULL */}
                     <div className={`${styles["celda-precio"]} flex-shrink-0`}>
                       <div className={styles["etiqueta"]}>PRECIO FULL</div>
 
-                      <div className={styles["precio"]}>S/ 400.00</div>
+                      <div className={styles["precio"]}>S/. 400.00</div>
                     </div>
 
                     {/* CONADIS */}
                     <div className={`${styles["celda-precio"]} flex-shrink-0`}>
                       <div className={styles["etiqueta"]}>CONADIS</div>
 
-                      <div className={styles["precio"]}>S/ 153.00</div>
+                      <div className={styles["precio"]}>S/. 153.00</div>
                     </div>
                   </div>
                 </div>
@@ -107,7 +107,7 @@ function Evento1() {
                     <div className={`${styles["celda-precio"]} flex-shrink-0`}>
                       <div className={styles["etiqueta"]}>PREVENTA FANS</div>
 
-                      <div className={styles["precio"]}>S/ 153.00</div>
+                      <div className={styles["precio"]}>S/. 153.00</div>
                     </div>
 
                     <div
@@ -117,19 +117,19 @@ function Evento1() {
                         PREVENTA INTERBANK
                       </div>
 
-                      <div className={styles["precio"]}>S/ 123.00</div>
+                      <div className={styles["precio"]}>S/. 123.00</div>
                     </div>
 
                     <div className={`${styles["celda-precio"]} flex-shrink-0`}>
                       <div className={styles["etiqueta"]}>PRECIO FULL</div>
 
-                      <div className={styles["precio"]}>S/ 210.00</div>
+                      <div className={styles["precio"]}>S/. 210.00</div>
                     </div>
 
                     <div className={`${styles["celda-precio"]} flex-shrink-0`}>
                       <div className={styles["etiqueta"]}>CONADIS</div>
 
-                      <div className={styles["precio"]}>S/ 99.00</div>
+                      <div className={styles["precio"]}>S/. 99.00</div>
                     </div>
                   </div>
                 </div>

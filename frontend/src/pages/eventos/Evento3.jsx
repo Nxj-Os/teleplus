@@ -57,15 +57,15 @@ function TablaPrecios() {
               </div>
             </td>
             <td>
-              <span className={styles["price-prefix"]}>S/</span>459
+              <span className={styles["price-prefix"]}>S/.</span>459
               <span className={styles["price-decimals"]}>.00</span>
             </td>
             <td className={styles["price--highlight"]}>
-              <span className={styles["price-prefix"]}>S/</span>390
+              <span className={styles["price-prefix"]}>S/.</span>390
               <span className={styles["price-decimals"]}>.00</span>
             </td>
             <td>
-              <span className={styles["price-prefix"]}>S/</span>459
+              <span className={styles["price-prefix"]}>S/.</span>459
               <span className={styles["price-decimals"]}>.00</span>
             </td>
             <td>----</td>
@@ -86,15 +86,15 @@ function TablaPrecios() {
               </div>
             </td>
             <td>
-              <span className={styles["price-prefix"]}>S/</span>399
+              <span className={styles["price-prefix"]}>S/.</span>399
               <span className={styles["price-decimals"]}>.00</span>
             </td>
             <td className={styles["price--highlight"]}>
-              <span className={styles["price-prefix"]}>S/</span>340
+              <span className={styles["price-prefix"]}>S/.</span>340
               <span className={styles["price-decimals"]}>.00</span>
             </td>
             <td>
-              <span className={styles["price-prefix"]}>S/</span>399
+              <span className={styles["price-prefix"]}>S/.</span>399
               <span className={styles["price-decimals"]}>.00</span>
             </td>
             <td>----</td>
@@ -113,15 +113,15 @@ function TablaPrecios() {
               </div>
             </td>
             <td>
-              <span className={styles["price-prefix"]}>S/</span>342
+              <span className={styles["price-prefix"]}>S/.</span>342
               <span className={styles["price-decimals"]}>.00</span>
             </td>
             <td className={styles["price--highlight"]}>
-              <span className={styles["price-prefix"]}>S/</span>290
+              <span className={styles["price-prefix"]}>S/.</span>290
               <span className={styles["price-decimals"]}>.00</span>
             </td>
             <td>
-              <span className={styles["price-prefix"]}>S/</span>342
+              <span className={styles["price-prefix"]}>S/.</span>342
               <span className={styles["price-decimals"]}>.00</span>
             </td>
             <td>----</td>
@@ -140,15 +140,15 @@ function TablaPrecios() {
               </div>
             </td>
             <td>
-              <span className={styles["price-prefix"]}>S/</span>259
+              <span className={styles["price-prefix"]}>S/.</span>259
               <span className={styles["price-decimals"]}>.00</span>
             </td>
             <td className={styles["price--highlight"]}>
-              <span className={styles["price-prefix"]}>S/</span>220
+              <span className={styles["price-prefix"]}>S/.</span>220
               <span className={styles["price-decimals"]}>.00</span>
             </td>
             <td>
-              <span className={styles["price-prefix"]}>S/</span>259
+              <span className={styles["price-prefix"]}>S/.</span>259
               <span className={styles["price-decimals"]}>.00</span>
             </td>
             <td>----</td>
@@ -169,19 +169,19 @@ function TablaPrecios() {
               </div>
             </td>
             <td>
-              <span className={styles["price-prefix"]}>S/</span>399
+              <span className={styles["price-prefix"]}>S/.</span>399
               <span className={styles["price-decimals"]}>.00</span>
             </td>
             <td className={styles["price--highlight"]}>
-              <span className={styles["price-prefix"]}>S/</span>340
+              <span className={styles["price-prefix"]}>S/.</span>340
               <span className={styles["price-decimals"]}>.00</span>
             </td>
             <td>
-              <span className={styles["price-prefix"]}>S/</span>399
+              <span className={styles["price-prefix"]}>S/.</span>399
               <span className={styles["price-decimals"]}>.00</span>
             </td>
             <td>
-              <span className={styles["price-prefix"]}>S/</span>319
+              <span className={styles["price-prefix"]}>S/.</span>319
               <span className={styles["price-decimals"]}>.00</span>
             </td>
           </tr>
@@ -201,15 +201,15 @@ function TablaPrecios() {
               </div>
             </td>
             <td>
-              <span className={styles["price-prefix"]}>S/</span>342
+              <span className={styles["price-prefix"]}>S/.</span>342
               <span className={styles["price-decimals"]}>.00</span>
             </td>
             <td className={styles["price--highlight"]}>
-              <span className={styles["price-prefix"]}>S/</span>290
+              <span className={styles["price-prefix"]}>S/.</span>290
               <span className={styles["price-decimals"]}>.00</span>
             </td>
             <td>
-              <span className={styles["price-prefix"]}>S/</span>342
+              <span className={styles["price-prefix"]}>S/.</span>342
               <span className={styles["price-decimals"]}>.00</span>
             </td>
             <td>----</td>
@@ -230,15 +230,15 @@ function TablaPrecios() {
               </div>
             </td>
             <td>
-              <span className={styles["price-prefix"]}>S/</span>399
+              <span className={styles["price-prefix"]}>S/.</span>399
               <span className={styles["price-decimals"]}>.00</span>
             </td>
             <td className={styles["price--highlight"]}>
-              <span className={styles["price-prefix"]}>S/</span>340
+              <span className={styles["price-prefix"]}>S/.</span>340
               <span className={styles["price-decimals"]}>.00</span>
             </td>
             <td>
-              <span className={styles["price-prefix"]}>S/</span>399
+              <span className={styles["price-prefix"]}>S/.</span>399
               <span className={styles["price-decimals"]}>.00</span>
             </td>
             <td>----</td>
@@ -259,15 +259,15 @@ function TablaPrecios() {
               </div>
             </td>
             <td>
-              <span className={styles["price-prefix"]}>S/</span>342
+              <span className={styles["price-prefix"]}>S/.</span>342
               <span className={styles["price-decimals"]}>.00</span>
             </td>
             <td className={styles["price--highlight"]}>
-              <span className={styles["price-prefix"]}>S/</span>290
+              <span className={styles["price-prefix"]}>S/.</span>290
               <span className={styles["price-decimals"]}>.00</span>
             </td>
             <td>
-              <span className={styles["price-prefix"]}>S/</span>342
+              <span className={styles["price-prefix"]}>S/.</span>342
               <span className={styles["price-decimals"]}>.00</span>
             </td>
             <td>----</td>
@@ -286,15 +286,15 @@ function TablaPrecios() {
               </div>
             </td>
             <td>
-              <span className={styles["price-prefix"]}>S/</span>142
+              <span className={styles["price-prefix"]}>S/.</span>142
               <span className={styles["price-decimals"]}>.00</span>
             </td>
             <td className={styles["price--highlight"]}>
-              <span className={styles["price-prefix"]}>S/</span>120
+              <span className={styles["price-prefix"]}>S/.</span>120
               <span className={styles["price-decimals"]}>.00</span>
             </td>
             <td>
-              <span className={styles["price-prefix"]}>S/</span>142
+              <span className={styles["price-prefix"]}>S/.</span>142
               <span className={styles["price-decimals"]}>.00</span>
             </td>
             <td>----</td>

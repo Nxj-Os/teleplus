@@ -83,7 +83,7 @@ function IndexDashboard() {
 
         <article className={styles.card}>
           <h3>Ganancias</h3>
-          <p>S/ 15,000</p>
+          <p>S/. 15,000</p>
           <span className={styles["card-caption"]}>Estimado del periodo</span>
         </article>
       </section>
