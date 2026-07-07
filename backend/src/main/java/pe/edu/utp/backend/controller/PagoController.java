@@ -11,7 +11,6 @@ import pe.edu.utp.backend.service.PagoService;
 
 @RestController
 @RequestMapping("/api/pagos")
-@CrossOrigin(origins = "*")
 public class PagoController {
 
     @Autowired

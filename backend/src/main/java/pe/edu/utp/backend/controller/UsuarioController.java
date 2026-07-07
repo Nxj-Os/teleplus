@@ -6,51 +6,59 @@ import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.*;
 
-import pe.edu.utp.backend.entity.Usuario;
+import pe.edu.utp.backend.dto.AuthResponseDTO;
+import pe.edu.utp.backend.dto.LoginRequestDTO;
 import pe.edu.utp.backend.entity.Rol;
-import pe.edu.utp.backend.repository.UsuarioRepository;
+import pe.edu.utp.backend.entity.Usuario;
 import pe.edu.utp.backend.repository.RolRepository;
+import pe.edu.utp.backend.repository.UsuarioRepository;
+import pe.edu.utp.backend.security.JwtUtil;
 import pe.edu.utp.backend.service.UsuarioService;
 
 @RestController
 @RequestMapping("/api/usuarios")
-@CrossOrigin(origins = "http://localhost:5173", allowedHeaders = "*")
 public class UsuarioController {
 
     private final UsuarioRepository usuarioRepository;
-    private final RolRepository rolRepository; 
+    private final RolRepository rolRepository;
     private final UsuarioService usuarioService;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
-    public UsuarioController(UsuarioRepository usuarioRepository, RolRepository rolRepository, UsuarioService usuarioService) {
+    public UsuarioController(UsuarioRepository usuarioRepository,
+                              RolRepository rolRepository,
+                              UsuarioService usuarioService,
+                              PasswordEncoder passwordEncoder,
+                              JwtUtil jwtUtil) {
         this.usuarioRepository = usuarioRepository;
         this.rolRepository = rolRepository;
         this.usuarioService = usuarioService;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtUtil = jwtUtil;
     }
-    
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody Usuario loginData) {
 
-        if (loginData.getCorreo() == null || loginData.getContrasena() == null) {
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequestDTO loginData) {
+        if (loginData.correo() == null || loginData.contrasena() == null) {
             return ResponseEntity.badRequest().body("Faltan datos de acceso");
         }
 
-        Optional<Usuario> userOpt = usuarioRepository.findByCorreo(loginData.getCorreo());
+        Optional<Usuario> userOpt = usuarioRepository.findByCorreo(loginData.correo());
 
         if (userOpt.isPresent()) {
             Usuario user = userOpt.get();
-
-            if (user.getContrasena().equals(loginData.getContrasena())) {
-                return ResponseEntity.ok(user); 
+            if (passwordEncoder.matches(loginData.contrasena(), user.getContrasena())) {
+                String token = jwtUtil.generateToken(user);
+                return ResponseEntity.ok(new AuthResponseDTO(
+                        token,
+                        user.getId_usuario(),
+                        user.getNombre(),
+                        user.getCorreo(),
+                        user.getRol().getNombreRol()
+                ));
             }
         }
 
@@ -58,24 +66,28 @@ public class UsuarioController {
     }
 
     @PostMapping("/login-admin")
-    public ResponseEntity<?> loginAdmin(@RequestBody Usuario loginData) {
-
-        if (loginData.getCorreo() == null || loginData.getContrasena() == null) {
+    public ResponseEntity<?> loginAdmin(@RequestBody LoginRequestDTO loginData) {
+        if (loginData.correo() == null || loginData.contrasena() == null) {
             return ResponseEntity.badRequest().body("Faltan datos de acceso");
         }
 
-        Optional<Usuario> userOpt = usuarioRepository.findByCorreo(loginData.getCorreo());
+        Optional<Usuario> userOpt = usuarioRepository.findByCorreo(loginData.correo());
 
         if (userOpt.isPresent()) {
             Usuario user = userOpt.get();
-
-            if (user.getContrasena().equals(loginData.getContrasena())) {
-
+            if (passwordEncoder.matches(loginData.contrasena(), user.getContrasena())) {
                 if (user.getRol() != null && "CLIENTE".equalsIgnoreCase(user.getRol().getNombreRol())) {
                     return ResponseEntity.status(HttpStatus.FORBIDDEN)
                             .body("Acceso denegado: Tu cuenta no cuenta con permisos de administrador.");
                 }
-                return ResponseEntity.ok(user); 
+                String token = jwtUtil.generateToken(user);
+                return ResponseEntity.ok(new AuthResponseDTO(
+                        token,
+                        user.getId_usuario(),
+                        user.getNombre(),
+                        user.getCorreo(),
+                        user.getRol().getNombreRol()
+                ));
             }
         }
 
@@ -84,15 +96,12 @@ public class UsuarioController {
 
     @PostMapping("/registro")
     public ResponseEntity<?> registrar(@RequestBody Usuario usuario) {
-
         if (usuario.getEstado() == null) {
             usuario.setEstado("activo");
         }
-
         if (usuario.getFecha_registro() == null) {
             usuario.setFecha_registro(LocalDate.now());
         }
-
         if (usuario.getRol() == null) {
             Optional<Rol> rolCliente = rolRepository.findByNombreRol("CLIENTE");
             if (rolCliente.isPresent()) {
@@ -102,6 +111,8 @@ public class UsuarioController {
                         .body("Error: El rol 'CLIENTE' no está inicializado en la base de datos.");
             }
         }
+
+        usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioRepository.save(usuario));
     }
@@ -114,17 +125,14 @@ public class UsuarioController {
     @PutMapping("/{id}")
     public ResponseEntity<Usuario> actualizar(@PathVariable Long id, @RequestBody Usuario usuario) {
         Usuario actualizado = usuarioService.actualizar(id, usuario);
-
         if (actualizado == null) {
             return ResponseEntity.notFound().build();
         }
-
         return ResponseEntity.ok(actualizado);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Usuario> obtenerPorId(@PathVariable Long id) {
-
         return usuarioRepository.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());

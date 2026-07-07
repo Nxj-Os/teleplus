@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { useCallback, useEffect, useState } from "react";
+import { BrowserRouter, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import "./App.css";
+import SessionExpiredModal from "./components/SessionExpiredModal";
+import useIdleTimer from "./hooks/useIdleTimer";
 import Cargando from "./pages/Cargando";
 import Compras from "./pages/compras";
 import DashboardGuard from "./pages/dashboard/DashboardGuard";
@@ -26,6 +28,43 @@ import TerminosUso from "./pages/TerminosUso";
 import AvisoLegal from "./pages/AvisoLegal";
 import EventoDetalle from "./pages/eventos/EventoDetalle";
 import PromocionesDashboard from "./pages/dashboard/PromocionesDashboard";
+
+function SessionManager() {
+  const navigate = useNavigate();
+  const [sessionExpired, setSessionExpired] = useState(false);
+  const [sessionMessage, setSessionMessage] = useState("");
+
+  const handleSessionExpired = useCallback((message) => {
+    setSessionMessage(message || "Tu sesión ha expirado por seguridad. Inicia sesión nuevamente.");
+    setSessionExpired(true);
+  }, []);
+
+  const handleCloseSession = useCallback(() => {
+    setSessionExpired(false);
+    navigate("/login", { replace: true });
+  }, [navigate]);
+
+  useEffect(() => {
+    const handler = () => handleSessionExpired();
+    window.addEventListener("session-expired", handler);
+    return () => window.removeEventListener("session-expired", handler);
+  }, [handleSessionExpired]);
+
+  useIdleTimer(() => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    localStorage.removeItem("dashboardUser");
+    handleSessionExpired("Tu sesión ha caducado por inactividad. Inicia sesión nuevamente.");
+  }, 300000);
+
+  return (
+    <SessionExpiredModal
+      visible={sessionExpired}
+      mensaje={sessionMessage}
+      onClose={handleCloseSession}
+    />
+  );
+}
 
 function RouteTransition() {
   const location = useLocation();
@@ -92,6 +131,7 @@ function RouteTransition() {
 function App() {
   return (
     <BrowserRouter>
+      <SessionManager />
       <RouteTransition />
     </BrowserRouter>
   );

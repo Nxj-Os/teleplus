@@ -1,75 +1,33 @@
-const BASE_URL = "http://localhost:8080/api/promociones";
+import apiClient from "./apiClient";
 
-const parseResponse = async (response) => {
-  const contentType = response.headers.get("content-type");
-  const hasJson = contentType?.includes("application/json");
-
-  const body = hasJson ? await response.json() : null;
-  if (!response.ok) {
-    const message =
-      body?.message ||
-      body?.error ||
-      body?.mensaje ||
-      JSON.stringify(body) ||
-      response.statusText;
-    throw new Error(message || `HTTP error ${response.status}`);
-  }
-
-  return body;
-};
+const BASE_URL = "/api/promociones";
 
 export const fetchPromociones = async () => {
-  const response = await fetch(BASE_URL);
-  return parseResponse(response);
+  const { data } = await apiClient.get(BASE_URL);
+  return data;
 };
 
 export const crearPromocion = async (promocion) => {
-  const response = await fetch(BASE_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(promocion),
-  });
-  return parseResponse(response);
+  const { data } = await apiClient.post(BASE_URL, promocion);
+  return data;
 };
 
 export const actualizarPromocion = async (id, promocion) => {
-  const response = await fetch(`${BASE_URL}/${id}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(promocion),
-  });
-  return parseResponse(response);
+  const { data } = await apiClient.put(`${BASE_URL}/${id}`, promocion);
+  return data;
 };
 
 export const eliminarPromocion = async (id) => {
-  const response = await fetch(`${BASE_URL}/${id}`, {
-    method: "DELETE",
-  });
-  return parseResponse(response);
+  const { data } = await apiClient.delete(`${BASE_URL}/${id}`);
+  return data;
 };
 
 export const validarPromocion = async (codigo) => {
-  const response = await fetch(`${BASE_URL}/validar`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ codigo }),
-  });
-  return parseResponse(response);
+  const { data } = await apiClient.post(`${BASE_URL}/validar`, { codigo });
+  return data;
 };
 
 export const aplicarPromocion = async (codigo) => {
-  const response = await fetch(`${BASE_URL}/aplicar`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ codigo }),
-  });
-  return parseResponse(response);
+  const { data } = await apiClient.post(`${BASE_URL}/aplicar`, { codigo });
+  return data;
 };

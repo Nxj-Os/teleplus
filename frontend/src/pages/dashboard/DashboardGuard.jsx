@@ -3,8 +3,10 @@ import { recuperarSesionDashboard } from "../../utils/dashboardAuth";
 
 function DashboardGuard() {
   const session = recuperarSesionDashboard();
+  const token = localStorage.getItem("token");
 
-  if (!session) {
+  // Sesión vieja sin JWT obliga a volver a loguearse
+  if (!session || !token) {
     return <Navigate to="/dashboard/login" replace />;
   }
 

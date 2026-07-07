@@ -1,93 +1,49 @@
-const API_URL = "http://localhost:8080/api/usuarios";
+import apiClient from "./apiClient";
+
+const API_PATH = "/api/usuarios";
 
 export const loginUsuario = async (credenciales) => {
   try {
-    const respuesta = await fetch(`${API_URL}/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(credenciales),
-    });
-
-    if (!respuesta.ok) {
-      const textoError = await respuesta.text();
-      const errorPersonalizado = new Error(textoError || "Credenciales incorrectas");
-      errorPersonalizado.response = { status: respuesta.status, data: textoError };
-      throw errorPersonalizado;
-    }
-
-    return await respuesta.json();
+    const respuesta = await apiClient.post(`${API_PATH}/login`, credenciales);
+    return respuesta.data;
   } catch (error) {
-    console.error("Error en loginUsuario:", error);
-    throw error;
+    const err = new Error(error.response?.data || "Credenciales incorrectas");
+    err.response = error.response
+      ? { status: error.response.status, data: error.response.data }
+      : null;
+    throw err;
   }
 };
 
 export const loginAdministrador = async (credenciales) => {
   try {
-    const respuesta = await fetch(`${API_URL}/login-admin`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(credenciales),
-    });
-
-    if (!respuesta.ok) {
-      const textoError = await respuesta.text();
-      const errorPersonalizado = new Error(textoError || "Error de autenticación administrativa");
-      errorPersonalizado.response = { status: respuesta.status, data: textoError };
-      throw errorPersonalizado;
-    }
-
-    return await respuesta.json();
+    const respuesta = await apiClient.post(`${API_PATH}/login-admin`, credenciales);
+    return respuesta.data;
   } catch (error) {
-    console.error("Error en loginAdministrador:", error);
-    throw error;
+    const err = new Error(
+      error.response?.data || "Error de autenticación administrativa"
+    );
+    err.response = error.response
+      ? { status: error.response.status, data: error.response.data }
+      : null;
+    throw err;
   }
 };
 
 export const registrarUsuario = async (nuevoUsuario) => {
   try {
-    const respuesta = await fetch(`${API_URL}/registro`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(nuevoUsuario),
-    });
-
-    if (!respuesta.ok) {
-      const errorData = await respuesta.text();
-      throw new Error(errorData || "Error al registrar el usuario");
-    }
-
-    return await respuesta.json();
+    const respuesta = await apiClient.post(`${API_PATH}/registro`, nuevoUsuario);
+    return respuesta.data;
   } catch (error) {
-    console.error("Error en registrarUsuario:", error);
-    throw error;
+    throw new Error(error.response?.data || "Error al registrar el usuario");
   }
 };
 
 export const actualizarUsuario = async (id, datosUsuario) => {
   try {
-    const respuesta = await fetch(`${API_URL}/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(datosUsuario),
-    });
-
-    if (!respuesta.ok) {
-      const errorData = await respuesta.text();
-      throw new Error(errorData || "Error al actualizar el usuario");
-    }
-
-    return await respuesta.json();
+    const respuesta = await apiClient.put(`${API_PATH}/${id}`, datosUsuario);
+    return respuesta.data;
   } catch (error) {
-    console.error("Error en actualizarUsuario:", error);
-    throw error;
+    throw new Error(error.response?.data || "Error al actualizar el usuario");
   }
 };

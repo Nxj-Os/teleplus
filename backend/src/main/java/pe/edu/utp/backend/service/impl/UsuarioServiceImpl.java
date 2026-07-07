@@ -3,6 +3,7 @@ package pe.edu.utp.backend.service.impl;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import pe.edu.utp.backend.entity.Usuario;
@@ -13,9 +14,11 @@ import pe.edu.utp.backend.service.UsuarioService;
 public class UsuarioServiceImpl implements UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UsuarioServiceImpl(UsuarioRepository usuarioRepository) {
+    public UsuarioServiceImpl(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -46,7 +49,7 @@ public class UsuarioServiceImpl implements UsuarioService {
             usuario.setEstado(datosNuevos.getEstado());
 
             if (datosNuevos.getContrasena() != null && !datosNuevos.getContrasena().isEmpty()) {
-                usuario.setContrasena(datosNuevos.getContrasena());
+                usuario.setContrasena(passwordEncoder.encode(datosNuevos.getContrasena()));
             }
             return usuarioRepository.save(usuario);
         }).orElse(null);

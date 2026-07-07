@@ -10,7 +10,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/zonas")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:5173")
 public class ZonaController {
 
     private final ZonaService zonaService;
