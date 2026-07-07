@@ -633,7 +633,7 @@ function EventosDashboard() {
                 </div>
 
                 <div className="col-md-2">
-                  <label className="form-label">Precio (S/)</label>
+                  <label className="form-label">Precio (S/.)</label>
                   <input
                     type="number"
                     className="form-control"
@@ -724,7 +724,7 @@ function EventosDashboard() {
                       <td>
                         <span className="badge bg-dark">{ezp.tipoPrecio}</span>
                       </td>
-                      <td>S/ {Number(ezp.precio).toFixed(2)}</td>
+                      <td>S/. {Number(ezp.precio).toFixed(2)}</td>
                       <td>{ezp.stock}</td>
                       <td>{ezp.stockDisponible}</td>
                       <td style={{ fontSize: "0.85rem" }}>
