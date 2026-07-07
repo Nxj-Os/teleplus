@@ -11,7 +11,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/eventos")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:5173")
 public class EventoController {
 
 	private final EventoService eventoService;

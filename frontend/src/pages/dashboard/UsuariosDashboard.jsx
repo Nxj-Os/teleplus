@@ -1,9 +1,9 @@
-import axios from "axios";
 import { useEffect, useMemo, useState } from "react";
-import { Navigate } from "react-router-dom"; 
+import { Navigate } from "react-router-dom";
 import styles from "../../css/dashboard.module.css";
-import { recuperarSesionDashboard } from "../../utils/dashboardAuth"; 
+import { recuperarSesionDashboard } from "../../utils/dashboardAuth";
 import DashboardShell from "./DashboardShell";
+import apiClient from "../../services/apiClient";
 
 function UsuariosDashboard() {
   const usuarioSesion = recuperarSesionDashboard();
@@ -34,8 +34,8 @@ function UsuariosDashboard() {
 
   const cargarUsuarios = () => {
     setCargando(true);
-    axios
-      .get("http://localhost:8080/api/usuarios")
+    apiClient
+      .get("/api/usuarios")
       .then((response) => {
         setUsuarios(response.data);
         setError("");
@@ -58,8 +58,8 @@ function UsuariosDashboard() {
 
   const alternarEstadoUsuario = (usuario) => {
     const nuevoEstado = usuario.estado === "activo" ? "bloqueado" : "activo";
-    axios
-      .put(`http://localhost:8080/api/usuarios/${usuario.id_usuario || usuario.id}`, {
+    apiClient
+      .put(`/api/usuarios/${usuario.id_usuario || usuario.id}`, {
         ...usuario,
         estado: nuevoEstado
       })
@@ -117,8 +117,8 @@ function UsuariosDashboard() {
       }
     };
 
-    axios
-      .put(`http://localhost:8080/api/usuarios/${id}`, datosActualizados)
+    apiClient
+      .put(`/api/usuarios/${id}`, datosActualizados)
       .then(() => {
         const disparadorCierre = document.getElementById("btn-cerrar-modal-usuarios");
         if (disparadorCierre) disparadorCierre.click();

@@ -1,23 +1,11 @@
+import apiClient from "./apiClient";
+
 export const guardarEntrada = async (entrada) => {
-    console.log("Enviando entrada:", entrada);
-
-    const response = await fetch("http://localhost:8080/api/entradas", {
-    method: "POST",
-
-    headers: {
-      "Content-Type": "application/json",
-    },
-
-    body: JSON.stringify(entrada),
-    });
-
-    return await response.json();
+  const { data } = await apiClient.post("/api/entradas", entrada);
+  return data;
 };
 
 export const obtenerEntradas = async () => {
-  const response = await fetch(
-    "http://localhost:8080/api/entradas"
-  );
-
-  return await response.json();
+  const { data } = await apiClient.get("/api/entradas");
+  return data;
 };

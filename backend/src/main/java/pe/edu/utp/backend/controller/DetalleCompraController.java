@@ -16,8 +16,6 @@ import java.util.List;
 
 @RequiredArgsConstructor
 
-@CrossOrigin(origins = "http://localhost:5173")
-
 public class DetalleCompraController {
 
     private final DetalleCompraService service;

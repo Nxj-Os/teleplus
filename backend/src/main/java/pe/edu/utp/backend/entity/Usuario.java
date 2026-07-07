@@ -1,5 +1,6 @@
 package pe.edu.utp.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -33,6 +34,7 @@ public class Usuario {
     @Size(max = 150)
     private String correo;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(length = 100, nullable = false)
     @NotBlank
     @Size(min = 6, max = 100)

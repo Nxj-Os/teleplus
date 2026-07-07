@@ -41,16 +41,22 @@ function DashboardLogin() {
       });
 
       if (data) {
-        const nombreRol = data.rol?.nombreRol || data.rol?.nombre_rol || "";
-        const esAdminOManager = String(nombreRol).toUpperCase() === "ADMIN" || 
-                                String(nombreRol).toUpperCase() === "MANAGER";
+        const nombreRol = String(data.rol || "").toUpperCase();
+        const esAdminOManager = nombreRol === "ADMIN" || nombreRol === "MANAGER";
 
         if (!esAdminOManager) {
           setError("Acceso denegado: Esta zona es exclusiva para el personal autorizado.");
           setCargando(false);
           return;
         }
-        guardarSesionDashboard(data);
+
+        localStorage.setItem("token", data.token);
+        guardarSesionDashboard({
+          id_usuario: data.id,
+          nombre: data.nombre,
+          correo: data.correo,
+          rol: { nombreRol: data.rol },
+        });
         navigate("/dashboard", { replace: true });
       }
     } catch (loginError) {

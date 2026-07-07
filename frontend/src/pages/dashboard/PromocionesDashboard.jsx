@@ -16,6 +16,7 @@ const INITIAL_FORM = {
   maximoUsos: "",
   stockDisponible: "",
   estado: "ACTIVA",
+  descripcion: "",
 };
 
 function PromocionesDashboard() {
@@ -161,6 +162,7 @@ function PromocionesDashboard() {
       maximoUsos: Number(form.maximoUsos),
       stockDisponible: Number(form.stockDisponible),
       estado: form.estado || "ACTIVA",
+      descripcion: form.descripcion.trim() || null,
     };
 
     try {
@@ -193,6 +195,7 @@ function PromocionesDashboard() {
       maximoUsos: promo.maximoUsos?.toString() || "",
       stockDisponible: promo.stockDisponible?.toString() || promo.stock?.toString() || "",
       estado: promo.estado || "ACTIVA",
+      descripcion: promo.descripcion || "",
     });
     setErrors({});
     setFeedback(null);
@@ -294,6 +297,20 @@ function PromocionesDashboard() {
                     <option value="ACTIVA">ACTIVA</option>
                     <option value="INACTIVA">INACTIVA</option>
                   </select>
+                </div>
+
+                <div className="col-md-12">
+                  <label className="form-label">Descripción</label>
+                  <textarea
+                    name="descripcion"
+                    className="form-control"
+                    value={form.descripcion}
+                    onChange={manejarCambio}
+                    rows="2"
+                    maxLength={200}
+                    placeholder="Descripción de la promoción..."
+                  />
+                  <div className="form-text text-muted">Opcional. Máximo 200 caracteres.</div>
                 </div>
 
                 <div className="col-md-3">

@@ -84,7 +84,13 @@ function Login() {
         });
 
         if (data) {
-          localStorage.setItem("user", JSON.stringify(data));
+          localStorage.setItem("token", data.token);
+          localStorage.setItem("user", JSON.stringify({
+            id_usuario: data.id,
+            nombre: data.nombre,
+            correo: data.correo,
+            rol: { nombreRol: data.rol },
+          }));
           setIsLoggedIn(true);
         }
       } catch (error) {
