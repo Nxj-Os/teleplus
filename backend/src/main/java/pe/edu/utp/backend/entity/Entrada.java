@@ -1,5 +1,5 @@
 package pe.edu.utp.backend.entity;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 @Entity
+@Table(name = "entradas")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -33,8 +33,10 @@ public class Entrada {
     private Float precio_final;
 
     @NotNull
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate fecha_generacion;
 
-    @FutureOrPresent
+    
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") 
     private LocalDateTime reservado_hasta;
 }

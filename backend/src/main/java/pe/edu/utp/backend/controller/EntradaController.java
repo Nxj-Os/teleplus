@@ -43,7 +43,6 @@ public class EntradaController {
             @PathVariable Long id,
             @RequestBody Entrada entrada
     ) {
-
         Entrada actual =
                 repository.findById(id).orElse(null);
 
