@@ -9,3 +9,7 @@ export const obtenerEntradas = async () => {
   const { data } = await apiClient.get("/api/entradas");
   return data;
 };
+export const actualizarEntrada = async (id, entradaActualizada) => {
+  const { data } = await apiClient.put(`/api/entradas/${id}`, entradaActualizada);
+  return data;
+};
