@@ -2,6 +2,7 @@ import styles from "../css/compras.module.css";
 import LayoutPrincipal from "../layouts/LayoutPrincipal";
 
 import { guardarEntrada } from "../services/entradaService";
+import { crearCompra } from "../services/compraService";
 
 import { useState } from "react";
 
@@ -10,6 +11,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { validarPromocion, aplicarPromocion as aplicarPromocionAPI } from "../services/promocionService";
 
 import { useLocation } from "react-router-dom";
+
+import PasarelaPago from "../components/PasarelaPago";
 
 function Compras() {
   const location = useLocation();
@@ -23,6 +26,8 @@ function Compras() {
   // STATES
   const [cantidad, setCantidad] = useState(1);
 
+  const [metodoPago, setMetodoPago] = useState("Tarjeta de crédito");
+
   const [codigoPromo, setCodigoPromo] = useState("");
 
   const [mensajePromo, setMensajePromo] = useState("");
@@ -34,6 +39,10 @@ function Compras() {
   const [aceptaPoliticas, setAceptaPoliticas] = useState(false);
 
   const [mostrarExito, setMostrarExito] = useState(false);
+
+  const [mostrarPasarela, setMostrarPasarela] = useState(false);
+
+  const [procesandoCompra, setProcesandoCompra] = useState(false);
 
   // TOTAL
   const subtotal = precioUnitario * cantidad;
@@ -60,23 +69,15 @@ function Compras() {
       setPromoValida(false);
     }
   };
-  const generarBoleto = () => {
-    const nuevoBoleto = {
-      nombre_evento: datosCompra?.evento,
-      codigo_qr: `QR_${Math.random().toString(36).substring(2, 14).toUpperCase()}`,
-      estado: "Activo",
-      lugar:datosCompra?.evento,
-      zona:datosCompra?.zona,
-      fecha_generacion: new Date().toISOString().split("T")[0],
-      precio_final: totalFinal,
-      reservado_hasta: null,
-    };
 
-    return nuevoBoleto;
-  };
   const handleCompra = async () => {
     if (!aceptaPoliticas) {
       alert("Debes aceptar las políticas");
+      return;
+    }
+
+    if (!metodoPago) {
+      alert("Selecciona un método de pago");
       return;
     }
 
@@ -89,23 +90,48 @@ function Compras() {
         }
       }
 
-      const boleto = generarBoleto();
+      setMostrarPasarela(true);
+    } catch (error) {
+      console.error(error);
+      alert("Error al validar la promoción");
+    }
+  };
+
+  const handleExitoPago = async () => {
+    setMostrarPasarela(false);
+    setProcesandoCompra(true);
+
+    try {
+      const compraData = {
+        fecha_compra: new Date().toISOString().split("T")[0],
+        total: totalFinal,
+        estado: "Completada",
+      };
+
+      const compraCreada = await crearCompra(compraData);
+
+      const codigoQR = `QR_${Math.random().toString(36).substring(2, 14).toUpperCase()}`;
 
       await guardarEntrada({
-        codigo_qr: boleto.codigo_qr,
-        estado: boleto.estado,
-        precio_final: boleto.precio_final,
+        codigo_qr: codigoQR,
+        estado: "Activo",
+        precio_final: totalFinal,
         reservado_hasta: null,
-        lugar:boleto.lugar,
-        zona:boleto.zona,
+        lugar: datosCompra?.lugar || datosCompra?.evento,
+        zona: datosCompra?.zona,
       });
 
       setMostrarExito(true);
     } catch (error) {
       console.error(error);
-
-      alert("Error al registrar la compra");
+      alert("Error al registrar la compra. Intente nuevamente.");
+    } finally {
+      setProcesandoCompra(false);
     }
+  };
+
+  const handleCancelarPago = () => {
+    setMostrarPasarela(false);
   };
 
   return (
@@ -164,11 +190,13 @@ function Compras() {
                 {/* PAGO */}
                 <label className="form-label">Método de pago</label>
 
-                <select className="form-select mb-3">
+                <select
+                  className="form-select mb-3"
+                  value={metodoPago}
+                  onChange={(e) => setMetodoPago(e.target.value)}
+                >
                   <option>Tarjeta de crédito</option>
-
                   <option>Tarjeta de débito</option>
-
                   <option>Yape / Plin</option>
                 </select>
 
@@ -253,10 +281,10 @@ function Compras() {
                 {/* BOTÓN */}
                 <button
                   className="btn btn-danger w-100 mt-3 fw-bold"
-                  disabled={!aceptaPoliticas}
+                  disabled={!aceptaPoliticas || procesandoCompra}
                   onClick={handleCompra}
                 >
-                  Confirmar compra{" "}
+                  {procesandoCompra ? "Procesando..." : "Confirmar compra"}
                 </button>
               </div>
             </div>
@@ -271,6 +299,18 @@ function Compras() {
           <small>Los boletos serán enviados a tu correo electrónico.</small>
         </section>
       </div>
+
+      {/* PASARELA DE PAGO */}
+      {mostrarPasarela && (
+        <PasarelaPago
+          metodoPago={metodoPago}
+          monto={totalFinal}
+          onExito={handleExitoPago}
+          onCancelar={handleCancelarPago}
+        />
+      )}
+
+      {/* MODAL ÉXITO */}
       {mostrarExito && (
         <>
           <div
