@@ -6,7 +6,7 @@ import {
   actualizarEvento,
   eliminarEvento,
   obtenerLugares,
-  obtenerZonas,
+  obtenerZonasPorLugar,
   obtenerZonasPorEvento,
   crearEventoZonaPrecio,
   actualizarEventoZonaPrecio,
@@ -19,7 +19,9 @@ const INITIAL_EVENTO = {
   fecha_evento: "",
   hora_evento: "",
   estado: "programado",
-  imagen: "",
+  imagenCarrusel: "",
+  imagenPortada: "",
+  imagenDetalle: "",
   lugar: "",
 };
 
@@ -74,19 +76,23 @@ function EventosDashboard() {
     }
   };
 
-  const cargarZonas = async () => {
+  const cargarZonasPorLugar = async (idLugar) => {
     try {
-      const data = await obtenerZonas();
+      if (!idLugar) {
+        setZonas([]);
+        return;
+      }
+      const data = await obtenerZonasPorLugar(idLugar);
       setZonas(data || []);
     } catch (error) {
-      console.error("Error cargando zonas:", error);
+      console.error("Error cargando zonas del lugar:", error);
+      setZonas([]);
     }
   };
 
   useEffect(() => {
     cargarEventos();
     cargarLugares();
-    cargarZonas();
   }, []);
 
   const abrirFormulario = () => {
@@ -110,7 +116,9 @@ function EventosDashboard() {
       fecha_evento: evento.fecha_evento || "",
       hora_evento: evento.hora_evento || "",
       estado: evento.estado || "programado",
-      imagen: evento.imagen || "",
+      imagenCarrusel: evento.imagenCarrusel || "",
+      imagenPortada: evento.imagenPortada || "",
+      imagenDetalle: evento.imagenDetalle || "",
       lugar: evento.lugar?.id_lugar || "",
     });
     setIsFormOpen(true);
@@ -144,7 +152,9 @@ function EventosDashboard() {
       fecha_evento: form.fecha_evento,
       hora_evento: form.hora_evento,
       estado: form.estado || "programado",
-      imagen: form.imagen.trim() || null,
+      imagenCarrusel: form.imagenCarrusel.trim() || null,
+      imagenPortada: form.imagenPortada.trim() || null,
+      imagenDetalle: form.imagenDetalle.trim() || null,
       lugar: { id_lugar: Number(form.lugar) },
     };
 
@@ -187,6 +197,7 @@ function EventosDashboard() {
     if (eventoSeleccionado?.id_evento === evento.id_evento) {
       setEventoSeleccionado(null);
       setZonaPrecioLista([]);
+      setZonas([]);
       return;
     }
 
@@ -196,8 +207,11 @@ function EventosDashboard() {
     setEditandoEzpId(null);
 
     try {
-      const data = await obtenerZonasPorEvento(evento.id_evento);
-      setZonaPrecioLista(data || []);
+      const [ezpData, zonasData] = await Promise.all([
+        obtenerZonasPorEvento(evento.id_evento),
+        cargarZonasPorLugar(evento.lugar?.id_lugar),
+      ]);
+      setZonaPrecioLista(ezpData || []);
     } catch (error) {
       console.error("Error cargando precios:", error);
       setZonaPrecioLista([]);
@@ -269,7 +283,7 @@ function EventosDashboard() {
   };
 
   const manejarEliminarEzp = async (ezp) => {
-    const confirmacion = window.confirm(`¿Eliminar precio "${ezp.tipoPrecio}" de zona ${ezp.zona?.nombre || ezp.zona?.id_zona}?`);
+    const confirmacion = window.confirm(`¿Eliminar precio "${ezp.tipoPrecio}" de zona ${ezp.zona?.nombre_zona || ezp.zona?.id_zona}?`);
     if (!confirmacion) return;
 
     try {
@@ -451,17 +465,47 @@ function EventosDashboard() {
                 </div>
 
                 <div className="col-md-12">
-                  <label className="form-label">URL de la imagen (banner)</label>
+                  <label className="form-label">URL imagen carrusel (inicio)</label>
                   <input
                     type="url"
                     className="form-control"
-                    name="imagen"
-                    value={form.imagen}
+                    name="imagenCarrusel"
+                    value={form.imagenCarrusel}
                     onChange={manejarCambio}
-                    placeholder="https://ejemplo.com/imagen-banner.jpg"
+                    placeholder="https://ejemplo.com/carrusel.jpg"
                   />
                   <div className="form-text text-muted">
-                    Opcional. Pega la URL de la imagen del banner del evento.
+                    Imagen del carrusel en la página principal. Tamaño recomendado: 1200x600px.
+                  </div>
+                </div>
+
+                <div className="col-md-6">
+                  <label className="form-label">URL imagen portada (tarjeta inicio)</label>
+                  <input
+                    type="url"
+                    className="form-control"
+                    name="imagenPortada"
+                    value={form.imagenPortada}
+                    onChange={manejarCambio}
+                    placeholder="https://ejemplo.com/portada.jpg"
+                  />
+                  <div className="form-text text-muted">
+                    Imagen de la tarjeta en la grilla de eventos. Tamaño recomendado: 400x300px.
+                  </div>
+                </div>
+
+                <div className="col-md-6">
+                  <label className="form-label">URL imagen detalle del evento</label>
+                  <input
+                    type="url"
+                    className="form-control"
+                    name="imagenDetalle"
+                    value={form.imagenDetalle}
+                    onChange={manejarCambio}
+                    placeholder="https://ejemplo.com/detalle-banner.jpg"
+                  />
+                  <div className="form-text text-muted">
+                    Banner en la página de detalle del evento. Tamaño recomendado: 1200x500px.
                   </div>
                 </div>
               </div>
@@ -613,7 +657,7 @@ function EventosDashboard() {
                     <option value="">Seleccionar...</option>
                     {zonas.map((z) => (
                       <option key={z.id_zona} value={z.id_zona}>
-                        {z.nombre} (cap. {z.capacidad})
+                        {z.nombre_zona} (cap. {z.capacidad})
                       </option>
                     ))}
                   </select>

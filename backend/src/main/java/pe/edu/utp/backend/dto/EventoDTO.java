@@ -19,7 +19,11 @@ public class EventoDTO {
 
     private LocalTime hora_evento;
 
-    private String imagen;
+    private String imagenCarrusel;
+
+    private String imagenPortada;
+
+    private String imagenDetalle;
 
     private String estado;
 

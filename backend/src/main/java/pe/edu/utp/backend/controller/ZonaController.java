@@ -19,6 +19,11 @@ public class ZonaController {
         return zonaService.listar();
     }
 
+    @GetMapping("/lugar/{idLugar}")
+    public List<Zona> listarPorLugar(@PathVariable Long idLugar) {
+        return zonaService.listarPorLugar(idLugar);
+    }
+
     @GetMapping("/{id}")
     public Zona buscarPorId(@PathVariable Long id) {
         return zonaService.buscarPorId(id);

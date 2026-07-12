@@ -1,7 +1,16 @@
 package pe.edu.utp.backend.repository;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import pe.edu.utp.backend.entity.Zona;
+
+import java.util.List;
+
 @Repository
 public interface ZonaRepository extends JpaRepository<Zona, Long> {
+
+    @Query("SELECT z FROM Zona z WHERE z.lugar.id_lugar = :idLugar")
+    List<Zona> findZonasByLugarId(@Param("idLugar") Long idLugar);
 }

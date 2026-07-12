@@ -54,7 +54,9 @@ public class EventoServiceImpl implements EventoService {
         actual.setDescripcion(nuevo.getDescripcion());
         actual.setFecha_evento(nuevo.getFecha_evento());
         actual.setHora_evento(nuevo.getHora_evento());
-        actual.setImagen(nuevo.getImagen());
+        actual.setImagenCarrusel(nuevo.getImagenCarrusel());
+        actual.setImagenPortada(nuevo.getImagenPortada());
+        actual.setImagenDetalle(nuevo.getImagenDetalle());
         actual.setEstado(nuevo.getEstado());
 
         return eventoRepository.save(actual);
