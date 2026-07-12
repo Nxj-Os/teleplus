@@ -301,6 +301,7 @@ function EventoDetalle() {
                           zona: ezp.zona?.nombre_zona || "General",
                           tipo: tipoNombre,
                           precio: Number(ezp.precio),
+                          idEventoZonaPrecio: ezp.id,
                         })
                       }
                     >

@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @Entity
 @AllArgsConstructor
@@ -36,6 +35,9 @@ public class Pago {
     @Column(length = 150)
     @Size(max = 150)
     private String codigo_transaccion;
-    @OneToMany
-    private Set<Compra> compras;
+
+    @ManyToOne
+    @JoinColumn(name = "id_compra")
+    @NotNull
+    private Compra compra;
 }
