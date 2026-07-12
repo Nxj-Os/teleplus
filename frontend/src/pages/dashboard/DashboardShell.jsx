@@ -9,6 +9,8 @@ function DashboardShell({ activeSection, title, subtitle, children }) {
   const navItems = [
     { to: "/dashboard", label: "Dashboard", section: "dashboard" },
     { to: "/dashboard/eventos", label: "Eventos", section: "eventos" },
+    { to: "/dashboard/lugares", label: "Lugares", section: "lugares" },
+    { to: "/dashboard/zonas", label: "Zonas", section: "zonas" },
     { to: "/dashboard/usuarios", label: "Usuarios", section: "usuarios" },
     { to: "/dashboard/promociones", label: "Promociones", section: "promociones" },
   ];

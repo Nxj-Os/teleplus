@@ -28,7 +28,7 @@ export default function Inicio() {
     ...evento,
     title: evento.titulo,
     subtitle: evento.descripcion,
-    img: evento.imagen || "https://placehold.co/1200x600?text=Evento",
+    img: evento.imagenCarrusel || "https://placehold.co/1200x600?text=Evento",
     ruta: `/evento/${evento.id_evento}`,
     active: index === 0,
   }));
@@ -137,10 +137,14 @@ export default function Inicio() {
                 <div className="card h-100 border-0 shadow-sm overflow-hidden">
                   <Link to={`/evento/${evento.id_evento}`}>
                     <img
-                      src={evento.imagen || "https://placehold.co/400x300?text=Evento"}
+                      src={evento.imagenPortada || "https://placehold.co/400x300?text=Evento"}
                       alt={`Evento ${evento.id_evento}`}
                       className="card-img-top"
-                      style={{ transition: "transform 0.3s" }}
+                      style={{
+                        height: "220px",
+                        objectFit: "cover",
+                        transition: "transform 0.3s",
+                      }}
                       onMouseOver={(e) =>
                         (e.currentTarget.style.transform = "scale(1.05)")
                       }

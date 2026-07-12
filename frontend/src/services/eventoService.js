@@ -40,8 +40,18 @@ export async function eliminarLugar(id) {
   await apiClient.delete(`${API}/lugares/${id}`);
 }
 
+export async function actualizarLugar(id, lugar) {
+  const { data } = await apiClient.put(`${API}/lugares/${id}`, lugar);
+  return data;
+}
+
 export async function obtenerZonas() {
   const { data } = await apiClient.get(`${API}/zonas`);
+  return data;
+}
+
+export async function obtenerZonasPorLugar(lugarId) {
+  const { data } = await apiClient.get(`${API}/zonas/lugar/${lugarId}`);
   return data;
 }
 

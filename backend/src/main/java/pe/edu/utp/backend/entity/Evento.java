@@ -38,7 +38,13 @@ public class Evento {
     private LocalTime hora_evento;
 
     @Size(max = 500)
-    private String imagen;
+    private String imagenCarrusel;
+
+    @Size(max = 500)
+    private String imagenPortada;
+
+    @Size(max = 500)
+    private String imagenDetalle;
 
     @Column(length = 30)
     @Size(max = 30)

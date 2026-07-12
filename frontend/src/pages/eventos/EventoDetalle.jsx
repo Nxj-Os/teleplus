@@ -151,7 +151,7 @@ function EventoDetalle() {
     );
   }
 
-  const bannerSrc = evento.imagen || bannerFallback;
+  const bannerSrc = evento.imagenDetalle || evento.imagenCarrusel || bannerFallback;
   const lugarNombre = evento.lugar?.nombre || "Lugar por definir";
   const lugarDireccion = evento.lugar?.direccion || "";
   const lugarCiudad = evento.lugar?.ciudad || "";

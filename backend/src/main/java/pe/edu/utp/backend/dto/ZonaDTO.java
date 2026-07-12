@@ -12,4 +12,6 @@ public class ZonaDTO {
     private Integer capacidad;
 
     private String estado;
+
+    private Long id_lugar;
 }
