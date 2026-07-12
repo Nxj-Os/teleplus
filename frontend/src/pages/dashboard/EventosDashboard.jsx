@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import DashboardShell from "./DashboardShell";
+import LugarSelector from "../../components/LugarSelector";
 import {
   obtenerEventos,
   crearEvento,
   actualizarEvento,
   eliminarEvento,
-  obtenerLugares,
   obtenerZonasPorLugar,
   obtenerZonasPorEvento,
   crearEventoZonaPrecio,
@@ -22,7 +22,6 @@ const INITIAL_EVENTO = {
   imagenCarrusel: "",
   imagenPortada: "",
   imagenDetalle: "",
-  lugar: "",
 };
 
 const INITIAL_EZP = {
@@ -36,7 +35,6 @@ const INITIAL_EZP = {
 
 function EventosDashboard() {
   const [eventos, setEventos] = useState([]);
-  const [lugares, setLugares] = useState([]);
   const [zonas, setZonas] = useState([]);
   const [busqueda, setBusqueda] = useState("");
   const [feedback, setFeedback] = useState(null);
@@ -53,6 +51,17 @@ function EventosDashboard() {
   const [editandoEzpId, setEditandoEzpId] = useState(null);
   const [isSubmittingEzp, setIsSubmittingEzp] = useState(false);
 
+  const [mostrarSelectorLugar, setMostrarSelectorLugar] = useState(false);
+  const [lugarSeleccionado, setLugarSeleccionado] = useState(null);
+
+  const abrirSelectorLugar = () => {
+    setMostrarSelectorLugar(true);
+  };
+
+  const cerrarSelectorLugar = () => {
+    setMostrarSelectorLugar(false);
+  };
+
   const cargarEventos = async () => {
     try {
       const data = await obtenerEventos();
@@ -64,15 +73,6 @@ function EventosDashboard() {
         type: "danger",
         text: "No se pudieron cargar los eventos. Verifica la conexión con el backend.",
       });
-    }
-  };
-
-  const cargarLugares = async () => {
-    try {
-      const data = await obtenerLugares();
-      setLugares(data || []);
-    } catch (error) {
-      console.error("Error cargando lugares:", error);
     }
   };
 
@@ -92,7 +92,6 @@ function EventosDashboard() {
 
   useEffect(() => {
     cargarEventos();
-    cargarLugares();
   }, []);
 
   const abrirFormulario = () => {
@@ -106,6 +105,7 @@ function EventosDashboard() {
     setFeedback(null);
     setIsFormOpen(false);
     setEditandoId(null);
+    setLugarSeleccionado(null);
   };
 
   const abrirEdicion = (evento) => {
@@ -121,6 +121,7 @@ function EventosDashboard() {
       imagenDetalle: evento.imagenDetalle || "",
       lugar: evento.lugar?.id_lugar || "",
     });
+    setLugarSeleccionado(evento.lugar || null);
     setIsFormOpen(true);
     setFeedback(null);
   };
@@ -138,7 +139,7 @@ function EventosDashboard() {
       return;
     }
 
-    if (!form.lugar) {
+    if (!lugarSeleccionado) {
       setFeedback({ type: "danger", text: "Debes seleccionar un lugar." });
       return;
     }
@@ -155,7 +156,7 @@ function EventosDashboard() {
       imagenCarrusel: form.imagenCarrusel.trim() || null,
       imagenPortada: form.imagenPortada.trim() || null,
       imagenDetalle: form.imagenDetalle.trim() || null,
-      lugar: { id_lugar: Number(form.lugar) },
+      lugar: { id_lugar: lugarSeleccionado.id_lugar },
     };
 
     try {
@@ -397,20 +398,31 @@ function EventosDashboard() {
 
                 <div className="col-md-6">
                   <label className="form-label">Lugar</label>
-                  <select
-                    className="form-select"
-                    name="lugar"
-                    value={form.lugar}
-                    onChange={manejarCambio}
-                    required
-                  >
-                    <option value="">Seleccionar lugar...</option>
-                    {lugares.map((l) => (
-                      <option key={l.id_lugar} value={l.id_lugar}>
-                        {l.nombre} — {l.ciudad}
-                      </option>
-                    ))}
-                  </select>
+                  {lugarSeleccionado ? (
+                    <div className="d-flex align-items-center justify-content-between border rounded p-2">
+                      <div>
+                        <div className="fw-bold">{lugarSeleccionado.nombre}</div>
+                        <small className="text-muted">
+                          {lugarSeleccionado.direccion}, {lugarSeleccionado.ciudad}
+                        </small>
+                      </div>
+                      <button
+                        type="button"
+                        className="btn btn-sm btn-outline-warning"
+                        onClick={abrirSelectorLugar}
+                      >
+                        Cambiar
+                      </button>
+                    </div>
+                  ) : (
+                    <button
+                      type="button"
+                      className="btn btn-outline-warning w-100"
+                      onClick={abrirSelectorLugar}
+                    >
+                      + Seleccionar Lugar
+                    </button>
+                  )}
                 </div>
 
                 <div className="col-md-12">
@@ -805,6 +817,13 @@ function EventosDashboard() {
             </div>
           )}
         </div>
+      )}
+
+      {mostrarSelectorLugar && (
+        <LugarSelector
+          onSelect={setLugarSeleccionado}
+          onCerrar={cerrarSelectorLugar}
+        />
       )}
     </DashboardShell>
   );

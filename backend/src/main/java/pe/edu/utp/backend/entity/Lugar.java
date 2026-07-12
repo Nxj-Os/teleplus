@@ -33,4 +33,8 @@ public class Lugar {
     @NotNull
     @Min(0)
     private Integer capacidad_total;
+
+    private Double latitud;
+
+    private Double longitud;
 }

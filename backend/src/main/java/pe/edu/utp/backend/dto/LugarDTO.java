@@ -14,4 +14,8 @@ public class LugarDTO {
     private String ciudad;
 
     private Integer capacidad_total;
+
+    private Double latitud;
+
+    private Double longitud;
 }

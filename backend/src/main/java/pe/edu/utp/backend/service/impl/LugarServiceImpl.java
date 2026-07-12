@@ -54,6 +54,10 @@ public class LugarServiceImpl
         actual.setCapacidad_total(
                 nuevo.getCapacidad_total());
 
+        actual.setLatitud(nuevo.getLatitud());
+
+        actual.setLongitud(nuevo.getLongitud());
+
         return repository.save(actual);
     }
 
