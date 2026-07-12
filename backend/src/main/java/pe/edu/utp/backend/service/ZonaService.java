@@ -8,6 +8,8 @@ public interface ZonaService {
 
     List<Zona> listar();
 
+    List<Zona> listarPorLugar(Long idLugar);
+
     Zona buscarPorId(Long id);
 
     Zona guardar(Zona zona);

@@ -8,6 +8,8 @@ import Compras from "./pages/compras";
 import DashboardGuard from "./pages/dashboard/DashboardGuard";
 import DashboardLogin from "./pages/dashboard/DashboardLogin";
 import EventosDashboard from "./pages/dashboard/EventosDashboard";
+import LugaresDashboard from "./pages/dashboard/LugaresDashboard";
+import ZonasDashboard from "./pages/dashboard/ZonasDashboard";
 import IndexDashboard from "./pages/dashboard/IndexDashboard";
 import UsuariosDashboard from "./pages/dashboard/UsuariosDashboard";
 import Evento1 from "./pages/eventos/Evento1";
@@ -109,6 +111,8 @@ function RouteTransition() {
         <Route element={<DashboardGuard />}>
           <Route path="/dashboard" element={<IndexDashboard />} />
           <Route path="/dashboard/eventos" element={<EventosDashboard />} />
+          <Route path="/dashboard/lugares" element={<LugaresDashboard />} />
+          <Route path="/dashboard/zonas" element={<ZonasDashboard />} />
           <Route path="/dashboard/usuarios" element={<UsuariosDashboard />} />
           <Route path="/dashboard/promociones" element={<PromocionesDashboard />} />
         </Route>
