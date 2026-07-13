@@ -36,7 +36,11 @@ public class Entrada {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate fecha_generacion;
 
-    
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") 
     private LocalDateTime reservado_hasta;
+
+    @ManyToOne
+    @JoinColumn(name = "id_usuario")
+    @NotNull
+    private Usuario usuario;
 }

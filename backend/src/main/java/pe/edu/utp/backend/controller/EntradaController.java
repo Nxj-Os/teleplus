@@ -1,11 +1,13 @@
 package pe.edu.utp.backend.controller;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.security.core.Authentication;
 import pe.edu.utp.backend.entity.Entrada;
+import pe.edu.utp.backend.entity.Usuario;
 import pe.edu.utp.backend.repository.EntradaRepository;
-
+import pe.edu.utp.backend.repository.UsuarioRepository;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -15,13 +17,19 @@ public class EntradaController {
 
     @Autowired
     private EntradaRepository repository;
-
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+    private Usuario obtenerUsuario(Authentication authentication) {
+    String correo = authentication.getName();
+    return usuarioRepository.findByCorreo(correo).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+    }
     // ===== LISTAR =====
     @GetMapping
-    public List<Entrada> listar() {
-        return repository.findAll();
+    public List<Entrada> listar(Authentication authentication) {
+    String correo = authentication.getName();
+    Usuario usuario = obtenerUsuario(authentication);
+    return repository.buscarPorUsuario(usuario.getId_usuario());
     }
-
     // ===== BUSCAR POR ID =====
     @GetMapping("/{id}")
     public Entrada obtener(@PathVariable Long id) {
@@ -30,11 +38,12 @@ public class EntradaController {
 
     // ===== CREAR =====
     @PostMapping
-    public Entrada guardar(@RequestBody Entrada entrada) {
-
-        entrada.setFecha_generacion(LocalDate.now());
-
-        return repository.save(entrada);
+    public Entrada guardar(@RequestBody Entrada entrada,Authentication authentication) {
+    entrada.setFecha_generacion(LocalDate.now());
+    String correo = authentication.getName();
+    Usuario usuario = obtenerUsuario(authentication);
+    entrada.setUsuario(usuario);
+    return repository.save(entrada);
     }
 
     // ===== ACTUALIZAR =====

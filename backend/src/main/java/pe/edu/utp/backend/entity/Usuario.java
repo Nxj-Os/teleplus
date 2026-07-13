@@ -1,5 +1,6 @@
 package pe.edu.utp.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -8,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -55,4 +57,7 @@ public class Usuario {
     @JoinColumn(name = "id_rol")
     @NotNull
     private Rol rol;
+    @OneToMany(mappedBy = "usuario")
+    @JsonIgnore
+    private List<Entrada> entradas;
 }
