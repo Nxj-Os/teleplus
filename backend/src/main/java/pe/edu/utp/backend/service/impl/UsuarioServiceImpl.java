@@ -63,7 +63,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public Usuario login(String correo, String contrasena) {
         return usuarioRepository.findByCorreo(correo)
-                .filter(user -> user.getContrasena().equals(contrasena))
+                .filter(user -> passwordEncoder.matches(contrasena, user.getContrasena()))
                 .orElse(null);
     }
 
