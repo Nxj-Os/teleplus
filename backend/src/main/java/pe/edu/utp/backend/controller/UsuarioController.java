@@ -10,9 +10,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import pe.edu.utp.backend.dto.AuthResponseDTO;
+import pe.edu.utp.backend.dto.CambiarContrasenaDTO;
 import pe.edu.utp.backend.dto.LoginRequestDTO;
+import pe.edu.utp.backend.entity.RevokedToken;
 import pe.edu.utp.backend.entity.Rol;
 import pe.edu.utp.backend.entity.Usuario;
+import pe.edu.utp.backend.repository.RevokedTokenRepository;
 import pe.edu.utp.backend.repository.RolRepository;
 import pe.edu.utp.backend.repository.UsuarioRepository;
 import pe.edu.utp.backend.security.JwtUtil;
@@ -27,17 +30,20 @@ public class UsuarioController {
     private final UsuarioService usuarioService;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
+    private final RevokedTokenRepository revokedTokenRepository;
 
     public UsuarioController(UsuarioRepository usuarioRepository,
                               RolRepository rolRepository,
                               UsuarioService usuarioService,
                               PasswordEncoder passwordEncoder,
-                              JwtUtil jwtUtil) {
+                              JwtUtil jwtUtil,
+                              RevokedTokenRepository revokedTokenRepository) {
         this.usuarioRepository = usuarioRepository;
         this.rolRepository = rolRepository;
         this.usuarioService = usuarioService;
         this.passwordEncoder = passwordEncoder;
         this.jwtUtil = jwtUtil;
+        this.revokedTokenRepository = revokedTokenRepository;
     }
 
     @PostMapping("/login")
@@ -142,5 +148,35 @@ public class UsuarioController {
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
         usuarioRepository.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(@RequestHeader("Authorization") String authHeader) {
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            String token = authHeader.substring(7);
+            if (!revokedTokenRepository.existsByToken(token)) {
+                revokedTokenRepository.save(new RevokedToken(token));
+            }
+        }
+        return ResponseEntity.ok("Sesion cerrada correctamente");
+    }
+
+    @PutMapping("/{id}/cambiar-contrasena")
+    public ResponseEntity<?> cambiarContrasena(@PathVariable Long id,
+                                                @RequestBody CambiarContrasenaDTO dto) {
+        return usuarioRepository.findById(id).map(usuario -> {
+            if (!passwordEncoder.matches(dto.contrasenaActual(), usuario.getContrasena())) {
+                return ResponseEntity.badRequest().body("La contrasena actual es incorrecta");
+            }
+            if (dto.nuevaContrasena() == null || dto.nuevaContrasena().length() < 8) {
+                return ResponseEntity.badRequest().body("La nueva contrasena debe tener al menos 8 caracteres");
+            }
+            if (!dto.nuevaContrasena().equals(dto.confirmarContrasena())) {
+                return ResponseEntity.badRequest().body("Las contrasenas no coinciden");
+            }
+            usuario.setContrasena(passwordEncoder.encode(dto.nuevaContrasena()));
+            usuarioRepository.save(usuario);
+            return ResponseEntity.ok("Contrasena actualizada correctamente");
+        }).orElse(ResponseEntity.notFound().build());
     }
 }

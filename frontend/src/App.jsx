@@ -24,6 +24,7 @@ import PaginaNoEncontrada from "./pages/PaginaNoEncontrada";
 import Perfil from "./pages/Perfil";
 import Registro from "./pages/Registro";
 import VerBoletos from "./pages/VerBoletos";
+import CambiarContrasena from "./pages/CambiarContrasena";
 import PoliticaCompra from "./pages/PoliticaCompra";
 import PoliticaPrivacidad from "./pages/PoliticaPrivacidad";
 import TerminosUso from "./pages/TerminosUso";
@@ -93,6 +94,7 @@ function RouteTransition() {
         <Route path="/compras" element={<Compras />} />
         <Route path="/login" element={<Login />} />
         <Route path="/ver-boletos" element={<VerBoletos />} />
+        <Route path="/cambiar-contrasena" element={<CambiarContrasena />} />
         <Route path="/evento-1" element={<Evento1 />} />
         <Route path="/evento-3" element={<Evento3 />} />
         <Route path="/evento-4" element={<Evento4 />} />

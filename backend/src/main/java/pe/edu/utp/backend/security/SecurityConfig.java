@@ -68,6 +68,9 @@ public class SecurityConfig {
                     "/api/promociones/aplicar"
                 ).permitAll()
 
+                // Logout requiere autenticacion
+                .requestMatchers(HttpMethod.POST, "/api/usuarios/logout").authenticated()
+
                 // Gestión de eventos y lugares — ADMIN o MANAGER
                 .requestMatchers(HttpMethod.POST, "/api/eventos/**").hasAnyRole("ADMIN", "MANAGER")
                 .requestMatchers(HttpMethod.PUT, "/api/eventos/**").hasAnyRole("ADMIN", "MANAGER")
