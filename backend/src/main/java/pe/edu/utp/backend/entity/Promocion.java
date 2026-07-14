@@ -9,13 +9,11 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "promociones")
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-
 public class Promocion {
 
     @Id
@@ -50,6 +48,7 @@ public class Promocion {
     @Column(nullable = false)
     @NotNull
     @Min(0)
+    @Builder.Default
     private Integer cantidadUsos = 0;
 
     @Column(nullable = false)

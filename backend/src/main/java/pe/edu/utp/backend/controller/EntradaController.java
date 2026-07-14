@@ -1,6 +1,5 @@
 package pe.edu.utp.backend.controller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
@@ -15,77 +14,72 @@ import java.util.List;
 @RequestMapping("/api/entradas")
 public class EntradaController {
 
-    @Autowired
-    private EntradaRepository repository;
-    @Autowired
-    private UsuarioRepository usuarioRepository;
-    private Usuario obtenerUsuario(Authentication authentication) {
-    String correo = authentication.getName();
-    return usuarioRepository.findByCorreo(correo).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-    }
-    // ===== LISTAR =====
-    @GetMapping
-    public List<Entrada> listar(Authentication authentication) {
-    String correo = authentication.getName();
-    Usuario usuario = obtenerUsuario(authentication);
-    return repository.buscarPorUsuario(usuario.getId_usuario());
-    }
-    // ===== BUSCAR POR ID =====
-    @GetMapping("/{id}")
-    public Entrada obtener(@PathVariable Long id) {
-        return repository.findById(id).orElse(null);
-    }
+        @Autowired
+        private EntradaRepository repository;
+        @Autowired
+        private UsuarioRepository usuarioRepository;
 
-    // ===== CREAR =====
-    @PostMapping
-    public Entrada guardar(@RequestBody Entrada entrada,Authentication authentication) {
-    entrada.setFecha_generacion(LocalDate.now());
-    String correo = authentication.getName();
-    Usuario usuario = obtenerUsuario(authentication);
-    entrada.setUsuario(usuario);
-    return repository.save(entrada);
-    }
-
-    // ===== ACTUALIZAR =====
-    @PutMapping("/{id}")
-    public Entrada actualizar(
-            @PathVariable Long id,
-            @RequestBody Entrada entrada
-    ) {
-        Entrada actual =
-                repository.findById(id).orElse(null);
-
-        if (actual != null) {
-
-            actual.setCodigo_qr(
-                    entrada.getCodigo_qr()
-            );
-
-            actual.setEstado(
-                    entrada.getEstado()
-            );
-
-            actual.setPrecio_final(
-                    entrada.getPrecio_final()
-            );
-
-            actual.setFecha_generacion(
-                    entrada.getFecha_generacion()
-            );
-
-            actual.setReservado_hasta(
-                    entrada.getReservado_hasta()
-            );
-
-            return repository.save(actual);
+        private Usuario obtenerUsuario(Authentication authentication) {
+                String correo = authentication.getName();
+                return usuarioRepository.findByCorreo(correo)
+                                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
         }
 
-        return null;
-    }
+        // ===== LISTAR =====
+        @GetMapping
+        public List<Entrada> listar(Authentication authentication) {
+                Usuario usuario = obtenerUsuario(authentication);
+                return repository.buscarPorUsuario(usuario.getId_usuario());
+        }
 
-    // ===== ELIMINAR =====
-    @DeleteMapping("/{id}")
-    public void eliminar(@PathVariable Long id) {
-        repository.deleteById(id);
-    }
+        // ===== BUSCAR POR ID =====
+        @GetMapping("/{id}")
+        public Entrada obtener(@PathVariable Long id) {
+                return repository.findById(id).orElse(null);
+        }
+
+        // ===== CREAR =====
+        @PostMapping
+        public Entrada guardar(@RequestBody Entrada entrada, Authentication authentication) {
+                entrada.setFecha_generacion(LocalDate.now());
+                Usuario usuario = obtenerUsuario(authentication);
+                entrada.setUsuario(usuario);
+                return repository.save(entrada);
+        }
+
+        // ===== ACTUALIZAR =====
+        @PutMapping("/{id}")
+        public Entrada actualizar(
+                        @PathVariable Long id,
+                        @RequestBody Entrada entrada) {
+                Entrada actual = repository.findById(id).orElse(null);
+
+                if (actual != null) {
+
+                        actual.setCodigo_qr(
+                                        entrada.getCodigo_qr());
+
+                        actual.setEstado(
+                                        entrada.getEstado());
+
+                        actual.setPrecio_final(
+                                        entrada.getPrecio_final());
+
+                        actual.setFecha_generacion(
+                                        entrada.getFecha_generacion());
+
+                        actual.setReservado_hasta(
+                                        entrada.getReservado_hasta());
+
+                        return repository.save(actual);
+                }
+
+                return null;
+        }
+
+        // ===== ELIMINAR =====
+        @DeleteMapping("/{id}")
+        public void eliminar(@PathVariable Long id) {
+                repository.deleteById(id);
+        }
 }
