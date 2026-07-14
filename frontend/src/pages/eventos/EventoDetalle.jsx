@@ -334,7 +334,7 @@ function EventoDetalle() {
         className={`${styles["descripcion"]} bg-dark py-5 text-center`}
       >
         <img
-          src={logoFallback}
+          src={evento.imagenFooter || logoFallback}
           alt={evento.titulo}
           className={`mb-3 img-fluid ${styles["img-centrada"]}`}
         />
