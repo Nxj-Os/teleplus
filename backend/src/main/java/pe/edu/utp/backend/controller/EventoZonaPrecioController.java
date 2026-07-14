@@ -1,5 +1,6 @@
 package pe.edu.utp.backend.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +43,7 @@ public class EventoZonaPrecioController {
 
     @PostMapping
     public EventoZonaPrecio guardar(
-            @RequestBody EventoZonaPrecio eventoZonaPrecio) {
+            @Valid @RequestBody EventoZonaPrecio eventoZonaPrecio) {
 
         return service.guardar(eventoZonaPrecio);
     }

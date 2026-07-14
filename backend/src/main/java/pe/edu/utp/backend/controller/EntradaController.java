@@ -1,5 +1,6 @@
 package pe.edu.utp.backend.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
@@ -40,7 +41,7 @@ public class EntradaController {
 
         // ===== CREAR =====
         @PostMapping
-        public Entrada guardar(@RequestBody Entrada entrada, Authentication authentication) {
+        public Entrada guardar(@Valid @RequestBody Entrada entrada, Authentication authentication) {
                 entrada.setFecha_generacion(LocalDate.now());
                 Usuario usuario = obtenerUsuario(authentication);
                 entrada.setUsuario(usuario);
@@ -55,22 +56,11 @@ public class EntradaController {
                 Entrada actual = repository.findById(id).orElse(null);
 
                 if (actual != null) {
-
-                        actual.setCodigo_qr(
-                                        entrada.getCodigo_qr());
-
-                        actual.setEstado(
-                                        entrada.getEstado());
-
-                        actual.setPrecio_final(
-                                        entrada.getPrecio_final());
-
-                        actual.setFecha_generacion(
-                                        entrada.getFecha_generacion());
-
-                        actual.setReservado_hasta(
-                                        entrada.getReservado_hasta());
-
+                        actual.setCodigo_qr(entrada.getCodigo_qr());
+                        actual.setEstado(entrada.getEstado());
+                        actual.setPrecio_final(entrada.getPrecio_final());
+                        actual.setFecha_generacion(entrada.getFecha_generacion());
+                        actual.setReservado_hasta(entrada.getReservado_hasta());
                         return repository.save(actual);
                 }
 

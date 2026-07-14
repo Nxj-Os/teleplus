@@ -1,5 +1,6 @@
 package pe.edu.utp.backend.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ public class CompraController {
     private CompraService compraService;
 
     @PostMapping
-    public ResponseEntity<Compra> crearCompra(@RequestBody Compra compra) {
+    public ResponseEntity<Compra> crearCompra(@Valid @RequestBody Compra compra) {
         return ResponseEntity.status(HttpStatus.CREATED).body(compraService.Newcompra(compra));
     }
     @PutMapping("/{id}")

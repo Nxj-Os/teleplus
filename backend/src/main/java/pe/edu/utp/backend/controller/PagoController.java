@@ -1,6 +1,7 @@
 package pe.edu.utp.backend.controller;
 
 import java.util.List;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ public class PagoController {
     private PagoService pagoService;
 
     @PostMapping
-    public ResponseEntity<Pago> crearpago(@RequestBody Pago pago) {
+    public ResponseEntity<Pago> crearpago(@Valid @RequestBody Pago pago) {
         return ResponseEntity.status(HttpStatus.CREATED).body(pagoService.guardarpago(pago));
     }
     @GetMapping("/{id}")

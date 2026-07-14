@@ -1,5 +1,6 @@
 package pe.edu.utp.backend.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,7 @@ public class EventoController {
 	}
 
 	@PostMapping
-	public Evento guardar(@RequestBody Evento evento) {
+	public Evento guardar(@Valid @RequestBody Evento evento) {
 		return eventoService.guardar(evento);
 	}
 

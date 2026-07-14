@@ -1,5 +1,6 @@
 package pe.edu.utp.backend.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.utp.backend.entity.Zona;
@@ -30,7 +31,7 @@ public class ZonaController {
     }
 
     @PostMapping
-    public Zona guardar(@RequestBody Zona zona) {
+    public Zona guardar(@Valid @RequestBody Zona zona) {
         return zonaService.guardar(zona);
     }
 

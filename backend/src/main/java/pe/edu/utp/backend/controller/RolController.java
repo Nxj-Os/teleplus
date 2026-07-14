@@ -1,5 +1,6 @@
 package pe.edu.utp.backend.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +30,7 @@ public class RolController {
 
     // ===== CREAR =====
     @PostMapping
-    public Rol guardar(@RequestBody Rol rol) {
+    public Rol guardar(@Valid @RequestBody Rol rol) {
         return repository.save(rol);
     }
 

@@ -1,5 +1,6 @@
 package pe.edu.utp.backend.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +36,7 @@ public class DetalleCompraController {
 
     @PostMapping
     public DetalleCompra guardar(
-            @RequestBody DetalleCompra detalleCompra) {
+            @Valid @RequestBody DetalleCompra detalleCompra) {
 
         return service.guardar(detalleCompra);
     }
