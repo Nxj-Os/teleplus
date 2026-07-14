@@ -1,9 +1,9 @@
 import styles from "../../css/dashboard.module.css";
 
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import DashboardShell from "./DashboardShell";
+import apiClient from "../../services/apiClient";
 
 function IndexDashboard() {
   // ===== STATES =====
@@ -22,8 +22,8 @@ function IndexDashboard() {
 
   useEffect(() => {
     // EVENTOS
-    axios
-      .get("http://localhost:8080/api/eventos")
+    apiClient
+      .get("/api/eventos")
       .then((response) => {
         setTotalEventos(response.data.length);
 
@@ -34,8 +34,8 @@ function IndexDashboard() {
       });
 
     // USUARIOS
-    axios
-      .get("http://localhost:8080/api/usuarios")
+    apiClient
+      .get("/api/usuarios")
       .then((response) => {
         setTotalUsuarios(response.data.length);
       })
@@ -44,8 +44,8 @@ function IndexDashboard() {
       });
 
     // ENTRADAS
-    axios
-      .get("http://localhost:8080/api/entradas")
+    apiClient
+      .get("/api/entradas")
       .then((response) => {
         setTotalEntradas(response.data.length);
       })
@@ -54,8 +54,8 @@ function IndexDashboard() {
       });
 
     // GANANCIAS
-    axios
-      .get("http://localhost:8080/api/pagos")
+    apiClient
+      .get("/api/pagos")
       .then((response) => {
         const total = response.data.reduce((sum, pago) => sum + (pago.monto || 0), 0);
         setTotalGanancias(total);
