@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import imagenNosotros from "../assets/img/informacion-fundadores.jpg";
+import imagenNosotros from "../assets/img/fundador-adrian.png";
 import styles from "../css/informacion.module.css";
 import LayoutPrincipal from "../layouts/LayoutPrincipal";
 
