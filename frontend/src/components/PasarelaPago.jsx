@@ -147,10 +147,10 @@ function PasarelaPago({ metodoPago, monto, onExito, onCancelar }) {
     return (
       <div className={styles.overlay}>
         <div className={styles.modal}>
-          <div className={styles.contenido}>
+          <div className={styles.contenido} style={{ textAlign: "center", padding: "48px 24px" }}>
             <div className={styles.spinner}></div>
-            <h4>Procesando pago...</h4>
-            <p className="text-muted">Por favor espere</p>
+            <h4 style={{ color: "#212529" }}>Procesando pago...</h4>
+            <p style={{ color: "#6c757d" }}>Por favor espere</p>
           </div>
         </div>
       </div>
@@ -161,10 +161,10 @@ function PasarelaPago({ metodoPago, monto, onExito, onCancelar }) {
     return (
       <div className={styles.overlay}>
         <div className={styles.modal}>
-          <div className={styles.contenido}>
+          <div className={styles.contenido} style={{ textAlign: "center", padding: "48px 24px" }}>
             <div className={styles.exito}>&#10003;</div>
-            <h4 className="text-success">Pago aprobado</h4>
-            <p>Tu compra se ha realizado correctamente</p>
+            <h4 style={{ color: "#28a745" }}>Pago aprobado</h4>
+            <p style={{ color: "#212529" }}>Tu compra se ha realizado correctamente</p>
           </div>
         </div>
       </div>
@@ -175,10 +175,10 @@ function PasarelaPago({ metodoPago, monto, onExito, onCancelar }) {
     return (
       <div className={styles.overlay}>
         <div className={styles.modal}>
-          <div className={styles.contenido}>
+          <div className={styles.contenido} style={{ textAlign: "center", padding: "48px 24px" }}>
             <div className={styles.error}>&#10007;</div>
-            <h4 className="text-danger">Pago rechazado</h4>
-            <p className="text-danger fw-bold">{errorGeneral}</p>
+            <h4 style={{ color: "#dc3545" }}>Pago rechazado</h4>
+            <p style={{ color: "#dc3545", fontWeight: "bold" }}>{errorGeneral}</p>
             <button className="btn btn-danger mt-3" onClick={() => { setEstado("form"); setErrores({}); setErrorGeneral(""); }}>
               Intentar de nuevo
             </button>
@@ -212,10 +212,10 @@ function PasarelaPago({ metodoPago, monto, onExito, onCancelar }) {
           {esTarjeta && (
             <div className={styles.formulario}>
               <div className="mb-3">
-                <label className="form-label fw-semibold">Numero de tarjeta</label>
+                <label className="form-label fw-semibold" style={{ color: "#495057", fontSize: "0.85rem" }}>Numero de tarjeta</label>
                 <input
                   type="text"
-                  className={`form-control ${errores.numeroTarjeta ? "is-invalid" : ""}`}
+                  className={`form-control ${styles.inputField} ${errores.numeroTarjeta ? "is-invalid" : ""}`}
                   placeholder="0000 0000 0000 0000"
                   maxLength="19"
                   value={numeroTarjeta}
@@ -225,14 +225,14 @@ function PasarelaPago({ metodoPago, monto, onExito, onCancelar }) {
                     validarCampo("numeroTarjeta", val);
                   }}
                 />
-                {errores.numeroTarjeta && <div className="invalid-feedback">{errores.numeroTarjeta}</div>}
+                {errores.numeroTarjeta && <div className="invalid-feedback" style={{ color: "#dc3545" }}>{errores.numeroTarjeta}</div>}
               </div>
               <div className="row">
                 <div className="col-6 mb-3">
-                  <label className="form-label fw-semibold">Vencimiento</label>
+                  <label className="form-label fw-semibold" style={{ color: "#495057", fontSize: "0.85rem" }}>Vencimiento</label>
                   <input
                     type="text"
-                    className={`form-control ${errores.vencimiento ? "is-invalid" : ""}`}
+                    className={`form-control ${styles.inputField} ${errores.vencimiento ? "is-invalid" : ""}`}
                     placeholder="MM/AA"
                     maxLength="5"
                     value={vencimiento}
@@ -242,13 +242,13 @@ function PasarelaPago({ metodoPago, monto, onExito, onCancelar }) {
                       validarCampo("vencimiento", val);
                     }}
                   />
-                  {errores.vencimiento && <div className="invalid-feedback">{errores.vencimiento}</div>}
+                  {errores.vencimiento && <div className="invalid-feedback" style={{ color: "#dc3545" }}>{errores.vencimiento}</div>}
                 </div>
                 <div className="col-6 mb-3">
-                  <label className="form-label fw-semibold">CVV</label>
+                  <label className="form-label fw-semibold" style={{ color: "#495057", fontSize: "0.85rem" }}>CVV</label>
                   <input
                     type="password"
-                    className={`form-control ${errores.cvv ? "is-invalid" : ""}`}
+                    className={`form-control ${styles.inputField} ${errores.cvv ? "is-invalid" : ""}`}
                     placeholder="123"
                     maxLength="4"
                     value={cvv}
@@ -258,7 +258,7 @@ function PasarelaPago({ metodoPago, monto, onExito, onCancelar }) {
                       validarCampo("cvv", val);
                     }}
                   />
-                  {errores.cvv && <div className="invalid-feedback">{errores.cvv}</div>}
+                  {errores.cvv && <div className="invalid-feedback" style={{ color: "#dc3545" }}>{errores.cvv}</div>}
                 </div>
               </div>
             </div>
@@ -275,14 +275,14 @@ function PasarelaPago({ metodoPago, monto, onExito, onCancelar }) {
                     fgColor="#1a1a2e"
                     includeMargin={false}
                   />
-                  <small className="mt-2">Escanear codigo</small>
+                  <small className="mt-2" style={{ color: "#6c757d" }}>Escanear codigo</small>
                 </div>
               </div>
               <div className="mb-3">
-                <label className="form-label fw-semibold">Numero de celular</label>
+                <label className="form-label fw-semibold" style={{ color: "#495057", fontSize: "0.85rem" }}>Numero de celular</label>
                 <input
                   type="text"
-                  className={`form-control ${errores.celular ? "is-invalid" : ""}`}
+                  className={`form-control ${styles.inputField} ${errores.celular ? "is-invalid" : ""}`}
                   placeholder="999 999 999"
                   maxLength="9"
                   value={celular}
@@ -292,7 +292,7 @@ function PasarelaPago({ metodoPago, monto, onExito, onCancelar }) {
                     validarCampo("celular", val);
                   }}
                 />
-                {errores.celular && <div className="invalid-feedback">{errores.celular}</div>}
+                {errores.celular && <div className="invalid-feedback" style={{ color: "#dc3545" }}>{errores.celular}</div>}
               </div>
             </div>
           )}

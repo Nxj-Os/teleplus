@@ -145,6 +145,7 @@ export default function Evento5() {
                 tipo: "PREVENTA NUEVAS FUNCIONES",
                 precio: 119.0,
                 zona: "ZONA DIAMANTE",
+                imagen: banner,
               })
             }
           >
@@ -161,6 +162,7 @@ export default function Evento5() {
                 tipo: "REGULAR",
                 precio: 150.0,
                 zona: "ZONA DIAMANTE",
+                imagen: banner,
               })
             }
           >

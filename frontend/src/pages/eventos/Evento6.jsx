@@ -53,6 +53,7 @@ export default function Evento6() {
                         zona: "PRIMERAS FILAS",
                         tipo: "REGULAR",
                         precio: 747.5,
+                        imagen: banner,
                       })
                     }
                   >
@@ -74,6 +75,7 @@ export default function Evento6() {
                         zona: "DIAMANTE",
                         tipo: "REGULAR",
                         precio: 632.5,
+                        imagen: banner,
                       })
                     }
                   >
@@ -95,6 +97,7 @@ export default function Evento6() {
                         zona: "PLATINUM",
                         tipo: "REGULAR",
                         precio: 460.0,
+                        imagen: banner,
                       })
                     }
                   >
@@ -116,6 +119,7 @@ export default function Evento6() {
                         zona: "GOLDEN",
                         tipo: "REGULAR",
                         precio: 345.0,
+                        imagen: banner,
                       })
                     }
                   >
@@ -137,6 +141,7 @@ export default function Evento6() {
                         zona: "SILVER",
                         tipo: "REGULAR",
                         precio: 287.5,
+                        imagen: banner,
                       })
                     }
                   >

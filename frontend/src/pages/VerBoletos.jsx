@@ -195,43 +195,10 @@ export default function VerBoletos() {
         <div className="container">
           <div className="d-flex justify-content-between align-items-center mb-4">
             <div>
-              <h1 className="fw-bold mb-1">Mis Boletos</h1>
-              <p className="text-muted mb-0">Gestiona tus entradas y compras recientes</p>
+              <h1 className="fw-bold mb-1" style={{ color: "#212529" }}>Mis Boletos</h1>
+              <p className="mb-0" style={{ color: "#6c757d" }}>Gestiona tus entradas y compras recientes</p>
             </div>
-            <div className="dropdown">
-              <button
-                className="btn btn-dark dropdown-toggle fw-semibold"
-                type="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-                style={{ borderRadius: "10px" }}
-              >
-                Compras & E-Tickets
-              </button>
-              <ul className="dropdown-menu dropdown-menu-end shadow-lg border-0" style={{ borderRadius: "12px" }}>
-                <li>
-                  <button className="dropdown-item fw-semibold" onClick={() => setPestanaActiva("TICKETS")}>
-                    &#127915; E-Tickets
-                  </button>
-                </li>
-                <li>
-                  <button className="dropdown-item fw-semibold" onClick={() => setPestanaActiva("DEVOLUCIONES")}>
-                    &#128260; Mis Devoluciones
-                  </button>
-                </li>
-                <li><hr className="dropdown-divider" /></li>
-                <li>
-                  <button className="dropdown-item fw-semibold" onClick={() => navigate("/cambiar-contrasena")}>
-                    &#128274; Cambiar Contrasena
-                  </button>
-                </li>
-                <li>
-                  <button className="dropdown-item fw-semibold text-danger" onClick={async () => { await cerrarSesion(); navigate("/"); }}>
-                    &#10140; Cerrar Sesion
-                  </button>
-                </li>
-              </ul>
-            </div>
+
           </div>
 
           <div className="d-flex gap-2 mb-4">

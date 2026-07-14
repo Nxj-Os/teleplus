@@ -1,14 +1,175 @@
 .page {
-  background-color: #ffffff;
+  background-color: #f8f9fa;
 }
 
-.seccion-principal {
-  height: 320px;
+/* HERO */
+.hero {
+  position: relative;
+  height: 300px;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+
+.heroBg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #1a1a2e;
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.85) 0%,
+    rgba(0, 0, 0, 0.3) 60%,
+    rgba(0, 0, 0, 0.1) 100%
+  );
+}
+
+.heroContent {
+  position: relative;
+  z-index: 1;
+  padding: 36px 48px;
+}
+
+/* RESUMEN CARD */
+.summaryCard {
+  border-radius: 16px;
+  overflow: hidden;
+  background: white;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  border: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.summaryCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+.summaryImageWrap {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.summaryImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.summaryImageOverlay {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}
+
+.summaryBody {
+  padding: 24px;
+}
+
+.summaryInfoRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  font-size: 14px;
+}
+
+.summaryIconBox {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #6c757d; /* restored gray hero background */
+  font-size: 14px;
+  font-weight: bold;
+  flex-shrink: 0;
 }
 
-/* end of module */
-/* placeholder for any future custom styles */
+.priceTag {
+  color: #dc3545;
+}
+
+/* FORMULARIO CARD */
+.formCard {
+  background: white;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  border: none;
+}
+
+.formGroup {
+  margin-bottom: 20px;
+}
+
+.formInput {
+  border-radius: 10px;
+  padding: 12px 16px;
+  border: 2px solid #e9ecef;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.formInput:focus {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.15);
+}
+
+/* TOTAL BOX */
+.totalBox {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 16px 20px;
+}
+
+/* SUCCESS ICON */
+.successIcon {
+  width: 72px;
+  height: 72px;
+  background: linear-gradient(135deg, #28a745, #20c997);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: bold;
+  margin: 0 auto;
+  animation: scaleIn 0.4s ease;
+}
+
+@keyframes scaleIn {
+  0% {
+    transform: scale(0);
+  }
+  70% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .hero {
+    height: 220px;
+  }
+  .heroContent {
+    padding: 20px 24px;
+  }
+  .summaryImageWrap {
+    height: 160px;
+  }
+  .formCard {
+    padding: 20px;
+  }
+}

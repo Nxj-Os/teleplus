@@ -31,6 +31,7 @@ import TerminosUso from "./pages/TerminosUso";
 import AvisoLegal from "./pages/AvisoLegal";
 import EventoDetalle from "./pages/eventos/EventoDetalle";
 import PromocionesDashboard from "./pages/dashboard/PromocionesDashboard";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function SessionManager() {
   const navigate = useNavigate();
@@ -91,17 +92,17 @@ function RouteTransition() {
       <Routes location={displayLocation}>
         <Route path="/" element={<Inicio />} />
         <Route path="/nosotros" element={<Informacion />} />
-        <Route path="/compras" element={<Compras />} />
+        <Route path="/compras" element={<ProtectedRoute><Compras /></ProtectedRoute>} />
         <Route path="/login" element={<Login />} />
-        <Route path="/ver-boletos" element={<VerBoletos />} />
-        <Route path="/cambiar-contrasena" element={<CambiarContrasena />} />
+        <Route path="/ver-boletos" element={<ProtectedRoute><VerBoletos /></ProtectedRoute>} />
+        <Route path="/cambiar-contrasena" element={<ProtectedRoute><CambiarContrasena /></ProtectedRoute>} />
         <Route path="/evento-1" element={<Evento1 />} />
         <Route path="/evento-3" element={<Evento3 />} />
         <Route path="/evento-4" element={<Evento4 />} />
         <Route path="/evento-5" element={<Evento5 />} />
         <Route path="/evento-6" element={<Evento6 />} />
         <Route path="/registro" element={<Registro />} />
-        <Route path="/perfil" element={<Perfil />} />
+        <Route path="/perfil" element={<ProtectedRoute><Perfil /></ProtectedRoute>} />
         <Route path="/dashboard/login" element={<DashboardLogin />} />
         <Route path="/politica-compra" element={<PoliticaCompra />} />
         <Route path="/politica-privacidad" element={<PoliticaPrivacidad />} />

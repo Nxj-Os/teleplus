@@ -347,6 +347,7 @@ export default function Evento3() {
                       zona: "Tribuna Oriente 1",
                       tipo: "Preventa fans",
                       precio: 342,
+                      imagen: banner,
                     })
                   }
                 >
@@ -364,6 +365,7 @@ export default function Evento3() {
                       zona: "Tribuna Oriente 2",
                       tipo: "Preventa Interbank",
                       precio: 290,
+                      imagen: banner,
                     })
                   }
                 >
@@ -381,6 +383,7 @@ export default function Evento3() {
                       zona: "Tribuna Oriente 3",
                       tipo: "Precio full",
                       precio: 342,
+                      imagen: banner,
                     })
                   }
                 >
@@ -398,6 +401,7 @@ export default function Evento3() {
                       zona: "Tribuna Oriente 4",
                       tipo: "Conadis",
                       precio: 120,
+                      imagen: banner,
                     })
                   }
                 >

@@ -302,6 +302,7 @@ function EventoDetalle() {
                           tipo: tipoNombre,
                           precio: Number(ezp.precio),
                           idEventoZonaPrecio: ezp.id,
+                          imagen: evento.imagenPortada,
                         })
                       }
                     >
