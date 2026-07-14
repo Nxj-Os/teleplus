@@ -14,6 +14,8 @@ function IndexDashboard() {
 
   const [totalEntradas, setTotalEntradas] = useState(0);
 
+  const [totalGanancias, setTotalGanancias] = useState(0);
+
   const [eventosRecientes, setEventosRecientes] = useState([]);
 
   // ===== CARGAR DATOS =====
@@ -25,7 +27,7 @@ function IndexDashboard() {
       .then((response) => {
         setTotalEventos(response.data.length);
 
-        setEventosRecientes(response.data);
+        setEventosRecientes(response.data.slice(0, 10));
       })
       .catch((error) => {
         console.error(error);
@@ -46,6 +48,17 @@ function IndexDashboard() {
       .get("http://localhost:8080/api/entradas")
       .then((response) => {
         setTotalEntradas(response.data.length);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+    // GANANCIAS
+    axios
+      .get("http://localhost:8080/api/pagos")
+      .then((response) => {
+        const total = response.data.reduce((sum, pago) => sum + (pago.monto || 0), 0);
+        setTotalGanancias(total);
       })
       .catch((error) => {
         console.error(error);
@@ -83,7 +96,7 @@ function IndexDashboard() {
 
         <article className={styles.card}>
           <h3>Ganancias</h3>
-          <p>S/. 15,000</p>
+          <p>S/. {totalGanancias.toLocaleString("es-PE", { minimumFractionDigits: 2 })}</p>
           <span className={styles["card-caption"]}>Estimado del periodo</span>
         </article>
       </section>
