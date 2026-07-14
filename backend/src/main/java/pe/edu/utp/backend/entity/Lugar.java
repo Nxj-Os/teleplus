@@ -1,5 +1,6 @@
 package pe.edu.utp.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -13,7 +14,9 @@ import lombok.NoArgsConstructor;
 public class Lugar {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_lugar;
+    @Column(name = "id_lugar")
+    @JsonProperty("id_lugar")
+    private Long id;
 
     @Column(length = 150)
     @NotBlank

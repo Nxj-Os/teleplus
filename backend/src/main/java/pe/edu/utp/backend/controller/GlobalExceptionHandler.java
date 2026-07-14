@@ -30,8 +30,9 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<Map<String, String>> handleRuntimeException(RuntimeException ex) {
+        ex.printStackTrace();
         Map<String, String> body = new HashMap<>();
-        body.put("error", "Error interno del servidor");
+        body.put("error", ex.getMessage() != null ? ex.getMessage() : "Error interno del servidor");
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
     }
 

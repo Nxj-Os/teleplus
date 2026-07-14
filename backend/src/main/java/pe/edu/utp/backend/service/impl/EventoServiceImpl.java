@@ -38,7 +38,7 @@ public class EventoServiceImpl implements EventoService {
     public Evento guardar(Evento evento) {
 
         Lugar lugar = lugarRepository.findById(
-                evento.getLugar().getId_lugar()).orElseThrow();
+                evento.getLugar().getId()).orElseThrow();
 
         evento.setLugar(lugar);
 

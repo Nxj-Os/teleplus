@@ -29,7 +29,7 @@ public class ZonaServiceImpl implements ZonaService {
         if (duplicada && excludeId != null) {
             Zona existente = zonaRepository.findAll().stream()
                     .filter(z -> z.getNombre_zona().equalsIgnoreCase(nombreZona)
-                            && ((idLugar != null && idLugar.equals(z.getLugar() != null ? z.getLugar().getId_lugar() : null))
+                            && ((idLugar != null && idLugar.equals(z.getLugar() != null ? z.getLugar().getId() : null))
                                 || (idLugar == null && z.getLugar() == null)))
                     .filter(z -> !z.getId_zona().equals(excludeId))
                     .findFirst().orElse(null);
@@ -55,12 +55,12 @@ public class ZonaServiceImpl implements ZonaService {
 
     @Override
     public Zona guardar(Zona zona) {
-        if (zona.getLugar() != null && zona.getLugar().getId_lugar() != null) {
-            Lugar lugar = lugarRepository.findById(zona.getLugar().getId_lugar()).orElseThrow();
+        if (zona.getLugar() != null && zona.getLugar().getId() != null) {
+            Lugar lugar = lugarRepository.findById(zona.getLugar().getId()).orElseThrow();
             zona.setLugar(lugar);
         }
 
-        Long idLugar = zona.getLugar() != null ? zona.getLugar().getId_lugar() : null;
+        Long idLugar = zona.getLugar() != null ? zona.getLugar().getId() : null;
         if (existeZonaDuplicada(zona.getNombre_zona(), idLugar, null)) {
             throw new ResponseStatusException(
                     HttpStatus.CONFLICT,
@@ -74,14 +74,14 @@ public class ZonaServiceImpl implements ZonaService {
     public Zona actualizar(Long id, Zona nueva) {
         Zona actual = zonaRepository.findById(id).orElseThrow();
 
-        if (nueva.getLugar() != null && nueva.getLugar().getId_lugar() != null) {
-            Lugar lugar = lugarRepository.findById(nueva.getLugar().getId_lugar()).orElseThrow();
+        if (nueva.getLugar() != null && nueva.getLugar().getId() != null) {
+            Lugar lugar = lugarRepository.findById(nueva.getLugar().getId()).orElseThrow();
             actual.setLugar(lugar);
         } else {
             actual.setLugar(null);
         }
 
-        Long idLugar = actual.getLugar() != null ? actual.getLugar().getId_lugar() : null;
+        Long idLugar = actual.getLugar() != null ? actual.getLugar().getId() : null;
         if (existeZonaDuplicada(nueva.getNombre_zona(), idLugar, id)) {
             throw new ResponseStatusException(
                     HttpStatus.CONFLICT,
