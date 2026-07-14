@@ -1,5 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
+import { MapContainer, TileLayer } from "react-leaflet";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
 import DashboardShell from "./DashboardShell";
+import { MapaInteractivo } from "../../components/LugarSelector";
 import {
   obtenerLugares,
   crearLugar,
@@ -7,12 +11,23 @@ import {
   eliminarLugar,
 } from "../../services/eventoService";
 
+const defaultIcon = L.icon({
+  iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
+  iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
+  shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+});
+L.Marker.prototype.options.icon = defaultIcon;
+
 const INITIAL_LUGAR = {
   nombre: "",
   direccion: "",
   ciudad: "",
   capacidad_total: "",
 };
+
+const POSICION_DEFAULT = [-12.0464, -77.0428];
 
 function LugaresDashboard() {
   const [lugares, setLugares] = useState([]);
@@ -23,6 +38,7 @@ function LugaresDashboard() {
 
   const [form, setForm] = useState(INITIAL_LUGAR);
   const [editandoId, setEditandoId] = useState(null);
+  const [posicion, setPosicion] = useState(POSICION_DEFAULT);
 
   const cargarLugares = async () => {
     try {
@@ -42,14 +58,23 @@ function LugaresDashboard() {
     cargarLugares();
   }, []);
 
+  const handlePosicionChange = (lat, lng, direccion) => {
+    setPosicion([lat, lng]);
+    if (direccion) {
+      setForm((prev) => ({ ...prev, direccion }));
+    }
+  };
+
   const abrirFormulario = () => {
     setForm(INITIAL_LUGAR);
+    setPosicion(POSICION_DEFAULT);
     setFeedback(null);
     setIsFormOpen(true);
   };
 
   const limpiarFormulario = () => {
     setForm(INITIAL_LUGAR);
+    setPosicion(POSICION_DEFAULT);
     setFeedback(null);
     setIsFormOpen(false);
     setEditandoId(null);
@@ -63,6 +88,11 @@ function LugaresDashboard() {
       ciudad: lugar.ciudad || "",
       capacidad_total: lugar.capacidad_total || "",
     });
+    if (lugar.latitud && lugar.longitud) {
+      setPosicion([lugar.latitud, lugar.longitud]);
+    } else {
+      setPosicion(POSICION_DEFAULT);
+    }
     setIsFormOpen(true);
     setFeedback(null);
   };
@@ -93,6 +123,8 @@ function LugaresDashboard() {
       direccion: form.direccion.trim(),
       ciudad: form.ciudad.trim(),
       capacidad_total: Number(form.capacidad_total),
+      latitud: posicion[0],
+      longitud: posicion[1],
     };
 
     try {
@@ -280,6 +312,35 @@ function LugaresDashboard() {
                     placeholder="50000"
                   />
                 </div>
+              </div>
+
+              <div className="mt-3">
+                <label className="form-label fw-bold">Ubicacion en el mapa</label>
+                <div
+                  className="rounded overflow-hidden"
+                  style={{ height: "350px", border: "2px solid #dee2e6" }}
+                >
+                  <MapContainer
+                    center={posicion}
+                    zoom={13}
+                    style={{ height: "100%", width: "100%" }}
+                  >
+                    <TileLayer
+                      attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    />
+                    <MapaInteractivo
+                      posicion={posicion}
+                      onPosicionChange={handlePosicionChange}
+                    />
+                  </MapContainer>
+                </div>
+                <small className="text-muted d-block mt-1">
+                  Haz click en el mapa para ubicar el marcador, o usa el buscador arriba a la derecha
+                </small>
+                <small className="text-muted d-block">
+                  Coordenadas: {posicion[0].toFixed(6)}, {posicion[1].toFixed(6)}
+                </small>
               </div>
 
               <div className="d-flex flex-column flex-md-row gap-2 justify-content-end mt-4">

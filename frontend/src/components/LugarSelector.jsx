@@ -16,7 +16,7 @@ const defaultIcon = L.icon({
 
 L.Marker.prototype.options.icon = defaultIcon;
 
-function MapaInteractivo({ posicion, onPosicionChange }) {
+export function MapaInteractivo({ posicion, onPosicionChange }) {
   const map = useMap();
 
   useEffect(() => {
