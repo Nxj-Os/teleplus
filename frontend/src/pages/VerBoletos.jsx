@@ -4,11 +4,10 @@ import { useEffect, useState } from "react";
 import { obtenerEntradas,actualizarEntrada } from "../services/entradaService";
 import { QRCodeSVG } from "qrcode.react";
 
+
 export default function VerBoletos() {
   const [entradas, setEntradas] = useState([]);
   const [boletoSeleccionado, setBoletoSeleccionado] = useState(null);
-  
-  
   const [pestañaActiva, setPestañaActiva] = useState("TICKETS");
 
   useEffect(() => {
@@ -21,7 +20,7 @@ export default function VerBoletos() {
         console.error("Error cargando entradas", error);
       }
     };
-
+ 
     cargarEntradas();
   }, []);
 //filtro
@@ -50,7 +49,14 @@ const Cancelarbole = async (boleto) => {
       console.error("Error al cancelar el boleto:", error);
       alert("Hubo un problema al procesar tu devolución.");
     }
+    
   };
+  const getStoredUser = () => {
+  const storedUser = localStorage.getItem("user");
+  return storedUser ? JSON.parse(storedUser) : null;
+};
+
+const user = getStoredUser();
   return (
     <LayoutPrincipal>
       <div className="container py-5">
@@ -183,7 +189,7 @@ const Cancelarbole = async (boleto) => {
                 </div>
                 <div className="col-7" style={{ fontSize: "12px" }}>
                   <div className="mb-2 text-truncate">
-                    <strong>{ "Cliente"}</strong>
+                    <strong>Cliente: {user?.nombre} {user?.apellido}</strong>
                   </div>
                   <div className="mb-2">
                   <span className=" text-truncate"><strong>Fecha de compra: </strong></span>{boletoSeleccionado.fecha_generacion.split("-").reverse().join("/")}
