@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LayoutPrincipal from "../layouts/LayoutPrincipal";
 import { actualizarUsuario } from "../services/UsuarioService";
+import { cerrarSesion } from "../utils/usuario";
 
 const getStoredUser = () => {
   const storedUser = localStorage.getItem("user");
@@ -46,8 +47,8 @@ function Perfil() {
     getProfileFormData(getStoredUser()),
   );
 
-  const handleLogout = () => {
-    localStorage.removeItem("user");
+  const handleLogout = async () => {
+    await cerrarSesion();
     navigate("/login");
   };
 

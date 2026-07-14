@@ -97,7 +97,7 @@ function Compras() {
     }
   };
 
-  const handleExitoPago = async () => {
+  const handleExitoPago = async (codigoTransaccion) => {
     setMostrarPasarela(false);
     setProcesandoCompra(true);
 
@@ -110,7 +110,7 @@ function Compras() {
 
       const compraCreada = await crearCompra(compraData);
 
-      const codigoQR = `QR_${Math.random().toString(36).substring(2, 14).toUpperCase()}`;
+      const codigoQR = codigoTransaccion || `QR_${Math.random().toString(36).substring(2, 14).toUpperCase()}`;
 
       await guardarEntrada({
         codigo_qr: codigoQR,
@@ -195,8 +195,8 @@ function Compras() {
                   value={metodoPago}
                   onChange={(e) => setMetodoPago(e.target.value)}
                 >
-                  <option>Tarjeta de crédito</option>
-                  <option>Tarjeta de débito</option>
+                  <option>Tarjeta de credito</option>
+                  <option>Tarjeta de debito</option>
                   <option>Yape / Plin</option>
                 </select>
 

@@ -136,12 +136,12 @@ export default function Navbar() {
                   <button
                     className="nav-link btn btn-link text-start"
                     style={{ textDecoration: 'none' }}
-                    onClick={() => {
-                      cerrarSesion();
+                    onClick={async () => {
+                      await cerrarSesion();
                       navigate("/");
                     }}
                   >
-                    Cerrar Sesión
+                    Cerrar Sesion
                   </button>
                 </li>
               </>

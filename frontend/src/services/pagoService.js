@@ -5,6 +5,11 @@ export const crearPago = async (pago) => {
   return data;
 };
 
+export const procesarPago = async (pagoData) => {
+  const { data } = await apiClient.post("/api/pagos/procesar", pagoData);
+  return data;
+};
+
 export const obtenerPago = async (id) => {
   const { data } = await apiClient.get(`/api/pagos/${id}`);
   return data;

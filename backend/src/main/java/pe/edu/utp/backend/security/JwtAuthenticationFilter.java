@@ -18,10 +18,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
     private final UsuarioDetailsServiceImpl userDetailsService;
+    private final pe.edu.utp.backend.repository.RevokedTokenRepository revokedTokenRepository;
 
-    public JwtAuthenticationFilter(JwtUtil jwtUtil, UsuarioDetailsServiceImpl userDetailsService) {
+    public JwtAuthenticationFilter(JwtUtil jwtUtil, UsuarioDetailsServiceImpl userDetailsService,
+                                   pe.edu.utp.backend.repository.RevokedTokenRepository revokedTokenRepository) {
         this.jwtUtil = jwtUtil;
         this.userDetailsService = userDetailsService;
+        this.revokedTokenRepository = revokedTokenRepository;
     }
 
     @Override
@@ -38,7 +41,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String token = authHeader.substring(7);
 
-        if (jwtUtil.validateToken(token) && SecurityContextHolder.getContext().getAuthentication() == null) {
+        if (jwtUtil.validateToken(token) && !revokedTokenRepository.existsByToken(token)
+                && SecurityContextHolder.getContext().getAuthentication() == null) {
             String correo = jwtUtil.extractCorreo(token);
             UserDetails userDetails = userDetailsService.loadUserByUsername(correo);
 
