@@ -115,6 +115,15 @@ function LugaresDashboard() {
       return;
     }
 
+    const nombreNormalizado = form.nombre.trim().toLowerCase();
+    const duplicado = lugares.some(
+      (l) => l.nombre.toLowerCase() === nombreNormalizado && l.id_lugar !== editandoId
+    );
+    if (duplicado) {
+      setFeedback({ type: "danger", text: "Ya existe un lugar con ese nombre." });
+      return;
+    }
+
     setIsSubmitting(true);
     setFeedback(null);
 

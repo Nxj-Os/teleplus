@@ -108,6 +108,13 @@ function LugarSelector({ onSelect, onCerrar }) {
       return;
     }
 
+    const nombreNormalizado = form.nombre.trim().toLowerCase();
+    const duplicado = lugares.some((l) => l.nombre.toLowerCase() === nombreNormalizado);
+    if (duplicado) {
+      alert("Ya existe un lugar con ese nombre.");
+      return;
+    }
+
     setGuardando(true);
     try {
       const nuevoLugar = {

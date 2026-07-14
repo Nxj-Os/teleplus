@@ -3,6 +3,8 @@ package pe.edu.utp.backend.service.impl;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.http.HttpStatus;
 
 import pe.edu.utp.backend.entity.Lugar;
 
@@ -35,6 +37,12 @@ public class LugarServiceImpl
     @Override
     public Lugar guardar(Lugar lugar) {
 
+        if (repository.existsByNombreIgnoreCase(lugar.getNombre())) {
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT,
+                    "Ya existe un lugar con ese nombre");
+        }
+
         return repository.save(lugar);
     }
 
@@ -44,6 +52,13 @@ public class LugarServiceImpl
             Lugar nuevo) {
 
         Lugar actual = repository.findById(id).orElseThrow();
+
+        if (repository.existsByNombreIgnoreCase(nuevo.getNombre())
+                && !actual.getNombre().equalsIgnoreCase(nuevo.getNombre())) {
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT,
+                    "Ya existe un lugar con ese nombre");
+        }
 
         actual.setNombre(nuevo.getNombre());
 
