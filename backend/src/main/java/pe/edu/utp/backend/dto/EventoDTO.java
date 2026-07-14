@@ -25,6 +25,8 @@ public class EventoDTO {
 
     private String imagenDetalle;
 
+    private String imagenFooter;
+
     private String estado;
 
     private LocalDateTime fecha_creacion;
