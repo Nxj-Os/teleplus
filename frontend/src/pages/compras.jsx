@@ -16,8 +16,12 @@ import PasarelaPago from "../components/PasarelaPago";
 
 function Compras() {
   const location = useLocation();
-
   const navigate = useNavigate();
+
+  if (!localStorage.getItem("token")) {
+    navigate("/login", { replace: true });
+    return null;
+  }
 
   const datosCompra = location.state;
 
@@ -26,7 +30,7 @@ function Compras() {
   // STATES
   const [cantidad, setCantidad] = useState(1);
 
-  const [metodoPago, setMetodoPago] = useState("Tarjeta de crédito");
+  const [metodoPago, setMetodoPago] = useState("Tarjeta de credito");
 
   const [codigoPromo, setCodigoPromo] = useState("");
 
@@ -71,13 +75,28 @@ function Compras() {
   };
 
   const handleCompra = async () => {
-    if (!aceptaPoliticas) {
-      alert("Debes aceptar las políticas");
+    if (!datosCompra?.evento) {
+      alert("No se encontro informacion del evento");
+      return;
+    }
+
+    if (!cantidad || cantidad < 1) {
+      alert("Debes seleccionar al menos 1 boleto");
+      return;
+    }
+
+    if (precioUnitario <= 0) {
+      alert("El precio del boleto no es valido");
       return;
     }
 
     if (!metodoPago) {
-      alert("Selecciona un método de pago");
+      alert("Selecciona un metodo de pago");
+      return;
+    }
+
+    if (!aceptaPoliticas) {
+      alert("Debes aceptar las politicas de compra");
       return;
     }
 
@@ -85,7 +104,7 @@ function Compras() {
       if (promoValida && codigoPromo.trim()) {
         const aplicacion = await aplicarPromocionAPI(codigoPromo.trim());
         if (!aplicacion.valido) {
-          alert(aplicacion.mensaje || "No se pudo aplicar la promoción.");
+          alert(aplicacion.mensaje || "No se pudo aplicar la promocion.");
           return;
         }
       }
@@ -93,7 +112,7 @@ function Compras() {
       setMostrarPasarela(true);
     } catch (error) {
       console.error(error);
-      alert("Error al validar la promoción");
+      alert("Error al validar la promocion");
     }
   };
 
@@ -137,104 +156,188 @@ function Compras() {
   return (
     <LayoutPrincipal>
       <div className={styles.page}>
-        {/* HERO */}
-        <section
-          className={`d-flex align-items-center justify-content-center ${styles["seccion-principal"]}`}
-        >
-          <h1 className="text-white fw-bold">Compra tus entradas</h1>
+        {/* HERO CON IMAGEN */}
+        <section className={styles.hero}>
+          <div
+            className={styles.heroBg}
+            style={{ backgroundImage: `url(${datosCompra?.imagen})` }}
+          ></div>
+          <div className={styles.heroOverlay}></div>
+          <div className={styles.heroContent}>
+            <span
+              className="badge bg-danger mb-2"
+              style={{ fontSize: "11px", letterSpacing: "1.5px" }}
+            >
+              TICKET PLUS+
+            </span>
+            <h1 className="text-white fw-bold mb-2">
+              {datosCompra?.evento || "Compra tus entradas"}
+            </h1>
+            <div className="d-flex align-items-center gap-3 flex-wrap">
+              <span className="text-white-50">
+                {datosCompra?.fecha}
+              </span>
+              <span className="text-white-50">|</span>
+              <span className="text-white-50">
+                {datosCompra?.lugar}
+              </span>
+            </div>
+          </div>
         </section>
 
         {/* CONTENIDO */}
-        <section
-          className="container my-5"
-          style={{ backgroundColor: "white" }}
-        >
-          <div className="row g-4">
-            {/* RESUMEN */}
-            <div className="col-md-6">
-              <div className="card bg-dark text-white p-4 h-100">
-                <h3 className="text-white">{datosCompra?.evento}</h3>
+        <section className="container my-5">
+          <div className="row g-4 justify-content-center">
+            {/* COLUMNA IZQUIERDA - RESUMEN EVENTO */}
+            <div className="col-lg-5">
+              <div className={styles.summaryCard}>
+                {datosCompra?.imagen && (
+                  <div className={styles.summaryImageWrap}>
+                    <img
+                      src={datosCompra.imagen}
+                      alt={datosCompra?.evento}
+                      className={styles.summaryImage}
+                    />
+                    <div className={styles.summaryImageOverlay}>
+                      <span
+                        className="badge bg-dark px-3 py-2"
+                        style={{ fontSize: "11px" }}
+                      >
+                        {datosCompra?.tipo}
+                      </span>
+                    </div>
+                  </div>
+                )}
+                <div className={styles.summaryBody}>
+                  <h4 className="fw-bold mb-3" style={{ color: "#1a1a2e" }}>{datosCompra?.evento}</h4>
 
-                <hr />
+                  <div className={styles.summaryInfoRow}>
+                    <div className={styles.summaryIconBox} style={{ background: "#e8f5e9", color: "#2e7d32" }}>
+                      <span>&#9744;</span>
+                    </div>
+                    <div>
+                      <small style={{ color: "#6c757d" }}>Fecha</small>
+                      <div className="fw-semibold" style={{ color: "#212529" }}>{datosCompra?.fecha}</div>
+                    </div>
+                  </div>
 
-                <p className="text-white">{datosCompra?.fecha}</p>
+                  <div className={styles.summaryInfoRow}>
+                    <div className={styles.summaryIconBox} style={{ background: "#fff3cd", color: "#856404" }}>
+                      <span>&#9873;</span>
+                    </div>
+                    <div>
+                      <small style={{ color: "#6c757d" }}>Lugar</small>
+                      <div className="fw-semibold" style={{ color: "#212529" }}>{datosCompra?.lugar}</div>
+                    </div>
+                  </div>
 
-                <p className="text-white">{datosCompra?.lugar}</p>
+                  <div className={styles.summaryInfoRow}>
+                    <div className={styles.summaryIconBox} style={{ background: "#e3f2fd", color: "#1565c0" }}>
+                      <span>&#9899;</span>
+                    </div>
+                    <div>
+                      <small style={{ color: "#6c757d" }}>Zona</small>
+                      <div className="fw-semibold" style={{ color: "#212529" }}>{datosCompra?.zona}</div>
+                    </div>
+                  </div>
 
-                <p className="text-white">{datosCompra?.zona}</p>
+                  <div className={styles.summaryInfoRow}>
+                    <div className={styles.summaryIconBox} style={{ background: "#fce4ec", color: "#c62828" }}>
+                      <span>&#9670;</span>
+                    </div>
+                    <div>
+                      <small style={{ color: "#6c757d" }}>Tipo</small>
+                      <div className="fw-semibold" style={{ color: "#212529" }}>{datosCompra?.tipo}</div>
+                    </div>
+                  </div>
 
-                <p className="text-white">{datosCompra?.tipo}</p>
-
-                <h4 className="mt-3">Precio unitario</h4>
-
-                <h2 className="text-danger">S/. {precioUnitario.toFixed(2)}</h2>
+                  <hr />
+                  <div className="d-flex justify-content-between align-items-center">
+                    <span style={{ color: "#6c757d" }}>Precio unitario</span>
+                    <span className="fw-bold" style={{ color: "#dc3545", fontSize: "1.15rem" }}>
+                      S/. {precioUnitario.toFixed(2)}
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* FORMULARIO */}
-            <div className="col-md-6">
-              <div className="card p-4 shadow h-100">
-                <h4 className="mb-3">Selecciona tus entradas</h4>
+            {/* COLUMNA DERECHA - FORMULARIO */}
+            <div className="col-lg-7">
+              <div className={styles.formCard}>
+                <h4 className="fw-bold mb-4" style={{ color: "#1a1a2e" }}>
+                  Selecciona tus entradas
+                </h4>
 
                 {/* CANTIDAD */}
-                <label className="form-label">Cantidad de boletos</label>
-
-                <input
-                  type="number"
-                  className="form-control mb-3"
-                  value={cantidad}
-                  min="1"
-                  onChange={(e) => setCantidad(Number(e.target.value))}
-                />
-
-                {/* PAGO */}
-                <label className="form-label">Método de pago</label>
-
-                <select
-                  className="form-select mb-3"
-                  value={metodoPago}
-                  onChange={(e) => setMetodoPago(e.target.value)}
-                >
-                  <option>Tarjeta de credito</option>
-                  <option>Tarjeta de debito</option>
-                  <option>Yape / Plin</option>
-                </select>
-
-                {/* PROMOCIÓN */}
-                <label className="form-label fw-bold">Código promocional</label>
-
-                <div className="d-flex gap-2 mb-2">
+                <div className={styles.formGroup}>
+                  <label className="form-label fw-semibold" style={{ color: "#495057" }}>
+                    Cantidad de boletos
+                  </label>
                   <input
-                    type="text"
-                    className={`form-control ${
-                      promoValida === true
-                        ? "border-success"
-                        : promoValida === false
-                          ? "border-danger"
-                          : ""
-                    }`}
-                    placeholder="Ej: INTERBANK2026"
-                    value={codigoPromo}
-                    onChange={(e) => setCodigoPromo(e.target.value)}
+                    type="number"
+                    className={`form-control ${styles.formInput}`}
+                    value={cantidad}
+                    min="1"
+                    onChange={(e) => setCantidad(Number(e.target.value))}
                   />
-
-                  <button className="btn btn-danger" onClick={validarCodigoPromocion}>
-                    Aplicar
-                  </button>
                 </div>
 
-                {/* MENSAJE */}
-                {mensajePromo && (
-                  <div
-                    className={`fw-bold mb-3 ${
-                      promoValida ? "text-success" : "text-danger"
-                    }`}
+                {/* METODO DE PAGO */}
+                <div className={styles.formGroup}>
+                  <label className="form-label fw-semibold" style={{ color: "#495057" }}>
+                    Metodo de pago
+                  </label>
+                  <select
+                    className={`form-select ${styles.formInput}`}
+                    value={metodoPago}
+                    onChange={(e) => setMetodoPago(e.target.value)}
                   >
-                    {mensajePromo}
-                  </div>
-                )}
+                    <option>Tarjeta de credito</option>
+                    <option>Tarjeta de debito</option>
+                    <option>Yape / Plin</option>
+                  </select>
+                </div>
 
-                {/* POLÍTICAS */}
+                {/* CODIGO PROMOCIONAL */}
+                <div className={styles.formGroup}>
+                  <label className="form-label fw-bold" style={{ color: "#495057" }}>
+                    Codigo promocional
+                  </label>
+                  <div className="d-flex gap-2">
+                    <input
+                      type="text"
+                      className={`form-control ${styles.formInput} ${
+                        promoValida === true
+                          ? "border-success"
+                          : promoValida === false
+                            ? "border-danger"
+                            : ""
+                      }`}
+                      placeholder="Ej: INTERBANK2026"
+                      value={codigoPromo}
+                      onChange={(e) => setCodigoPromo(e.target.value)}
+                    />
+                    <button
+                      className="btn btn-danger fw-bold px-4"
+                      style={{ borderRadius: "10px" }}
+                      onClick={validarCodigoPromocion}
+                    >
+                      Aplicar
+                    </button>
+                  </div>
+                  {mensajePromo && (
+                    <div
+                      className={`fw-bold mt-2 small ${
+                        promoValida ? "text-success" : "text-danger"
+                      }`}
+                    >
+                      {mensajePromo}
+                    </div>
+                  )}
+                </div>
+
+                {/* POLITICAS */}
                 <div className="form-check mt-4 mb-3">
                   <input
                     className="form-check-input"
@@ -243,15 +346,18 @@ function Compras() {
                     onChange={(e) => setAceptaPoliticas(e.target.checked)}
                     id="aceptaPoliticas"
                   />
-
-                  <label className="form-check-label" htmlFor="aceptaPoliticas">
-                    He leído y acepto los{" "}
+                  <label
+                    className="form-check-label"
+                    htmlFor="aceptaPoliticas"
+                    style={{ color: "#212529" }}
+                  >
+                    He leido y acepto los{" "}
                     <Link
                       to="/politica-compra"
                       target="_blank"
                       className="text-danger fw-bold"
                     >
-                      Términos de Compra
+                      Terminos de Compra
                     </Link>{" "}
                     y{" "}
                     <Link
@@ -259,7 +365,7 @@ function Compras() {
                       target="_blank"
                       className="text-danger fw-bold"
                     >
-                      Términos de Uso
+                      Terminos de Uso
                     </Link>
                   </label>
                 </div>
@@ -267,24 +373,49 @@ function Compras() {
                 <hr />
 
                 {/* TOTAL */}
-                <h5>Total estimado</h5>
+                <div className={styles.totalBox}>
+                  <div className="d-flex justify-content-between align-items-center mb-2">
+                    <span style={{ color: "#6c757d" }}>
+                      Subtotal ({cantidad}{" "}
+                      {cantidad === 1 ? "boleto" : "boletos"})
+                    </span>
+                    <span style={{ color: "#212529" }}>S/. {subtotal.toFixed(2)}</span>
+                  </div>
+                  {descuento > 0 && (
+                    <div className="d-flex justify-content-between align-items-center mb-2">
+                      <span className="fw-bold" style={{ color: "#28a745" }}>
+                        Descuento ({descuento}%)
+                      </span>
+                      <span className="fw-bold" style={{ color: "#28a745" }}>
+                        -S/. {((subtotal * descuento) / 100).toFixed(2)}
+                      </span>
+                    </div>
+                  )}
+                  <hr className="my-2" />
+                  <div className="d-flex justify-content-between align-items-center">
+                    <span className="fw-bold fs-5" style={{ color: "#212529" }}>Total</span>
+                    <span className="fw-bold fs-4" style={{ color: "#dc3545" }}>
+                      S/. {totalFinal.toFixed(2)}
+                    </span>
+                  </div>
+                </div>
 
-                {/* DESCUENTO */}
-                {descuento > 0 && (
-                  <p className="text-success fw-bold">
-                    Descuento aplicado: {descuento}%
-                  </p>
-                )}
-
-                <h3 className="text-danger">S/. {totalFinal.toFixed(2)}</h3>
-
-                {/* BOTÓN */}
                 <button
-                  className="btn btn-danger w-100 mt-3 fw-bold"
-                  disabled={!aceptaPoliticas || procesandoCompra}
+                  className="btn btn-danger w-100 mt-4 py-3 fw-bold"
+                  style={{ borderRadius: "12px", fontSize: "1.05rem" }}
+                  disabled={!aceptaPoliticas || procesandoCompra || !cantidad || cantidad < 1}
                   onClick={handleCompra}
                 >
-                  {procesandoCompra ? "Procesando..." : "Confirmar compra"}
+                  {procesandoCompra ? (
+                    <>
+                      <span className="spinner-border spinner-border-sm me-2"></span>{" "}
+                      Procesando...
+                    </>
+                  ) : (
+                    <>
+                      Confirmar compra — S/. {totalFinal.toFixed(2)}
+                    </>
+                  )}
                 </button>
               </div>
             </div>
@@ -292,11 +423,10 @@ function Compras() {
         </section>
 
         {/* INFO */}
-        <section
-          className="container text-center mb-5"
-          style={{ backgroundColor: "white" }}
-        >
-          <small>Los boletos serán enviados a tu correo electrónico.</small>
+        <section className="container text-center mb-5">
+          <small style={{ color: "#6c757d" }}>
+            Los boletos seran enviados a tu correo electronico.
+          </small>
         </section>
       </div>
 
@@ -310,40 +440,57 @@ function Compras() {
         />
       )}
 
-      {/* MODAL ÉXITO */}
+      {/* MODAL EXITO */}
       {mostrarExito && (
         <>
           <div
             className="modal fade show"
             style={{
               display: "block",
-              backgroundColor: "rgba(0,0,0,0.5)",
+              backgroundColor: "rgba(0,0,0,0.6)",
             }}
           >
             <div className="modal-dialog modal-dialog-centered">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title">Compra realizada</h5>
-                </div>
-
-                <div className="modal-body text-center">
-                  <h4 className="text-success mb-3">
+              <div
+                className="modal-content border-0 shadow-lg"
+                style={{ borderRadius: "20px", overflow: "hidden" }}
+              >
+                {datosCompra?.imagen && (
+                  <div style={{ height: "160px", overflow: "hidden" }}>
+                    <img
+                      src={datosCompra.imagen}
+                      alt=""
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                      }}
+                    />
+                  </div>
+                )}
+                <div className="modal-body text-center p-4">
+                  <div className={styles.successIcon}>&#10003;</div>
+                  <h4 className="fw-bold mt-3">
                     Compra realizada correctamente
                   </h4>
-
-                  <p>Tu boleto ha sido registrado exitosamente.</p>
+                  <p className="text-muted">
+                    Tu boleto ha sido registrado exitosamente.
+                  </p>
+                  <p className="small text-muted mb-0">
+                    <strong>Evento:</strong> {datosCompra?.evento}
+                  </p>
                 </div>
-
-                <div className="modal-footer justify-content-center">
+                <div className="modal-footer border-0 justify-content-center pb-4 gap-2">
                   <button
-                    className="btn btn-primary"
+                    className="btn btn-danger fw-bold px-4"
+                    style={{ borderRadius: "10px" }}
                     onClick={() => navigate("/ver-boletos")}
                   >
                     Ver mis boletos
                   </button>
-
                   <button
-                    className="btn btn-secondary"
+                    className="btn btn-outline-secondary px-4"
+                    style={{ borderRadius: "10px" }}
                     onClick={() => navigate("/")}
                   >
                     Volver al inicio

@@ -128,6 +128,7 @@ function Evento4() {
                 tipo: "PREVENTA FANS",
                 precio: 230.0,
                 zona: "PLATINUM",
+                imagen: Eventos,
               })
             }
           >
@@ -144,6 +145,7 @@ function Evento4() {
                 tipo: "PREVENTA INTERBANK",
                 precio: 210.0,
                 zona: "GOLD",
+                imagen: Eventos,
               })
             }
           >
@@ -160,6 +162,7 @@ function Evento4() {
                 tipo: "PRECIO FULL",
                 precio: 250.0,
                 zona: "SILVER",
+                imagen: Eventos,
               })
             }
           >
@@ -175,6 +178,7 @@ function Evento4() {
                 tipo: "CONADIS",
                 precio: 120,
                 zona: "CONADIS",
+                imagen: Eventos,
               })
             }
           >

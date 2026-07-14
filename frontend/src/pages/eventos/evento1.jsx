@@ -159,6 +159,7 @@ function Evento1() {
                     zona: "CAMPO A",
                     tipo: "PREVENTA FANS",
                     precio: 330,
+                    imagen: bannerEvento,
                   })
                 }
               >
@@ -178,6 +179,7 @@ function Evento1() {
                     zona: "CAMPO A",
                     tipo: "PREVENTA INTERBANK",
                     precio: 280,
+                    imagen: bannerEvento,
                   })
                 }
               >
@@ -197,6 +199,7 @@ function Evento1() {
                     zona: "CAMPO A",
                     tipo: "PRECIO FULL",
                     precio: 400,
+                    imagen: bannerEvento,
                   })
                 }
               >
@@ -216,6 +219,7 @@ function Evento1() {
                     zona: "CAMPO A",
                     tipo: "CONADIS",
                     precio: 153,
+                    imagen: bannerEvento,
                   })
                 }
               >
