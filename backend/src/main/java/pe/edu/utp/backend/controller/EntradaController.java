@@ -41,7 +41,7 @@ public class EntradaController {
 
         // ===== CREAR =====
         @PostMapping
-        public Entrada guardar(@Valid @RequestBody Entrada entrada, Authentication authentication) {
+        public Entrada guardar(@RequestBody Entrada entrada, Authentication authentication) {
                 entrada.setFecha_generacion(LocalDate.now());
                 Usuario usuario = obtenerUsuario(authentication);
                 entrada.setUsuario(usuario);

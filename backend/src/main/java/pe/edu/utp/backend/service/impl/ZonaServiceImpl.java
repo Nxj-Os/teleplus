@@ -22,9 +22,9 @@ public class ZonaServiceImpl implements ZonaService {
     private boolean existeZonaDuplicada(String nombreZona, Long idLugar, Long excludeId) {
         boolean duplicada;
         if (idLugar != null) {
-            duplicada = zonaRepository.existsByNombreZonaAndLugarId(nombreZona, idLugar);
+            duplicada = zonaRepository.existeZonaDuplicadaEnLugar(nombreZona, idLugar);
         } else {
-            duplicada = zonaRepository.existsByNombreZonaAndLugarIsNull(nombreZona);
+            duplicada = zonaRepository.existeZonaDuplicadaSinLugar(nombreZona);
         }
         if (duplicada && excludeId != null) {
             Zona existente = zonaRepository.findAll().stream()
@@ -45,7 +45,7 @@ public class ZonaServiceImpl implements ZonaService {
 
     @Override
     public List<Zona> listarPorLugar(Long idLugar) {
-        return zonaRepository.findZonasByLugarId(idLugar);
+        return zonaRepository.buscarZonasPorLugar(idLugar);
     }
 
     @Override

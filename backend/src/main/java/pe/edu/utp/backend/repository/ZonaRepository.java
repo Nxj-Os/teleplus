@@ -12,11 +12,11 @@ import java.util.List;
 public interface ZonaRepository extends JpaRepository<Zona, Long> {
 
     @Query("SELECT z FROM Zona z WHERE z.lugar.id_lugar = :idLugar")
-    List<Zona> findZonasByLugarId(@Param("idLugar") Long idLugar);
+    List<Zona> buscarZonasPorLugar(@Param("idLugar") Long idLugar);
 
     @Query("SELECT COUNT(z) > 0 FROM Zona z WHERE LOWER(z.nombre_zona) = LOWER(:nombreZona) AND z.lugar.id_lugar = :idLugar")
-    boolean existsByNombreZonaAndLugarId(@Param("nombreZona") String nombreZona, @Param("idLugar") Long idLugar);
+    boolean existeZonaDuplicadaEnLugar(@Param("nombreZona") String nombreZona, @Param("idLugar") Long idLugar);
 
     @Query("SELECT COUNT(z) > 0 FROM Zona z WHERE LOWER(z.nombre_zona) = LOWER(:nombreZona) AND z.lugar IS NULL")
-    boolean existsByNombreZonaAndLugarIsNull(@Param("nombreZona") String nombreZona);
+    boolean existeZonaDuplicadaSinLugar(@Param("nombreZona") String nombreZona);
 }
