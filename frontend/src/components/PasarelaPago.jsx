@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { QRCodeSVG } from "qrcode.react";
 import styles from "../css/pasarelaPago.module.css";
 import { procesarPago } from "../services/pagoService";
 
@@ -267,8 +268,14 @@ function PasarelaPago({ metodoPago, monto, onExito, onCancelar }) {
             <div className={styles.formulario}>
               <div className="text-center mb-3">
                 <div className={styles.qrSimulado}>
-                  <p className="mb-0">&#128241;</p>
-                  <small>Escanear codigo</small>
+                  <QRCodeSVG
+                    value={`yape://pay?amount=${monto}&phone=999999999`}
+                    size={100}
+                    bgColor="#ffffff"
+                    fgColor="#1a1a2e"
+                    includeMargin={false}
+                  />
+                  <small className="mt-2">Escanear codigo</small>
                 </div>
               </div>
               <div className="mb-3">
