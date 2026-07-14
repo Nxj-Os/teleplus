@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -102,7 +101,7 @@ public class UsuarioController {
     }
 
     @PostMapping("/registro")
-    public ResponseEntity<?> registrar(@Valid @RequestBody Usuario usuario) {
+    public ResponseEntity<?> registrar(@RequestBody Usuario usuario) {
         if (usuario.getEstado() == null) {
             usuario.setEstado("activo");
         }
