@@ -97,6 +97,19 @@ function ZonasDashboard() {
       return;
     }
 
+    const nombreNormalizado = form.nombre_zona.trim().toLowerCase();
+    const lugarId = form.lugar ? Number(form.lugar) : null;
+    const duplicado = zonas.some(
+      (z) =>
+        z.nombre_zona.toLowerCase() === nombreNormalizado &&
+        (z.lugar?.id_lugar || null) === lugarId &&
+        z.id_zona !== editandoId
+    );
+    if (duplicado) {
+      setFeedback({ type: "danger", text: "Ya existe una zona con ese nombre en ese lugar." });
+      return;
+    }
+
     setIsSubmitting(true);
     setFeedback(null);
 
