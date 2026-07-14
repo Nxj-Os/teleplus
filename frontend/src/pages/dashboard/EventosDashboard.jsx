@@ -22,6 +22,7 @@ const INITIAL_EVENTO = {
   imagenCarrusel: "",
   imagenPortada: "",
   imagenDetalle: "",
+  imagenFooter: "",
 };
 
 const INITIAL_EZP = {
@@ -119,6 +120,7 @@ function EventosDashboard() {
       imagenCarrusel: evento.imagenCarrusel || "",
       imagenPortada: evento.imagenPortada || "",
       imagenDetalle: evento.imagenDetalle || "",
+      imagenFooter: evento.imagenFooter || "",
       lugar: evento.lugar?.id_lugar || "",
     });
     setLugarSeleccionado(evento.lugar || null);
@@ -156,6 +158,7 @@ function EventosDashboard() {
       imagenCarrusel: form.imagenCarrusel.trim() || null,
       imagenPortada: form.imagenPortada.trim() || null,
       imagenDetalle: form.imagenDetalle.trim() || null,
+      imagenFooter: form.imagenFooter.trim() || null,
       lugar: { id_lugar: lugarSeleccionado.id_lugar },
     };
 
@@ -518,6 +521,21 @@ function EventosDashboard() {
                   />
                   <div className="form-text text-muted">
                     Banner en la página de detalle del evento. Tamaño recomendado: 1200x500px.
+                  </div>
+                </div>
+
+                <div className="col-md-6">
+                  <label className="form-label">URL imagen footer del evento</label>
+                  <input
+                    type="url"
+                    className="form-control"
+                    name="imagenFooter"
+                    value={form.imagenFooter}
+                    onChange={manejarCambio}
+                    placeholder="https://ejemplo.com/logo-footer.png"
+                  />
+                  <div className="form-text text-muted">
+                    Logo o imagen que se muestra en la sección inferior del evento. Tamaño recomendado: 300x300px.
                   </div>
                 </div>
               </div>

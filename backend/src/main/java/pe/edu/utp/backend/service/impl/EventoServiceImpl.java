@@ -57,6 +57,7 @@ public class EventoServiceImpl implements EventoService {
         actual.setImagenCarrusel(nuevo.getImagenCarrusel());
         actual.setImagenPortada(nuevo.getImagenPortada());
         actual.setImagenDetalle(nuevo.getImagenDetalle());
+        actual.setImagenFooter(nuevo.getImagenFooter());
         actual.setEstado(nuevo.getEstado());
 
         return eventoRepository.save(actual);
