@@ -315,11 +315,11 @@ export default function VerBoletos() {
                       </div>
                       <div className="mb-2">
                         <span className="text-muted d-block" style={{ fontSize: "11px" }}>Lugar</span>
-                        <strong>{boletoSeleccionado.lugar || "Lugar"}</strong>
+                        <strong>{boletoSeleccionado.eventoZonaPrecio?.evento?.lugar?.nombre || "Lugar"}</strong>
                       </div>
                       <div>
                         <span className="text-muted d-block" style={{ fontSize: "11px" }}>Zona</span>
-                        <strong>{boletoSeleccionado.zona || "General"}</strong>
+                        <strong>{boletoSeleccionado.eventoZonaPrecio?.zona?.nombre || "General"}</strong>
                       </div>
                     </div>
                   </div>
