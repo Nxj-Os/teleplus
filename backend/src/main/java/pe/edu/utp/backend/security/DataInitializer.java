@@ -1,8 +1,11 @@
 package pe.edu.utp.backend.security;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.annotation.Order;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import pe.edu.utp.backend.entity.Rol;
@@ -16,6 +19,7 @@ import java.time.LocalDate;
 @Order(2)
 public class DataInitializer implements ApplicationRunner {
 
+    private static final Logger log = LoggerFactory.getLogger(DataInitializer.class);
     private final UsuarioRepository usuarioRepository;
     private final RolRepository rolRepository;
     private final PasswordEncoder passwordEncoder;
@@ -41,21 +45,25 @@ public class DataInitializer implements ApplicationRunner {
 
         Rol rol = rolRepository.findByNombreRol(rolNombre).orElse(null);
         if (rol == null) {
-            System.out.println("[DataInitializer] Rol no encontrado: " + rolNombre + " — omitiendo " + correo);
+            log.warn("Rol no encontrado: {} — omitiendo {}", rolNombre, correo);
             return;
         }
 
-        Usuario u = new Usuario();
-        u.setNombre(nombre);
-        u.setApellido(apellido);
-        u.setCorreo(correo);
-        u.setContrasena(passwordEncoder.encode(contrasena));
-        u.setEstado("activo");
-        u.setFecha_registro(LocalDate.now());
-        u.setRol(rol);
-        u.setTelefono("000000000");
+        try {
+            Usuario u = new Usuario();
+            u.setNombre(nombre);
+            u.setApellido(apellido);
+            u.setCorreo(correo);
+            u.setContrasena(passwordEncoder.encode(contrasena));
+            u.setEstado("activo");
+            u.setFecha_registro(LocalDate.now());
+            u.setRol(rol);
+            u.setTelefono("000000000");
 
-        usuarioRepository.save(u);
-        System.out.println("[DataInitializer] Usuario creado: " + correo);
+            usuarioRepository.save(u);
+            log.info("Usuario creado: {}", correo);
+        } catch (DataIntegrityViolationException e) {
+            log.info("Usuario '{}' ya existe en la base de datos", correo);
+        }
     }
 }
