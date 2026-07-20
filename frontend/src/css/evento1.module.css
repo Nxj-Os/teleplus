@@ -58,7 +58,6 @@ body {
 .caja-boletos {
   position: relative;
   margin: 20px auto 0 auto;
-  /* espacio adecuado entre escenario y tabla */
   width: calc(100% - 40px);
   max-width: 960px;
   background: transparent;
@@ -66,74 +65,122 @@ body {
   padding: 0 10px;
 }
 
-.tabla-precios {
-  gap: 12px;
-}
-
-.fila-precios {
-  margin-bottom: 1rem;
-  transition:
-    box-shadow 0.2s ease,
-    transform 0.2s ease;
+/* TABLA DE PRECIOS ESTILO TELETICKET */
+.tabla-precios-container {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  margin-bottom: 1rem;
 }
 
-.fila-precios::-webkit-scrollbar {
+.tabla-precios-container::-webkit-scrollbar {
   height: 8px;
 }
 
-.fila-precios::-webkit-scrollbar-thumb {
+.tabla-precios-container::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.25);
   border-radius: 999px;
 }
 
-.fila-precios:hover {
-  box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.25);
-  transform: translateY(-2px);
-}
-
-.etiqueta-fila {
-  min-height: 80px;
-  min-width: 180px;
-  padding: 0 1rem;
-  background: transparent;
-  color: #092950;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-transform: uppercase;
-  font-weight: 800;
-  letter-spacing: 1px;
-}
-
-.celda-precio {
+.tabla-precios {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
   background: #071021;
-  color: #fff;
-  padding: 12px 14px;
-  text-align: center;
   border: 2px solid #1b263b;
-  min-width: 160px;
-  min-height: 80px;
-  box-sizing: border-box;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
-.celda-precio .etiqueta {
-  font-size: 12px;
-  color: #cbd5e1;
-  text-transform: uppercase;
-  margin-bottom: 6px;
-}
-
-.celda-precio .precio {
+.th-sectores {
+  background: #0d1b30;
+  color: #dc3545;
   font-weight: 800;
-  font-size: 18px;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 14px 18px;
+  text-align: left;
+  border-bottom: 2px solid #1b263b;
+  white-space: nowrap;
+  min-width: 160px;
 }
 
-.destacado {
-  background: #074b01;
-  color: #ffffff;
-  border-color: #44ff00;
+.th-precio {
+  background: #0d1b30;
+  color: #dc3545;
+  font-weight: 800;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 14px 16px;
+  text-align: center;
+  border-bottom: 2px solid #1b263b;
+  border-left: 1px solid #1b263b;
+  white-space: nowrap;
+  min-width: 140px;
+}
+
+.fila-zona {
+  transition: background 0.15s ease;
+}
+
+.fila-zona:hover {
+  background: rgba(253, 224, 0, 0.06);
+}
+
+.fila-zona:not(:last-child) td {
+  border-bottom: 1px solid #1b263b;
+}
+
+.td-zona {
+  color: #fff;
+  font-weight: 800;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 16px 18px;
+  background: #0a1628;
+  white-space: nowrap;
+}
+
+.td-precio {
+  text-align: center;
+  padding: 16px 14px;
+  border-left: 1px solid #1b263b;
+}
+
+.sin-precio {
+  background: rgba(7, 16, 33, 0.5);
+}
+
+.precio-valor {
+  display: block;
+  color: #fff;
+  font-weight: 800;
+  font-size: 1.05rem;
+}
+
+.no-disponible {
+  color: #475569;
+  font-weight: 600;
+}
+
+.badge-agotado {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.7rem;
+  color: #ef4444;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.badge-ultimas {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.7rem;
+  color: #fde000;
+  font-weight: 700;
+  text-transform: uppercase;
 }
 
 .descripcion {
@@ -143,8 +190,8 @@ body {
 }
 
 .botones-seccion {
-  background-color: #fde000;
-  color: #000;
+  background-color: #081020;
+  color: #fff;
 }
 
 .img-centrada {

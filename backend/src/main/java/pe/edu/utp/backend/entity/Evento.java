@@ -49,6 +49,9 @@ public class Evento {
     @Size(max = 500)
     private String imagenFooter;
 
+    @Size(max = 500)
+    private String imagenMapa;
+
     @Column(length = 30)
     @Size(max = 30)
     private String estado;

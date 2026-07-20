@@ -23,6 +23,7 @@ const INITIAL_EVENTO = {
   imagenPortada: "",
   imagenDetalle: "",
   imagenFooter: "",
+  imagenMapa: "",
 };
 
 const INITIAL_EZP = {
@@ -121,6 +122,7 @@ function EventosDashboard() {
       imagenPortada: evento.imagenPortada || "",
       imagenDetalle: evento.imagenDetalle || "",
       imagenFooter: evento.imagenFooter || "",
+      imagenMapa: evento.imagenMapa || "",
       lugar: evento.lugar?.id_lugar || "",
     });
     setLugarSeleccionado(evento.lugar || null);
@@ -159,6 +161,7 @@ function EventosDashboard() {
       imagenPortada: form.imagenPortada.trim() || null,
       imagenDetalle: form.imagenDetalle.trim() || null,
       imagenFooter: form.imagenFooter.trim() || null,
+      imagenMapa: form.imagenMapa.trim() || null,
       lugar: { id_lugar: lugarSeleccionado.id_lugar },
     };
 
@@ -536,6 +539,21 @@ function EventosDashboard() {
                   />
                   <div className="form-text text-muted">
                     Logo o imagen que se muestra en la sección inferior del evento. Tamaño recomendado: 300x300px.
+                  </div>
+                </div>
+
+                <div className="col-md-6">
+                  <label className="form-label">URL imagen mapa/plano del recinto</label>
+                  <input
+                    type="url"
+                    className="form-control"
+                    name="imagenMapa"
+                    value={form.imagenMapa}
+                    onChange={manejarCambio}
+                    placeholder="https://ejemplo.com/plano-recinto.png"
+                  />
+                  <div className="form-text text-muted">
+                    Plano de ubicación del recinto mostrando las zonas. Tamaño recomendado: 1200x800px.
                   </div>
                 </div>
               </div>
