@@ -136,10 +136,10 @@ function Compras() {
         estado: "Activo",
         precio_final: totalFinal,
         reservado_hasta: null,
-        lugar: datosCompra?.lugar || datosCompra?.evento,
-        zona: datosCompra?.zona,
+        eventoZonaPrecio: {
+        id: datosCompra.idEventoZonaPrecio
+        }
       });
-
       setMostrarExito(true);
     } catch (error) {
       console.error(error);

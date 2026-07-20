@@ -43,4 +43,9 @@ public class Entrada {
     @JoinColumn(name = "id_usuario")
     @NotNull
     private Usuario usuario;
+    
+    @ManyToOne
+    @JoinColumn(name = "id_evento_zona_precio")
+    @NotNull
+    private EventoZonaPrecio eventoZonaPrecio;
 }
