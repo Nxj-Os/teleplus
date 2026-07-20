@@ -14,9 +14,9 @@ import bannerFallback from "../../assets/img/banner-evento1.jpg";
 import logoFallback from "../../assets/img/logo-evento1.png";
 
 const BOTON_COLORES = {
-  "PREVENTA FANS": "btn-dark",
+  "PREVENTA FANS": "btn-outline-light",
   "PREVENTA INTERBANK": "btn-danger",
-  "PRECIO FULL": "btn-secondary",
+  "PRECIO FULL": "btn-info",
   CONADIS: "btn-warning",
 };
 
@@ -85,6 +85,20 @@ function EventoDetalle() {
       });
 
     return Array.from(tipos.entries());
+  }, [zonasPrecios]);
+
+  const tiposUnicos = useMemo(() => {
+    const orden = [];
+    const vistos = new Set();
+    zonasPrecios
+      .filter((zp) => zp.activo)
+      .forEach((zp) => {
+        if (!vistos.has(zp.tipoPrecio)) {
+          vistos.add(zp.tipoPrecio);
+          orden.push(zp.tipoPrecio);
+        }
+      });
+    return orden;
   }, [zonasPrecios]);
 
   const estaEnVenta = (fechaInicio, fechaFin) => {
@@ -173,95 +187,99 @@ function EventoDetalle() {
       </section>
 
       {/* INFORMACION DEL EVENTO */}
-      <section className="py-4 bg-light">
+      <section className="py-3" style={{ backgroundColor: "#0d1b30" }}>
         <div className="container">
-          <div className="card shadow-lg border-0">
-            <div className="card-body p-4">
-              <h2 className="fw-bold mb-3">{evento.titulo}</h2>
-
-              <div className="row">
-                <div className="col-md-6">
-                  <p className="mb-1">
-                    <strong>Fecha:</strong>{" "}
-                    {formatearFecha(evento.fecha_evento)}
-                  </p>
-                  <p className="mb-1">
-                    <strong>Hora:</strong>{" "}
-                    {formatearHora(evento.hora_evento)}
-                  </p>
-                </div>
-                <div className="col-md-6">
-                  <p className="mb-1">
-                    <strong>Lugar:</strong> {lugarNombre}
-                  </p>
-                  {lugarDireccion && (
-                    <p className="mb-1 text-muted small">
-                      {lugarDireccion}
-                      {lugarCiudad ? ` - ${lugarCiudad}` : ""}
-                    </p>
-                  )}
-                </div>
-              </div>
-
-              {evento.descripcion && (
-                <>
-                  <hr />
-                  <p className="mb-0">{evento.descripcion}</p>
-                </>
-              )}
-            </div>
+          <div className="d-flex flex-wrap justify-content-center gap-4 text-white small">
+            <span><strong>Fecha:</strong> {formatearFecha(evento.fecha_evento)}</span>
+            <span><strong>Hora:</strong> {formatearHora(evento.hora_evento)}</span>
+            <span><strong>Lugar:</strong> {lugarNombre}</span>
           </div>
         </div>
       </section>
+
+      {/* PLANO DE UBICACION */}
+      {evento.imagenMapa && (
+        <section className="py-4" style={{ backgroundColor: "#081020" }}>
+          <div className="container">
+            <div className="card border-0 shadow-lg" style={{ backgroundColor: "#0d1b30" }}>
+              <div className="card-body p-4 text-center">
+                <h4 className="fw-bold mb-3 text-white">Plano de Ubicación del Recinto</h4>
+                <img
+                  src={evento.imagenMapa}
+                  alt={`Plano de ${evento.titulo}`}
+                  className="img-fluid rounded d-block mx-auto"
+                  style={{ maxHeight: "600px", objectFit: "contain" }}
+                />
+                <p className="small mt-2 mb-0" style={{ color: "#94a3b8" }}>
+                  Plano referencial. La distribución puede variar por razones técnicas, logísticas o por disposiciones de las autoridades competentes.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* MAPA + PRECIOS */}
       {zonasAgrupadas.length > 0 && (
         <div className={styles["campo-escenario"]}>
           <div className="container">
             <div className="row justify-content-center">
-              {/* PRECIOS */}
-              <div className={`${styles["caja-boletos"]} col-lg-8 col-12`}>
-                <div className={styles["tabla-precios"]}>
-                  {zonasAgrupadas.map((zona, indexZona) => (
-                    <div
-                      key={zona.idZona || indexZona}
-                      className={`${styles["fila-precios"]} rounded shadow-sm bg-dark p-3 overflow-auto mb-3`}
-                    >
-                      <div className="d-flex align-items-center justify-content-center flex-nowrap gap-2">
-                        <div
-                          className={`${
-                            indexZona % 2 === 0
-                              ? "bg-white text-dark"
-                              : "bg-warning text-dark"
-                          } ${styles["etiqueta-fila"]} flex-shrink-0`}
+              <div className={`${styles["caja-boletos"]} col-lg-10 col-12`}>
+                <div className={styles["tabla-precios-container"]}>
+                  <table className={styles["tabla-precios"]}>
+                    <thead>
+                      <tr>
+                        <th className={styles["th-sectores"]}>SECTORES</th>
+                        {tiposUnicos.map((tipo) => (
+                          <th key={tipo} className={styles["th-precio"]}>
+                            {tipo}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {zonasAgrupadas.map((zona, indexZona) => (
+                        <tr
+                          key={zona.idZona || indexZona}
+                          className={styles["fila-zona"]}
                         >
-                          {zona.nombre}
-                        </div>
+                          <td className={styles["td-zona"]}>
+                            {zona.nombre}
+                          </td>
+                          {tiposUnicos.map((tipo) => {
+                            const tipoData = zona.tipos[tipo];
+                            const sinStock = tipoData && tipoData.stockDisponible <= 0;
+                            const stockBajo = tipoData && tipoData.stockDisponible > 0 && tipoData.stockDisponible <= 5;
 
-                        {Object.entries(zona.tipos).map(
-                          ([tipoNombre, tipoData]) => (
-                            <div
-                              key={tipoData.ezpId}
-                              className={`${styles["celda-precio"]} flex-shrink-0`}
-                            >
-                              <div className={styles["etiqueta"]}>
-                                {tipoNombre}
-                              </div>
-                              <div className={styles["precio"]}>
-                                S/. {Number(tipoData.precio).toFixed(2)}
-                              </div>
-                              {tipoData.stockDisponible <= 5 &&
-                                tipoData.stockDisponible > 0 && (
-                                  <div className="small text-warning mt-1">
-                                    ¡Últimas {tipoData.stockDisponible}!
-                                  </div>
+                            return (
+                              <td
+                                key={tipo}
+                                className={`${styles["td-precio"]} ${!tipoData ? styles["sin-precio"] : ""}`}
+                              >
+                                {tipoData ? (
+                                  <>
+                                    <span className={styles["precio-valor"]}>
+                                      S/. {Number(tipoData.precio).toFixed(2)}
+                                    </span>
+                                    {sinStock && (
+                                      <span className={styles["badge-agotado"]}>Agotado</span>
+                                    )}
+                                    {stockBajo && (
+                                      <span className={styles["badge-ultimas"]}>
+                                        ¡Últimas {tipoData.stockDisponible}!
+                                      </span>
+                                    )}
+                                  </>
+                                ) : (
+                                  <span className={styles["no-disponible"]}>-----</span>
                                 )}
-                            </div>
-                          )
-                        )}
-                      </div>
-                    </div>
-                  ))}
+                              </td>
+                            );
+                          })}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
@@ -273,7 +291,7 @@ function EventoDetalle() {
       {tiposDisponibles.length > 0 && (
         <section className={`${styles["botones-seccion"]} py-5`}>
           <div className="container text-center">
-            <h3 className="mb-5 text-dark fw-bold">
+            <h3 className="mb-5 text-white fw-bold">
               Obtén tus tickets para ver a {evento.titulo}
             </h3>
 
@@ -320,10 +338,10 @@ function EventoDetalle() {
       {tiposDisponibles.length === 0 && zonasPrecios.length > 0 && (
         <section className={`${styles["botones-seccion"]} py-5`}>
           <div className="container text-center">
-            <h3 className="mb-3 text-dark fw-bold">
+            <h3 className="mb-3 text-white fw-bold">
               {evento.titulo}
             </h3>
-            <p className="text-dark fs-5">
+            <p className="text-white fs-5">
               No hay entradas disponibles para este evento en este momento.
             </p>
           </div>
