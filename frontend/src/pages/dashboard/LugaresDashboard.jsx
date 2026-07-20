@@ -58,11 +58,13 @@ function LugaresDashboard() {
     cargarLugares();
   }, []);
 
-  const handlePosicionChange = (lat, lng, direccion) => {
+  const handlePosicionChange = (lat, lng, direccion, ciudad) => {
     setPosicion([lat, lng]);
-    if (direccion) {
-      setForm((prev) => ({ ...prev, direccion }));
-    }
+    setForm((prev) => ({
+      ...prev,
+      ...(direccion && { direccion }),
+      ...(ciudad && { ciudad }),
+    }));
   };
 
   const abrirFormulario = () => {
