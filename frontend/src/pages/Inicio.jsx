@@ -87,10 +87,9 @@ export default function Inicio() {
                             <p className="text-uppercase fw-semibold mb-2 text-warning">
                               Evento destacado
                             </p>
-                            <h2 className="display-6 fw-bold mb-2">
+                            <h2 className="display-6 fw-bold mb-0">
                               {slide.title}
                             </h2>
-                            <p className="mb-0">{slide.subtitle}</p>
                           </div>
                         </div>
                       </div>
